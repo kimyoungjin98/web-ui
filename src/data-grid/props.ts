@@ -1,0 +1,27 @@
+import type * as React from "react";
+import type { DataGridColumn, DataGridExcelDownloadAction, DataGridSelection, DataGridSort } from "./types";
+
+export type DataGridProps<T> = {
+  className?: string;
+  columns: DataGridColumn<T>[];
+  rows: T[];
+  getRowId: (row: T, index: number) => string;
+  loading?: boolean;
+  emptyMessage?: string;
+  total: number;
+  page: number;
+  pageSize: number;
+  pageSizeOptions?: number[];
+  sort: DataGridSort;
+  search?: string;
+  searchable?: boolean;
+  minTableWidth?: string;
+  excelDownload?: DataGridExcelDownloadAction | false;
+  selection?: DataGridSelection<T>;
+  onPageChange?: (page: number) => void;
+  onPageSizeChange?: (pageSize: number) => void;
+  onSortChange?: (sort: DataGridSort) => void;
+  onSearchChange?: (search: string) => void;
+  onRowClick?: (row: T) => void;
+  rowActions?: (row: T) => React.ReactNode;
+};
