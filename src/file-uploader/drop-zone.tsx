@@ -9,15 +9,16 @@ import {
   type KeyboardEvent,
   type ReactNode,
 } from "react";
-import { Icon } from "../../icon";
-import { cn } from "../../lib/tailwind-util";
-import type { FileUploaderLabels } from "../types";
+import { Icon } from "../icon";
+import { cn } from "../lib/tailwind-util";
+import type { FileUploaderLabels } from "./types";
 
 const FRAME =
   "grid cursor-pointer place-items-center rounded-md border border-dashed p-8 text-center transition focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/25";
 const IDLE_FRAME =
   "border-primary/30 bg-white hover:border-primary/60 hover:bg-primary/5 hover:shadow-sm focus-visible:border-primary/70 focus-visible:bg-primary/5";
-const READY_FRAME = "border-primary bg-primary/10 shadow-sm ring-3 ring-primary/15";
+const READY_FRAME =
+  "border-primary bg-primary/10 shadow-sm ring-3 ring-primary/15";
 const DISABLED_FRAME = "pointer-events-none opacity-50";
 
 type Props = {
@@ -32,28 +33,39 @@ type Props = {
 export function DropZone(props: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const drop = useDrop(props.disabled, props.onFiles);
-  return <>
-    <DropInput ref={inputRef} accept={props.accept} multiple={props.multiple} disabled={props.disabled} onFiles={props.onFiles} />
-    <DropFrame
-      disabled={props.disabled}
-      onClick={() => inputRef.current?.click()}
-      onDragOver={drop.dragOver}
-      onDragLeave={drop.leave}
-      onDrop={drop.drop}
-      over={drop.over}
-    >
-      <DropContent
-        guide={props.labels?.guide}
-        help={props.help}
-        idle={props.labels?.idle}
-        over={drop.over}
-        overLabel={props.labels?.over}
+  return (
+    <>
+      <DropInput
+        ref={inputRef}
+        accept={props.accept}
+        multiple={props.multiple}
+        disabled={props.disabled}
+        onFiles={props.onFiles}
       />
-    </DropFrame>
-  </>;
+      <DropFrame
+        disabled={props.disabled}
+        onClick={() => inputRef.current?.click()}
+        onDragOver={drop.dragOver}
+        onDragLeave={drop.leave}
+        onDrop={drop.drop}
+        over={drop.over}
+      >
+        <DropContent
+          guide={props.labels?.guide}
+          help={props.help}
+          idle={props.labels?.idle}
+          over={drop.over}
+          overLabel={props.labels?.over}
+        />
+      </DropFrame>
+    </>
+  );
 }
 
-function useDrop(disabled: boolean | undefined, onFiles: (files: FileList) => void) {
+function useDrop(
+  disabled: boolean | undefined,
+  onFiles: (files: FileList) => void,
+) {
   const [over, setOver] = useState(false);
 
   function dragOver(event: DragEvent<HTMLDivElement>) {
@@ -130,7 +142,11 @@ function DropFrame(props: FrameProps) {
       onDragOver={props.onDragOver}
       onDragLeave={props.onDragLeave}
       onDrop={props.onDrop}
-      className={cn(FRAME, props.over ? READY_FRAME : IDLE_FRAME, props.disabled && DISABLED_FRAME)}
+      className={cn(
+        FRAME,
+        props.over ? READY_FRAME : IDLE_FRAME,
+        props.disabled && DISABLED_FRAME,
+      )}
     >
       {props.children}
     </div>
@@ -163,14 +179,14 @@ function DropContent({
         className={`mb-3 size-10 transition ${over ? "text-primary" : "text-primary/80"}`}
       />
       <p className="font-bold text-foreground">
-        {over ? overLabel ?? "파일을 여기에 놓으세요" : idle ?? "파일을 업로드하세요"}
+        {over
+          ? (overLabel ?? "파일을 여기에 놓으세요")
+          : (idle ?? "파일을 업로드하세요")}
       </p>
       <p className="mt-2 text-xs font-semibold text-muted-foreground">
         {guide ?? "파일을 이곳에 드래그하거나 이 영역을 클릭하세요"}
       </p>
-      <p className="mt-4 text-xs font-semibold text-muted-foreground">
-        {help}
-      </p>
+      <p className="mt-4 text-xs font-semibold text-muted-foreground">{help}</p>
     </>
   );
 }

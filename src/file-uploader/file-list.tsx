@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button } from "../../button";
-import { Icon } from "../../icon";
-import type { UploadFileItem } from "../types";
-import { formatBytes } from "../utils/bytes";
+import { Button } from "../button";
+import { Icon } from "../icon";
+import type { UploadFileItem } from "./types";
+import { formatBytes } from "./utils";
 
 type Props = {
   disabled?: boolean;
@@ -39,13 +39,21 @@ function FileRow(props: RowProps) {
   const { item, disabled, onRemove, onRetry } = props;
 
   return (
-    <li className="rounded border border-gray-200 bg-white p-3" onClick={(event) => event.preventDefault()}>
+    <li
+      className="rounded border border-gray-200 bg-white p-3"
+      onClick={(event) => event.preventDefault()}
+    >
       <div className="flex items-start gap-3">
         <FilePreview item={item} />
         <FileMeta item={item} />
         <StatusIcon status={item.status} />
       </div>
-      <FileRowFooter item={item} disabled={disabled} onRemove={onRemove} onRetry={onRetry} />
+      <FileRowFooter
+        item={item}
+        disabled={disabled}
+        onRemove={onRemove}
+        onRetry={onRetry}
+      />
     </li>
   );
 }
@@ -69,7 +77,9 @@ function FileMeta({ item }: { item: UploadFileItem }) {
 const IMAGE_EXTENSIONS = ["JPG", "JPEG", "PNG", "WEBP", "GIF"];
 
 function FilePreview({ item }: { item: UploadFileItem }) {
-  const image = item.file.type.startsWith("image/") || IMAGE_EXTENSIONS.includes(item.extension);
+  const image =
+    item.file.type.startsWith("image/") ||
+    IMAGE_EXTENSIONS.includes(item.extension);
   const [src, setSrc] = useState("");
   useEffect(() => {
     if (!image) return;
@@ -77,16 +87,18 @@ function FilePreview({ item }: { item: UploadFileItem }) {
     setSrc(url);
     return () => URL.revokeObjectURL(url);
   }, [image, item.file]);
-  if (!image || !src) return <FileIcon extension={item.extension} status={item.status} />;
-  return <img src={src} alt="" className="size-10 shrink-0 rounded object-cover ring-1 ring-gray-200" />;
+  if (!image || !src)
+    return <FileIcon extension={item.extension} status={item.status} />;
+  return (
+    <img
+      src={src}
+      alt=""
+      className="size-10 shrink-0 rounded object-cover ring-1 ring-gray-200"
+    />
+  );
 }
 
-function FileRowFooter({
-  item,
-  disabled,
-  onRemove,
-  onRetry,
-}: RowProps) {
+function FileRowFooter({ item, disabled, onRemove, onRetry }: RowProps) {
   const tone =
     item.status === "error"
       ? "red"
@@ -121,15 +133,32 @@ function RowActions({
   return null;
 }
 
-function FileIcon({ extension, status }: { extension: string; status: string }) {
-  const tone = status === "error" ? "bg-red-50 text-red-600" : "bg-primary-soft text-primary";
+function FileIcon({
+  extension,
+  status,
+}: {
+  extension: string;
+  status: string;
+}) {
+  const tone =
+    status === "error"
+      ? "bg-red-50 text-red-600"
+      : "bg-primary-soft text-primary";
 
-  return <div className={`grid size-10 shrink-0 place-items-center rounded ${tone}`}><Icon name={iconName(extension)} className="size-5" /></div>;
+  return (
+    <div className={`grid size-10 shrink-0 place-items-center rounded ${tone}`}>
+      <Icon name={iconName(extension)} className="size-5" />
+    </div>
+  );
 }
 
 function StatusIcon({ status }: { status: string }) {
-  if (status === "success") return <Icon name="lucide:check-circle-2" className="size-5 text-emerald-600" />;
-  if (status === "error") return <Icon name="lucide:circle-alert" className="size-5 text-red-600" />;
+  if (status === "success")
+    return (
+      <Icon name="lucide:check-circle-2" className="size-5 text-emerald-600" />
+    );
+  if (status === "error")
+    return <Icon name="lucide:circle-alert" className="size-5 text-red-600" />;
   return <Icon name="lucide:loader-circle" className="size-5 text-primary" />;
 }
 
@@ -148,7 +177,12 @@ function ProgressBar({
   value: number;
   tone?: "blue" | "green" | "red";
 }) {
-  const color = tone === "green" ? "bg-emerald-500" : tone === "red" ? "bg-red-500" : "bg-primary";
+  const color =
+    tone === "green"
+      ? "bg-emerald-500"
+      : tone === "red"
+        ? "bg-red-500"
+        : "bg-primary";
 
   return (
     <div className="h-2 overflow-hidden rounded-full bg-gray-100">

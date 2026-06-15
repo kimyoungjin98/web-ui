@@ -1,6 +1,6 @@
-import { DEFAULT_ACCEPTED_TYPES } from "../constants";
-import type { FileUploaderProps, UploadFileItem } from "../types";
-import { toAccept } from "../utils/accept";
+import { DEFAULT_ACCEPTED_TYPES } from "./constants";
+import type { FileUploaderProps, UploadFileItem } from "./types";
+import { toAccept } from "./utils";
 
 export function acceptedTypes(props: FileUploaderProps) {
   if (Array.isArray(props.accept)) return props.accept;
@@ -11,9 +11,18 @@ export function acceptedTypes(props: FileUploaderProps) {
 export function getViewModel(types: string[], items: UploadFileItem[]) {
   return {
     accept: toAccept(types),
-    active: items.some((item) => item.status === "pending" || item.status === "uploading"),
-    error: [...items].reverse().find((item) => item.status === "error")?.error ?? "",
-    label: types.map((type) => type === "*" || type === "*/*" ? "모든" : type.replace(".", "").toUpperCase()).join(", "),
+    active: items.some(
+      (item) => item.status === "pending" || item.status === "uploading",
+    ),
+    error:
+      [...items].reverse().find((item) => item.status === "error")?.error ?? "",
+    label: types
+      .map((type) =>
+        type === "*" || type === "*/*"
+          ? "모든"
+          : type.replace(".", "").toUpperCase(),
+      )
+      .join(", "),
     progress: getProgress(items),
   };
 }

@@ -1,10 +1,14 @@
 "use client";
 
 import { useRef, useState, type Dispatch, type SetStateAction } from "react";
-import type { UploadContext, UploadResult, UploadStorageObject } from "../storage-types";
-import type { FileUploaderProps, UploadFileItem } from "../types";
+import type {
+  UploadContext,
+  UploadResult,
+  UploadStorageObject,
+} from "./storage-types";
+import type { FileUploaderProps, UploadFileItem } from "./types";
 import { createItem } from "./file";
-import { getExtension } from "../utils/accept";
+import { getExtension } from "./utils";
 
 type UploaderProps = Required<
   Pick<FileUploaderProps, "acceptedFileTypes" | "maxFileSize">
@@ -16,8 +20,8 @@ type SetItems = Dispatch<SetStateAction<UploadFileItem[]>>;
 type Patch = (id: string, next: Partial<UploadFileItem>) => void;
 
 export function useUploader(props: UploaderProps) {
-  const [items, setItems] = useState<UploadFileItem[]>(
-    () => createInitialItems(props.initialUrls, props.initialStorageObjects),
+  const [items, setItems] = useState<UploadFileItem[]>(() =>
+    createInitialItems(props.initialUrls, props.initialStorageObjects),
   );
   const [error, setError] = useState("");
   const controllers = useRef(new Map<string, AbortController>());
@@ -25,7 +29,13 @@ export function useUploader(props: UploaderProps) {
   return {
     error,
     items,
-    ...createActions({ controllers: controllers.current, items, props, setError, setItems }),
+    ...createActions({
+      controllers: controllers.current,
+      items,
+      props,
+      setError,
+      setItems,
+    }),
   };
 }
 
@@ -38,14 +48,24 @@ function createActions(args: {
 }) {
   const { controllers, items, props, setError, setItems } = args;
   const upload = props.onUpload ?? defaultUpload;
-  const patch = (id: string, next: Partial<UploadFileItem>) => patchItem(setItems, id, next);
-  const start = (item: UploadFileItem) => startUpload(item, upload, controllers, patch);
+  const patch = (id: string, next: Partial<UploadFileItem>) =>
+    patchItem(setItems, id, next);
+  const start = (item: UploadFileItem) =>
+    startUpload(item, upload, controllers, patch);
 
   return {
-    add: (files: FileList) => addUpload(files, items, props, setItems, start, setError),
-    cancel: () => (setError(""), cancelUploads(items, controllers, setItems, props.onCancel)),
-    remove: (item: UploadFileItem) => (setError(""), removeUpload(item, controllers, setItems, props.onRemove)),
-    retry: (item: UploadFileItem) => retryUpload(item, patch, start, props.onRetry),
+    add: (files: FileList) =>
+      addUpload(files, items, props, setItems, start, setError),
+    cancel: () => (
+      setError(""),
+      cancelUploads(items, controllers, setItems, props.onCancel)
+    ),
+    remove: (item: UploadFileItem) => (
+      setError(""),
+      removeUpload(item, controllers, setItems, props.onRemove)
+    ),
+    retry: (item: UploadFileItem) =>
+      retryUpload(item, patch, start, props.onRetry),
   };
 }
 
@@ -58,13 +78,17 @@ function addUpload(
   setError: Dispatch<SetStateAction<string>>,
 ) {
   const selected = createSelectedItems(files, props);
-  const count = props.multiple ? items.length + selected.length : selected.length;
+  const count = props.multiple
+    ? items.length + selected.length
+    : selected.length;
   if (props.maxCount !== undefined && count > props.maxCount) {
     setError(`최대 ${props.maxCount}개까지 업로드할 수 있습니다.`);
     return;
   }
   setError("");
-  setItems((current) => (props.multiple ? [...current, ...selected] : selected));
+  setItems((current) =>
+    props.multiple ? [...current, ...selected] : selected,
+  );
   selected.forEach(start);
 }
 
@@ -92,12 +116,17 @@ function startUpload(
   })
     .then((result) => finishUpload(item, result, patch))
     .catch(() => {
-      if (!controller.signal.aborted) patch(item.id, { status: "error", error: "업로드에 실패했습니다." });
+      if (!controller.signal.aborted)
+        patch(item.id, { status: "error", error: "업로드에 실패했습니다." });
     })
     .finally(() => controllers.delete(item.id));
 }
 
-function finishUpload(item: UploadFileItem, result: UploadResult | void, patch: Patch) {
+function finishUpload(
+  item: UploadFileItem,
+  result: UploadResult | void,
+  patch: Patch,
+) {
   const output = result || undefined;
   patch(item.id, {
     status: "success",
@@ -139,7 +168,12 @@ function retryUpload(
   start: (item: UploadFileItem) => void,
   onRetry?: (item: UploadFileItem) => void,
 ) {
-  const next = { ...item, status: "pending" as const, progress: 1, error: undefined };
+  const next = {
+    ...item,
+    status: "pending" as const,
+    progress: 1,
+    error: undefined,
+  };
   patch(item.id, next);
   onRetry?.(item);
   start(next);
@@ -165,7 +199,10 @@ function cancelled(item: UploadFileItem): UploadFileItem {
     : item;
 }
 
-function createInitialItems(urls?: string[], objects?: UploadStorageObject[]): UploadFileItem[] {
+function createInitialItems(
+  urls?: string[],
+  objects?: UploadStorageObject[],
+): UploadFileItem[] {
   return [...fromObjects(objects), ...fromUrls(urls)];
 }
 
@@ -186,7 +223,9 @@ function fromUrls(urls?: string[]): UploadFileItem[] {
 }
 
 function fromObjects(objects?: UploadStorageObject[]): UploadFileItem[] {
-  return (objects ?? []).filter((object) => object.url).map(createInitialObject);
+  return (objects ?? [])
+    .filter((object) => object.url)
+    .map(createInitialObject);
 }
 
 function createInitialObject(object: UploadStorageObject): UploadFileItem {

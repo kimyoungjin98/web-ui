@@ -1,5 +1,5 @@
-import { downloadDataGridAsExcel } from "../../lib/data-grid/export";
-import type { DataGridProps } from "../props";
+import { downloadDataGridAsExcel } from "../lib/data-grid/export";
+import type { DataGridProps } from "./props";
 
 export function getDataGridModel<T>(p: DataGridProps<T>) {
   const action = p.excelDownload;
@@ -19,5 +19,11 @@ export function getDataGridModel<T>(p: DataGridProps<T>) {
     })),
   };
 
-  return { pageCount, firstItem, lastItem, tableColumnCount, excelDownload };
+  return {
+    pageCount,
+    firstItem,
+    lastItem,
+    tableColumnCount,
+    excelDownload,
+  };
 }
