@@ -6,7 +6,8 @@ import { cn } from "../../lib/tailwind-util";
 import type { DataGridSelection } from "../types";
 import type { DataGridTableColumn } from "./layout";
 
-const ROW = "group border-b border-border last:border-0 hover:bg-gray-50";
+const ROW =
+  "data-grid-row-enter group border-b border-border last:border-0 hover:bg-gray-50";
 
 const SELECTED_ROW =
   "bg-primary-soft hover:bg-primary-soft focus-visible:bg-primary-soft";
