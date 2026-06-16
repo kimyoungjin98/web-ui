@@ -193,8 +193,16 @@ function DateRangePicker({
   }, []);
 
   function handleSelect(range: DateRange | undefined, selectedDate: Date) {
+    const selectedValue = formatDateValue(selectedDate);
+
     if (value.from && value.to) {
-      onValueChange({ from: formatDateValue(selectedDate), to: "" });
+      onValueChange({ from: selectedValue, to: "" });
+      return;
+    }
+
+    if (value.from && !value.to && value.from === selectedValue) {
+      onValueChange({ from: selectedValue, to: selectedValue });
+      setOpen(false);
       return;
     }
 
