@@ -15,8 +15,9 @@ type Props<T> = {
   tableColumnCount: number;
   rowActionsRightOffset?: string;
   rowActionsLeftEdge: boolean;
-  onRowClick?: (row: T) => void;
-  rowActions?: (row: T) => React.ReactNode;
+  rowClassName?: (row: T, index: number) => string;
+  onRowClick?: (row: T, index: number) => void;
+  rowActions?: (row: T, index: number) => React.ReactNode;
 };
 
 export function DataGridBody<T>(p: Props<T>) {
@@ -31,6 +32,7 @@ export function DataGridBody<T>(p: Props<T>) {
       columns={p.columns}
       selection={p.selection}
       onRowClick={p.onRowClick}
+      rowClassName={p.rowClassName}
       rowActions={p.rowActions}
       rowActionsRightOffset={p.rowActionsRightOffset}
       rowActionsLeftEdge={p.rowActionsLeftEdge}

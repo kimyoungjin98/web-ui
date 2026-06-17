@@ -20,6 +20,9 @@ function DataGridView<T>({
   props: DataGridProps<T>;
   model: Model;
 }) {
+  const showToolbar = p.showToolbar ?? p.toolbar ?? true;
+  const showPagination = p.pagination ?? true;
+
   return (
     <div
       className={cn(
@@ -27,16 +30,18 @@ function DataGridView<T>({
         p.className,
       )}
     >
-      <DataGridToolbar
-        search={p.search ?? ""}
-        searchable={p.searchable ?? true}
-        selectedCount={p.selection?.selectedIds.length ?? 0}
-        pageSize={p.pageSize}
-        pageSizeOptions={p.pageSizeOptions ?? [10, 20, 50]}
-        excelDownload={m.excelDownload}
-        onSearchChange={p.onSearchChange}
-        onPageSizeChange={p.onPageSizeChange}
-      />
+      {showToolbar ? (
+        <DataGridToolbar
+          search={p.search ?? ""}
+          searchable={p.searchable ?? true}
+          selectedCount={p.selection?.selectedIds.length ?? 0}
+          pageSize={p.pageSize}
+          pageSizeOptions={p.pageSizeOptions ?? [10, 20, 50]}
+          excelDownload={m.excelDownload}
+          onSearchChange={p.onSearchChange}
+          onPageSizeChange={p.onPageSizeChange}
+        />
+      ) : null}
       <DataGridTable
         columns={p.columns}
         rows={p.rows}
@@ -50,16 +55,19 @@ function DataGridView<T>({
         minTableWidth={p.minTableWidth ?? "760px"}
         onSortChange={p.onSortChange}
         onRowClick={p.onRowClick}
+        rowClassName={p.rowClassName}
         rowActions={p.rowActions}
       />
-      <DataGridPagination
-        firstItem={m.firstItem}
-        lastItem={m.lastItem}
-        total={p.total}
-        page={p.page}
-        pageCount={m.pageCount}
-        onPageChange={p.onPageChange}
-      />
+      {showPagination ? (
+        <DataGridPagination
+          firstItem={m.firstItem}
+          lastItem={m.lastItem}
+          total={p.total}
+          page={p.page}
+          pageCount={m.pageCount}
+          onPageChange={p.onPageChange}
+        />
+      ) : null}
     </div>
   );
 }

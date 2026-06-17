@@ -8,9 +8,9 @@ export type DataGridSort = {
 export type DataGridColumn<T> = {
   id: string;
   header: React.ReactNode;
-  accessor?: keyof T | ((row: T) => React.ReactNode);
-  cell?: (row: T) => React.ReactNode;
-  exportValue?: (row: T) => React.ReactNode;
+  accessor?: keyof T | ((row: T, index: number) => React.ReactNode);
+  cell?: (row: T, index: number) => React.ReactNode;
+  exportValue?: (row: T, index: number) => React.ReactNode;
   exportable?: boolean;
   sortable?: boolean;
   align?: "left" | "center" | "right";

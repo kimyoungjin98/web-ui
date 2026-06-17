@@ -20,8 +20,9 @@ type Props<T> = {
   index: number;
   columns: DataGridTableColumn<T>[];
   selection?: DataGridSelection<T>;
-  onRowClick?: (row: T) => void;
-  rowActions?: (row: T) => ReactNode;
+  rowClassName?: (row: T, index: number) => string;
+  onRowClick?: (row: T, index: number) => void;
+  rowActions?: (row: T, index: number) => ReactNode;
   rowActionsRightOffset?: string;
   rowActionsLeftEdge: boolean;
 };
@@ -36,9 +37,14 @@ export function DataGridRow<T>(p: Props<T>) {
       aria-selected={selected || undefined}
       data-selected={selected || undefined}
       tabIndex={canClick ? 0 : undefined}
-      onClick={(e) => runRowClick(e, p.row, p.onRowClick)}
-      onKeyDown={(e) => runRowClick(e, p.row, p.onRowClick)}
-      className={cn(ROW, canClick && CLICKABLE, selected && SELECTED_ROW)}
+      onClick={(e) => runRowClick(e, p.row, p.index, p.onRowClick)}
+      onKeyDown={(e) => runRowClick(e, p.row, p.index, p.onRowClick)}
+      className={cn(
+        ROW,
+        canClick && CLICKABLE,
+        selected && SELECTED_ROW,
+        p.rowClassName?.(p.row, p.index),
+      )}
     >
       {p.selection ? (
         <DataGridSelectionCell
@@ -49,11 +55,12 @@ export function DataGridRow<T>(p: Props<T>) {
         />
       ) : null}
       {p.columns.map((c) => (
-        <DataGridCell key={c.column.id} row={p.row} item={c} />
+        <DataGridCell key={c.column.id} row={p.row} index={p.index} item={c} />
       ))}
       {p.rowActions ? (
         <DataGridRowActionsCell
           row={p.row}
+          index={p.index}
           rowActions={p.rowActions}
           rightOffset={p.rowActionsRightOffset}
           leftEdge={p.rowActionsLeftEdge}
@@ -95,9 +102,11 @@ function DataGridSelectionCell<T>({
 
 function DataGridCell<T>({
   row,
+  index,
   item,
 }: {
   row: T;
+  index: number;
   item: DataGridTableColumn<T>;
 }) {
   const column = item.column;
@@ -118,19 +127,21 @@ function DataGridCell<T>({
         column.className,
       )}
     >
-      {resolveCellContent(row, column)}
+      {resolveCellContent(row, column, index)}
     </td>
   );
 }
 
 function DataGridRowActionsCell<T>({
   row,
+  index,
   rowActions,
   rightOffset,
   leftEdge,
 }: {
   row: T;
-  rowActions: (row: T) => React.ReactNode;
+  index: number;
+  rowActions: (row: T, index: number) => React.ReactNode;
   rightOffset?: string;
   leftEdge: boolean;
 }) {
@@ -143,7 +154,7 @@ function DataGridRowActionsCell<T>({
         leftEdge && "shadow-[-8px_0_12px_-12px_rgba(15,23,42,0.75)]",
       )}
     >
-      {rowActions(row)}
+      {rowActions(row, index)}
     </td>
   );
 }
@@ -155,12 +166,13 @@ type RowEvent =
 function runRowClick<T>(
   event: RowEvent,
   row: T,
-  onRowClick?: (row: T) => void,
+  index: number,
+  onRowClick?: (row: T, index: number) => void,
 ) {
   if (!onRowClick || isInteractiveTarget(event)) return;
   if ("key" in event && event.key !== "Enter" && event.key !== " ") return;
   if ("key" in event) event.preventDefault();
-  onRowClick(row);
+  onRowClick(row, index);
 }
 
 function isInteractiveTarget(event: RowEvent) {

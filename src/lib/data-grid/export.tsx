@@ -20,9 +20,11 @@ export function downloadDataGridAsExcel<T>({
   const headerCells = exportableColumns.map((column) =>
     renderExcelCell(reactNodeToText(column.header), "th"),
   );
-  const bodyRows = rows.map((row) =>
+  const bodyRows = rows.map((row, index) =>
     `<tr>${exportableColumns
-      .map((column) => renderExcelCell(getColumnExportText(row, column), "td"))
+      .map((column) =>
+        renderExcelCell(getColumnExportText(row, column, index), "td"),
+      )
       .join("")}</tr>`,
   );
   const html = `<!doctype html><html><head><meta charset="utf-8" /></head><body><table><thead><tr>${headerCells.join(
@@ -42,10 +44,14 @@ export function downloadDataGridAsExcel<T>({
   window.URL.revokeObjectURL(url);
 }
 
-function getColumnExportText<T>(row: T, column: DataGridColumn<T>) {
+function getColumnExportText<T>(
+  row: T,
+  column: DataGridColumn<T>,
+  index: number,
+) {
   const value = column.exportValue
-    ? column.exportValue(row)
-    : resolveCellContent(row, column);
+    ? column.exportValue(row, index)
+    : resolveCellContent(row, column, index);
 
   return reactNodeToText(value);
 }

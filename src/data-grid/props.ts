@@ -18,10 +18,14 @@ export type DataGridProps<T> = {
   minTableWidth?: string;
   excelDownload?: DataGridExcelDownloadAction | false;
   selection?: DataGridSelection<T>;
+  toolbar?: boolean;
+  showToolbar?: boolean;
+  pagination?: boolean;
+  rowClassName?: (row: T, index: number) => string;
   onPageChange?: (page: number) => void;
   onPageSizeChange?: (pageSize: number) => void;
   onSortChange?: (sort: DataGridSort) => void;
   onSearchChange?: (search: string) => void;
-  onRowClick?: (row: T) => void;
-  rowActions?: (row: T) => React.ReactNode;
+  onRowClick?: (row: T, index: number) => void;
+  rowActions?: (row: T, index: number) => React.ReactNode;
 };

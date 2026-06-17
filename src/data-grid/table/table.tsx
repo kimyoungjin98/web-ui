@@ -16,8 +16,9 @@ type Props<T> = {
   tableColumnCount: number;
   minTableWidth: string;
   onSortChange?: (sort: DataGridSort) => void;
-  onRowClick?: (row: T) => void;
-  rowActions?: (row: T) => React.ReactNode;
+  rowClassName?: (row: T, index: number) => string;
+  onRowClick?: (row: T, index: number) => void;
+  rowActions?: (row: T, index: number) => React.ReactNode;
 };
 
 export function DataGridTable<T>(p: Props<T>) {

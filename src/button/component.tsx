@@ -1,4 +1,5 @@
 import { Slot } from "@radix-ui/react-slot";
+import * as React from "react";
 
 import { cn } from "../lib/tailwind-util";
 import { buttonBase, buttonSizes, buttonVariantBase } from "./base";
@@ -10,31 +11,39 @@ import type {
   ButtonVariant,
 } from "./types";
 
-export function Button({
-  className,
-  color,
-  variant = "solid",
-  size,
-  asChild = false,
-  ...props
-}: ButtonProps) {
-  const Comp = asChild ? Slot : "button";
-  const resolvedColor = resolveButtonColor(color, variant);
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    {
+      className,
+      color,
+      variant = "solid",
+      size,
+      asChild = false,
+      ...props
+    },
+    ref,
+  ) => {
+    const Comp = asChild ? Slot : "button";
+    const resolvedColor = resolveButtonColor(color, variant);
 
-  return (
-    <Comp
-      data-slot="button"
-      className={cn(
-        buttonBase,
-        buttonVariantBase[variant],
-        getButtonColorClass(variant, resolvedColor),
-        buttonSizes[size ?? "default"],
-        className,
-      )}
-      {...props}
-    />
-  );
-}
+    return (
+      <Comp
+        ref={ref}
+        data-slot="button"
+        className={cn(
+          buttonBase,
+          buttonVariantBase[variant],
+          getButtonColorClass(variant, resolvedColor),
+          buttonSizes[size ?? "default"],
+          className,
+        )}
+        {...props}
+      />
+    );
+  },
+);
+
+Button.displayName = "Button";
 
 function buttonVariants({
   className,
@@ -73,4 +82,4 @@ function isButtonColor(color: ButtonColor | string | undefined): color is Button
   return color === "primary" || color === "secondary" || color === "neutral";
 }
 
-export { buttonVariants };
+export { Button, buttonVariants };
