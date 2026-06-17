@@ -6,6 +6,9 @@ import Icon from "./icon";
 type CheckboxSize = "sm" | "md" | "lg";
 
 type CheckboxProps = Omit<React.ComponentProps<"input">, "size" | "type"> & {
+  children?: React.ReactNode;
+  containerClassName?: string;
+  indeterminate?: boolean;
   label?: React.ReactNode;
   labelClassName?: string;
   size?: CheckboxSize;
@@ -25,7 +28,10 @@ const checkboxSizeTokens: Record<
 };
 
 function Checkbox({
+  children,
   className,
+  containerClassName,
+  indeterminate = false,
   label,
   labelClassName,
   disabled,
@@ -33,12 +39,18 @@ function Checkbox({
   ...props
 }: CheckboxProps) {
   const sizeToken = checkboxSizeTokens[size];
+  const inputRef = React.useRef<HTMLInputElement | null>(null);
+
+  React.useEffect(() => {
+    if (inputRef.current) inputRef.current.indeterminate = indeterminate;
+  }, [indeterminate]);
 
   return (
     <label
       className={cn(
         "group select-none flex cursor-pointer items-center rounded-md border border-input bg-background font-semibold text-foreground transition-all hover:bg-gray-50 has-[:checked]:border-primary-border has-[:checked]:bg-primary/10 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 has-[:focus-visible]:border-ring has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-ring/15",
         sizeToken.label,
+        containerClassName,
         labelClassName,
       )}
     >
@@ -49,10 +61,13 @@ function Checkbox({
         )}
       >
         <input
+          ref={inputRef}
           type="checkbox"
           disabled={disabled}
+          aria-checked={indeterminate ? "mixed" : undefined}
           className={cn(
             "peer absolute inset-0 size-full cursor-pointer appearance-none rounded border border-input bg-background outline-none transition-all checked:border-primary checked:bg-primary disabled:cursor-not-allowed",
+            indeterminate && "border-primary bg-primary",
             className,
           )}
           {...props}
@@ -61,13 +76,14 @@ function Checkbox({
           name="mdi:check"
           className={cn(
             "pointer-events-none opacity-0 text-white transition-opacity peer-checked:opacity-100",
+            indeterminate && "opacity-100",
             sizeToken.icon,
           )}
         />
       </span>
-      {label ? (
+      {label ?? children ? (
         <span className="min-w-0 leading-5 mt-0.5 font-semibold text-sm">
-          {label}
+          {label ?? children}
         </span>
       ) : null}
     </label>

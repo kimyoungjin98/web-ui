@@ -12,6 +12,10 @@ export const buttonSizes: Record<ButtonSize, string> = {
 
 export const buttonVariantBase: Record<ButtonVariant, string> = {
   solid: "shadow-xs",
+  default: "shadow-xs",
   outline: "shadow-xs border",
   ghost: "",
+  secondary: "shadow-xs",
+  destructive: "shadow-xs",
+  link: "underline-offset-4 hover:underline",
 };

@@ -1,12 +1,19 @@
 import type * as React from "react";
 
-export type ButtonVariant = "solid" | "outline" | "ghost";
+export type ButtonVariant =
+  | "solid"
+  | "default"
+  | "outline"
+  | "ghost"
+  | "secondary"
+  | "destructive"
+  | "link";
 export type ButtonColor = "primary" | "secondary" | "neutral";
 export type ButtonSize = "default" | "sm" | "lg" | "icon";
 
 export type ButtonProps = React.ComponentProps<"button"> & {
   asChild?: boolean;
-  color?: ButtonColor;
+  color?: ButtonColor | string;
   size?: ButtonSize;
   variant?: ButtonVariant;
 };

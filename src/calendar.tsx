@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ko } from "date-fns/locale";
+import { ko } from "date-fns/locale/ko";
 import {
   DayPicker,
   getDefaultClassNames,

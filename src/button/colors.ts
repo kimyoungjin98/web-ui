@@ -19,5 +19,10 @@ const ghost: Record<ButtonColor, string> = {
 };
 
 export function getButtonColorClass(variant: ButtonVariant, color: ButtonColor) {
+  if (variant === "default") return solid.primary;
+  if (variant === "secondary") return solid.secondary;
+  if (variant === "destructive") return "bg-destructive text-white hover:bg-destructive/90";
+  if (variant === "link") return "text-link";
+
   return { ghost, outline, solid }[variant][color];
 }

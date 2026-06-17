@@ -19,7 +19,7 @@ export function Button({
   ...props
 }: ButtonProps) {
   const Comp = asChild ? Slot : "button";
-  const resolvedColor = color ?? getDefaultColor(variant);
+  const resolvedColor = resolveButtonColor(color, variant);
 
   return (
     <Comp
@@ -43,11 +43,11 @@ function buttonVariants({
   variant = "solid",
 }: {
   className?: string;
-  color?: ButtonColor;
+  color?: ButtonColor | string;
   size?: ButtonSize;
   variant?: ButtonVariant;
 } = {}) {
-  const resolvedColor = color ?? getDefaultColor(variant);
+  const resolvedColor = resolveButtonColor(color, variant);
 
   return cn(
     buttonBase,
@@ -59,7 +59,18 @@ function buttonVariants({
 }
 
 function getDefaultColor(variant: ButtonVariant): ButtonColor {
-  return variant === "solid" ? "primary" : "neutral";
+  return variant === "solid" || variant === "default" ? "primary" : "neutral";
+}
+
+function resolveButtonColor(
+  color: ButtonColor | string | undefined,
+  variant: ButtonVariant,
+): ButtonColor {
+  return isButtonColor(color) ? color : getDefaultColor(variant);
+}
+
+function isButtonColor(color: ButtonColor | string | undefined): color is ButtonColor {
+  return color === "primary" || color === "secondary" || color === "neutral";
 }
 
 export { buttonVariants };
