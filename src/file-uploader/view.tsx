@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
-import { Button } from "../../button";
-import { Icon } from "../../icon";
-import { cn } from "../../lib/tailwind-util";
-import type { FileUploaderLabels, UploadFileItem } from "../types";
+import { Button } from "../button";
+import { Icon } from "../icon";
+import { cn } from "../lib/tailwind-util";
+import type { FileUploaderLabels, UploadFileItem } from "./types";
 import { DropZone } from "./drop-zone";
 import { FileList } from "./file-list";
 
@@ -61,7 +61,13 @@ export function UploaderView(props: Props) {
   );
 }
 
-function Box({ children, className }: { children: ReactNode; className?: string }) {
+function Box({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   return <section className={cn("grid gap-4", className)}>{children}</section>;
 }
 
@@ -89,14 +95,22 @@ function UploaderHeader({
   );
 }
 
-function OverallProgress({ active, progress }: { active: boolean; progress: number }) {
+function OverallProgress({
+  active,
+  progress,
+}: {
+  active: boolean;
+  progress: number;
+}) {
   if (!active) return null;
 
   return (
     <div className="rounded border border-primary-border bg-white p-3">
       <div className="mb-2 flex items-center justify-between gap-3">
         <p className="text-sm font-bold text-foreground">업로드 중</p>
-        <p className="text-xs font-bold text-muted-foreground">전체 {progress}%</p>
+        <p className="text-xs font-bold text-muted-foreground">
+          전체 {progress}%
+        </p>
       </div>
       <ProgressBar value={progress} />
     </div>
@@ -115,7 +129,9 @@ function ProgressBar({ value }: { value: number }) {
 }
 
 function Limit({ message }: { message: string }) {
-  return message ? <p className="text-xs font-bold text-red-600">{message}</p> : null;
+  return message ? (
+    <p className="text-xs font-bold text-red-600">{message}</p>
+  ) : null;
 }
 
 function Live({ message }: { message: string }) {

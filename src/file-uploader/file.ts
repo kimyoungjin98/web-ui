@@ -1,6 +1,5 @@
-import type { UploadFileItem } from "../types";
-import { getExtension, matchesAcceptedType } from "../utils/accept";
-import { formatBytes } from "../utils/bytes";
+import type { UploadFileItem } from "./types";
+import { formatBytes, getExtension, matchesAcceptedType } from "./utils";
 
 export function createItem(
   file: File,

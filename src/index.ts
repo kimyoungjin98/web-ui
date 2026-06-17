@@ -18,5 +18,6 @@ export * from "./radio";
 export * from "./select";
 export * from "./sheet";
 export * from "./popover";
+export * from "./tabs";
 export * from "./textarea";
 export * from "./toaster";

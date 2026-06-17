@@ -15,6 +15,7 @@ export type DataGridColumn<T> = {
   sortable?: boolean;
   align?: "left" | "center" | "right";
   width?: string;
+  fixed?: "right";
   className?: string;
 };
 

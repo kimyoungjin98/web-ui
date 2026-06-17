@@ -1,8 +1,8 @@
 "use client";
 
 import { cn } from "../lib/tailwind-util";
-import { getDataGridModel } from "./core/model";
-import { DataGridPagination } from "./pagination/pagination";
+import { getDataGridModel } from "./model";
+import { DataGridPagination } from "./pagination";
 import type { DataGridProps } from "./props";
 import { DataGridTable } from "./table/table";
 import { DataGridToolbar } from "./toolbar/toolbar";

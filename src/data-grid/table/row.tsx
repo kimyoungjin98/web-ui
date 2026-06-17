@@ -1,14 +1,16 @@
 import type * as React from "react";
 import type { ReactNode } from "react";
-import { Checkbox } from "../../../checkbox";
-import { resolveCellContent } from "../../../lib/data-grid/cell";
-import { cn } from "../../../lib/tailwind-util";
-import type { DataGridColumn, DataGridSelection } from "../../types";
+import { Checkbox } from "../../checkbox";
+import { resolveCellContent } from "../../lib/data-grid/cell";
+import { cn } from "../../lib/tailwind-util";
+import type { DataGridSelection } from "../types";
+import type { DataGridTableColumn } from "./layout";
 
 const ROW =
-  "border-b border-border transition-colors last:border-0 hover:bg-gray-50";
+  "data-grid-row-enter group border-b border-border last:border-0 hover:bg-gray-50";
 
-const SELECTED_ROW = "bg-primary/5 hover:bg-primary/10 focus-visible:bg-primary/10";
+const SELECTED_ROW =
+  "bg-primary-soft hover:bg-primary-soft focus-visible:bg-primary-soft";
 
 const CLICKABLE =
   "cursor-pointer outline-none focus-visible:bg-gray-50 focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/20";
@@ -16,10 +18,12 @@ const CLICKABLE =
 type Props<T> = {
   row: T;
   index: number;
-  columns: DataGridColumn<T>[];
+  columns: DataGridTableColumn<T>[];
   selection?: DataGridSelection<T>;
   onRowClick?: (row: T) => void;
   rowActions?: (row: T) => ReactNode;
+  rowActionsRightOffset?: string;
+  rowActionsLeftEdge: boolean;
 };
 
 export function DataGridRow<T>(p: Props<T>) {
@@ -45,10 +49,15 @@ export function DataGridRow<T>(p: Props<T>) {
         />
       ) : null}
       {p.columns.map((c) => (
-        <DataGridCell key={c.id} row={p.row} column={c} />
+        <DataGridCell key={c.column.id} row={p.row} item={c} />
       ))}
       {p.rowActions ? (
-        <DataGridRowActionsCell row={p.row} rowActions={p.rowActions} />
+        <DataGridRowActionsCell
+          row={p.row}
+          rowActions={p.rowActions}
+          rightOffset={p.rowActionsRightOffset}
+          leftEdge={p.rowActionsLeftEdge}
+        />
       ) : null}
     </tr>
   );
@@ -86,15 +95,24 @@ function DataGridSelectionCell<T>({
 
 function DataGridCell<T>({
   row,
-  column,
+  item,
 }: {
   row: T;
-  column: DataGridColumn<T>;
+  item: DataGridTableColumn<T>;
 }) {
+  const column = item.column;
   return (
     <td
+      style={{
+        width: item.fixedWidth ?? column.width,
+        minWidth: item.fixedWidth,
+        right: item.fixedRightOffset,
+      }}
       className={cn(
         "px-4 py-3 align-middle text-foreground",
+        item.fixedRightOffset &&
+          "sticky z-10 bg-card group-hover:bg-gray-50 group-data-[selected=true]:bg-primary-soft",
+        item.fixedLeftEdge && "shadow-[-8px_0_12px_-12px_rgba(15,23,42,0.75)]",
         column.align === "center" && "text-center",
         column.align === "right" && "text-right",
         column.className,
@@ -108,12 +126,23 @@ function DataGridCell<T>({
 function DataGridRowActionsCell<T>({
   row,
   rowActions,
+  rightOffset,
+  leftEdge,
 }: {
   row: T;
   rowActions: (row: T) => React.ReactNode;
+  rightOffset?: string;
+  leftEdge: boolean;
 }) {
   return (
-    <td data-row-click-ignore className="px-4 py-3 text-right align-middle">
+    <td
+      data-row-click-ignore
+      style={{ right: rightOffset, width: "64px", minWidth: "64px" }}
+      className={cn(
+        "sticky right-0 z-10 w-16 bg-card px-4 py-3 text-right align-middle group-hover:bg-gray-50 group-data-[selected=true]:bg-primary-soft",
+        leftEdge && "shadow-[-8px_0_12px_-12px_rgba(15,23,42,0.75)]",
+      )}
+    >
       {rowActions(row)}
     </td>
   );
