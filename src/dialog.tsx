@@ -57,7 +57,7 @@ function DialogContent({
         <DialogPrimitive.Content
           data-slot="dialog-content"
           className={cn(
-            "dialog-content pointer-events-auto relative flex max-h-[calc(100dvh-1rem)] w-[calc(100vw-1rem)] flex-col overflow-hidden rounded-md border border-border bg-background shadow-xl outline-none sm:max-h-[90vh]",
+            "dialog-content pointer-events-auto relative flex max-h-[calc(100dvh-1rem)] w-[calc(100vw-1rem)] max-w-lg flex-col overflow-hidden rounded-md border border-border bg-background shadow-xl outline-none sm:max-h-[90vh]",
             className,
           )}
           onInteractOutside={(event) => {
@@ -115,7 +115,20 @@ function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="dialog-header"
-      className={cn("flex flex-col gap-1 text-left", className)}
+      className={cn(
+        "flex flex-col gap-1 border-b border-border px-5 py-4 pr-12 text-left",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+function DialogBody({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="dialog-body"
+      className={cn("flex-1 overflow-y-auto px-5 py-4", className)}
       {...props}
     />
   );
@@ -125,7 +138,10 @@ function DialogFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="dialog-footer"
-      className={cn("flex flex-col-reverse gap-2 sm:flex-row sm:justify-end", className)}
+      className={cn(
+        "flex items-center justify-end gap-2 border-t border-border bg-muted/30 px-5 py-3",
+        className,
+      )}
       {...props}
     />
   );
@@ -133,6 +149,7 @@ function DialogFooter({ className, ...props }: React.ComponentProps<"div">) {
 
 export {
   Dialog,
+  DialogBody,
   DialogClose,
   DialogContent,
   DialogDescription,

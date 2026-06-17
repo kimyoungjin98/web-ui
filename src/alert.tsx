@@ -7,6 +7,8 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
+  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "./dialog";
@@ -51,13 +53,13 @@ function ConfirmAlert({
     <Dialog open={dialogOpen} onOpenChange={handleOpenChange}>
       {children ? <DialogTrigger asChild>{children}</DialogTrigger> : null}
       <DialogContent className="max-w-sm p-0">
-        <div className="border-b border-border px-5 py-4 pr-12 flex flex-col gap-2">
+        <DialogHeader className="gap-2">
           <DialogTitle>{title}</DialogTitle>
           {description ? (
             <DialogDescription>{description}</DialogDescription>
           ) : null}
-        </div>
-        <div className="flex justify-end gap-2 px-5 py-4">
+        </DialogHeader>
+        <DialogFooter>
           <Button
             type="button"
             variant="outline"
@@ -68,7 +70,7 @@ function ConfirmAlert({
           <Button type="button" variant="solid" color="primary" onClick={handleConfirm}>
             {confirmLabel}
           </Button>
-        </div>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

@@ -18,7 +18,7 @@ function Input({ className, startIcon, endIcon, ...props }: InputProps) {
       <input
         data-slot="input"
         className={cn(
-          "h-9 w-full rounded-md border border-input bg-background px-3 text-[14px] font-semibold outline-none transition-all placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 focus:border-ring focus:ring-3 focus:ring-ring/15",
+          "h-9 w-full rounded-md border border-input bg-card px-3 text-sm font-semibold outline-none transition-all placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 focus:border-ring focus:ring-3 focus:ring-ring/15",
           startIcon && "pl-8",
           endIcon && "pr-8",
           className,
