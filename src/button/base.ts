@@ -5,6 +5,7 @@ export const buttonBase =
 
 export const buttonSizes: Record<ButtonSize, string> = {
   default: "h-9 px-4 py-2",
+  xs: "h-7 px-2.5 py-1 text-xs",
   sm: "h-8 px-3 text-xs",
   lg: "h-11 px-6",
   icon: "size-10",
