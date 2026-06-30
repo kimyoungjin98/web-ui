@@ -1,6 +1,8 @@
 "use client";
 
 import * as React from "react";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import type { DateRange } from "react-day-picker";
 
 import { Button } from "./button";
@@ -8,6 +10,8 @@ import { Calendar } from "./calendar";
 import Icon from "./icon";
 import { cn } from "./lib/tailwind-util";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+
+dayjs.extend(customParseFormat);
 
 type DatePickerProps = {
   value: string;
@@ -339,32 +343,23 @@ function parseDateValue(value: string): Date | undefined {
 }
 
 function parseDateParts(value: string): DateParts | null {
-  const match = DATE_PATTERN.exec(value);
+  if (!DATE_PATTERN.test(value)) return null;
 
-  if (!match) return null;
+  const date = dayjs(value, "YYYY-MM-DD", true);
 
-  const year = Number(match[1]);
-  const month = Number(match[2]);
-  const day = Number(match[3]);
-  const date = new Date(year, month - 1, day);
-
-  if (
-    date.getFullYear() !== year ||
-    date.getMonth() !== month - 1 ||
-    date.getDate() !== day
-  ) {
+  if (!date.isValid()) {
     return null;
   }
 
-  return { year, month, day };
+  return {
+    year: date.year(),
+    month: date.month() + 1,
+    day: date.date(),
+  };
 }
 
 function formatDateValue(date: Date) {
-  return [
-    date.getFullYear().toString().padStart(4, "0"),
-    (date.getMonth() + 1).toString().padStart(2, "0"),
-    date.getDate().toString().padStart(2, "0"),
-  ].join("-");
+  return dayjs(date).format("YYYY-MM-DD");
 }
 
 function isDateDisabled(value: string, min?: string, max?: string) {

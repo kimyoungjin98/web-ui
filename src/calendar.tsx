@@ -1,6 +1,8 @@
 "use client";
 
 import * as React from "react";
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
 import { ko } from "date-fns/locale/ko";
 import {
   DayPicker,
@@ -38,10 +40,8 @@ function Calendar({
       )}
       captionLayout={captionLayout}
       formatters={{
-        formatCaption: (date) =>
-          `${date.getFullYear()}년 ${date.getMonth() + 1}월`,
-        formatMonthDropdown: (date) =>
-          date.toLocaleString("ko-KR", { month: "short" }),
+        formatCaption: (date) => dayjs(date).format("YYYY년 M월"),
+        formatMonthDropdown: (date) => dayjs(date).locale("ko").format("MMM"),
         ...formatters,
       }}
       classNames={{
@@ -210,7 +210,7 @@ function CalendarDayButton({
       type="button"
       variant="ghost"
       size="icon"
-      data-day={day.date.toLocaleDateString()}
+      data-day={dayjs(day.date).format("YYYY-MM-DD")}
       data-selected-single={
         modifiers.selected &&
         !modifiers.range_start &&
