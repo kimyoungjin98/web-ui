@@ -49,14 +49,14 @@
   --radius-pill: var(--radius);
   --radius-pill-tab: var(--radius);
 
-  --spacing-xxs: 4px;
-  --spacing-xs: 6px;
-  --spacing-sm: 8px;
-  --spacing-md: 12px;
-  --spacing-lg: 16px;
-  --spacing-xl: 20px;
-  --spacing-2xl: 24px;
-  --spacing-3xl: 32px;
+  --space-xxs: 4px;
+  --space-xs: 6px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 20px;
+  --space-2xl: 24px;
+  --space-3xl: 32px;
 
   --text-xs: 12px;
   --text-sm: 14px;
@@ -146,6 +146,7 @@
 }
 
 .dialog-content {
+  width: calc(100vw - 1rem);
   will-change: opacity, margin-top;
 }
 

@@ -22,30 +22,42 @@ type Props<T> = {
 };
 
 export function DataGridTable<T>(p: Props<T>) {
-  const layout = getDataGridTableLayout(p.columns, Boolean(p.rowActions));
+  const layout = getDataGridTableLayout(
+    p.columns,
+    Boolean(p.rowActions),
+    Boolean(p.selection),
+  );
 
   return (
-    <div className="min-h-0 flex-auto overflow-auto">
-      <table
-        className="w-full border-collapse text-sm"
+    <div className="min-h-0 flex-auto overflow-auto" role="region">
+      <div
+        role="table"
+        aria-busy={p.loading || undefined}
+        className="w-full text-sm"
         style={{ minWidth: p.minTableWidth }}
       >
         <DataGridHeader
           columns={layout.columns}
-          selection={p.selection}
+          gridTemplateColumns={layout.gridTemplateColumns}
           sort={p.sort}
-          onSortChange={p.onSortChange}
           hasRowActions={Boolean(p.rowActions)}
-          rowActionsRightOffset={layout.rowActionsRightOffset}
           rowActionsLeftEdge={layout.rowActionsLeftEdge}
+          {...(p.selection ? { selection: p.selection } : {})}
+          {...(p.onSortChange ? { onSortChange: p.onSortChange } : {})}
+          {...(layout.rowActionsRightOffset
+            ? { rowActionsRightOffset: layout.rowActionsRightOffset }
+            : {})}
         />
         <DataGridBody
           {...p}
           columns={layout.columns}
-          rowActionsRightOffset={layout.rowActionsRightOffset}
+          gridTemplateColumns={layout.gridTemplateColumns}
           rowActionsLeftEdge={layout.rowActionsLeftEdge}
+          {...(layout.rowActionsRightOffset
+            ? { rowActionsRightOffset: layout.rowActionsRightOffset }
+            : {})}
         />
-      </table>
+      </div>
     </div>
   );
 }

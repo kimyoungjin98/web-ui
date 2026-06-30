@@ -7,7 +7,7 @@ type Props = {
 };
 
 export function DataGridPagination(p: Props) {
-  return <div className="flex flex-col gap-3 border-t border-border bg-white px-4 py-3 text-sm font-semibold text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+  return <div className="-mt-px flex flex-col gap-3 border-t border-border bg-white px-4 py-3 text-sm font-semibold text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
     <span>{p.firstItem}-{p.lastItem} / {p.total}</span>
     <div className="flex items-center gap-2">
       <PageButton disabled={p.page <= 1} icon="lucide:chevron-left" label="이전" onClick={() => p.onPageChange?.(Math.max(1, p.page - 1))} />

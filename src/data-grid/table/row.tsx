@@ -7,7 +7,7 @@ import type { DataGridSelection } from "../types";
 import type { DataGridTableColumn } from "./layout";
 
 const ROW =
-  "data-grid-row-enter group border-b border-border last:border-0 hover:bg-gray-50";
+  "data-grid-row-enter group border-b border-border/50 hover:bg-gray-50";
 
 const SELECTED_ROW =
   "bg-primary-soft hover:bg-primary-soft focus-visible:bg-primary-soft";
@@ -19,6 +19,7 @@ type Props<T> = {
   row: T;
   index: number;
   columns: DataGridTableColumn<T>[];
+  gridTemplateColumns: string;
   selection?: DataGridSelection<T>;
   rowClassName?: (row: T, index: number) => string;
   onRowClick?: (row: T, index: number) => void;
@@ -31,15 +32,17 @@ export function DataGridRow<T>(p: Props<T>) {
   const canClick = Boolean(p.onRowClick);
   const selected = p.selection?.isSelected(p.row, p.index) ?? false;
   return (
-    <tr
-      role={canClick ? "button" : undefined}
+    <div
+      role="row"
       aria-label={canClick ? "행 상세 보기" : undefined}
       aria-selected={selected || undefined}
       data-selected={selected || undefined}
       tabIndex={canClick ? 0 : undefined}
+      style={{ gridTemplateColumns: p.gridTemplateColumns }}
       onClick={(e) => runRowClick(e, p.row, p.index, p.onRowClick)}
       onKeyDown={(e) => runRowClick(e, p.row, p.index, p.onRowClick)}
       className={cn(
+        "grid",
         ROW,
         canClick && CLICKABLE,
         selected && SELECTED_ROW,
@@ -66,7 +69,7 @@ export function DataGridRow<T>(p: Props<T>) {
           leftEdge={p.rowActionsLeftEdge}
         />
       ) : null}
-    </tr>
+    </div>
   );
 }
 
@@ -82,10 +85,11 @@ function DataGridSelectionCell<T>({
   selection: DataGridSelection<T>;
 }) {
   return (
-    <td
+    <div
+      role="cell"
       data-row-click-ignore
       className={cn(
-        "px-4 py-3 align-middle",
+        "flex min-h-16 items-center px-4 py-3",
         selected && "shadow-[inset_3px_0_0_hsl(var(--primary))]",
       )}
     >
@@ -96,7 +100,7 @@ function DataGridSelectionCell<T>({
         labelClassName="min-h-0 border-0 bg-transparent px-0 py-0 has-[:checked]:bg-transparent"
         onChange={() => selection.onToggleRow(row, index)}
       />
-    </td>
+    </div>
   );
 }
 
@@ -111,23 +115,28 @@ function DataGridCell<T>({
 }) {
   const column = item.column;
   return (
-    <td
+    <div
+      role="cell"
       style={{
         ...item.style,
         right: item.fixedRightOffset,
       }}
       className={cn(
-        "whitespace-nowrap px-4 py-3 align-middle text-foreground",
+        "flex items-center whitespace-nowrap px-4 py-3 text-foreground",
         item.fixedRightOffset &&
           "sticky z-10 bg-card group-hover:bg-gray-50 group-data-[selected=true]:bg-primary-soft",
-        item.fixedLeftEdge && "shadow-[-8px_0_12px_-12px_rgba(15,23,42,0.75)]",
+        item.fixedLeftEdge &&
+          "border-l border-border/70 shadow-[-18px_0_24px_-24px_rgba(15,23,42,0.45)]",
+        column.align === "center" && "justify-center",
+        column.align === "right" && "justify-end",
+        !column.align && "justify-start",
         column.align === "center" && "text-center",
         column.align === "right" && "text-right",
         column.className,
       )}
     >
       {resolveCellContent(row, column, index)}
-    </td>
+    </div>
   );
 }
 
@@ -145,22 +154,24 @@ function DataGridRowActionsCell<T>({
   leftEdge: boolean;
 }) {
   return (
-    <td
+    <div
+      role="cell"
       data-row-click-ignore
       style={{ right: rightOffset, width: "64px", minWidth: "64px" }}
       className={cn(
-        "sticky right-0 z-10 w-16 bg-card px-4 py-3 text-right align-middle group-hover:bg-gray-50 group-data-[selected=true]:bg-primary-soft",
-        leftEdge && "shadow-[-8px_0_12px_-12px_rgba(15,23,42,0.75)]",
+        "sticky right-0 z-10 flex min-h-16 w-16 items-center justify-end bg-card px-4 py-3 text-right group-hover:bg-gray-50 group-data-[selected=true]:bg-primary-soft",
+        leftEdge &&
+          "border-l border-border/70 shadow-[-18px_0_24px_-24px_rgba(15,23,42,0.45)]",
       )}
     >
       {rowActions(row, index)}
-    </td>
+    </div>
   );
 }
 
 type RowEvent =
-  | React.MouseEvent<HTMLTableRowElement>
-  | React.KeyboardEvent<HTMLTableRowElement>;
+  | React.MouseEvent<HTMLDivElement>
+  | React.KeyboardEvent<HTMLDivElement>;
 
 function runRowClick<T>(
   event: RowEvent,

@@ -6,17 +6,19 @@ import type { DataGridColumn, DataGridSelection, DataGridSort } from "../types";
 import type { DataGridTableColumn } from "./layout";
 
 const HEAD =
-  "sticky top-0 z-10 whitespace-nowrap bg-gray-50 px-4 py-3 text-sm font-semibold uppercase tracking-normal text-muted-foreground";
+  "sticky top-0 z-10 flex items-center whitespace-nowrap bg-gray-50 px-4 py-3 text-sm font-semibold uppercase tracking-normal text-muted-foreground";
 
 const FIXED_HEAD = "sticky z-30 bg-gray-50";
 
-const FIXED_LEFT_EDGE = "shadow-[-8px_0_12px_-12px_rgba(15,23,42,0.75)]";
+const FIXED_LEFT_EDGE =
+  "border-l border-border/70 shadow-[-18px_0_24px_-24px_rgba(15,23,42,0.45)]";
 
 const HEAD_BUTTON =
   "whitespace-pre-line inline-flex items-center gap-1 rounded-sm outline-none transition-colors hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/20";
 
 type Props<T> = {
   columns: DataGridTableColumn<T>[];
+  gridTemplateColumns: string;
   selection?: DataGridSelection<T>;
   sort: DataGridSort;
   hasRowActions: boolean;
@@ -27,8 +29,12 @@ type Props<T> = {
 
 export function DataGridHeader<T>(p: Props<T>) {
   return (
-    <thead className="sticky top-0 z-20">
-      <tr className="sticky top-0 z-20 border-b border-border bg-gray-50">
+    <div role="rowgroup" className="sticky top-0 z-20">
+      <div
+        role="row"
+        className="grid border-b border-border bg-gray-50"
+        style={{ gridTemplateColumns: p.gridTemplateColumns }}
+      >
         {p.selection ? <SelectionHead selection={p.selection} /> : null}
         {p.columns.map((c) => (
           <HeadCell
@@ -39,26 +45,27 @@ export function DataGridHeader<T>(p: Props<T>) {
           />
         ))}
         {p.hasRowActions ? (
-          <th
+          <div
+            role="columnheader"
             style={{ right: p.rowActionsRightOffset, width: "64px" }}
             className={cn(
-              "sticky right-0 top-0 z-30 w-16 bg-gray-50 px-4 py-3 text-right text-xs font-semibold uppercase tracking-normal text-muted-foreground",
+              "sticky right-0 top-0 z-30 flex min-h-12 w-16 items-center justify-end bg-gray-50 px-4 py-3 text-right text-sm font-semibold uppercase tracking-normal text-muted-foreground",
               p.rowActionsLeftEdge && FIXED_LEFT_EDGE,
             )}
           >
             액션
-          </th>
+          </div>
         ) : null}
-      </tr>
-    </thead>
+      </div>
+    </div>
   );
 }
 
 function SelectionHead<T>({ selection }: { selection: DataGridSelection<T> }) {
   return (
-    <th
-      scope="col"
-      className="sticky top-0 z-10 w-12 bg-gray-50 px-4 py-3 text-left"
+    <div
+      role="columnheader"
+      className="sticky top-0 z-10 flex min-h-12 w-12 items-center bg-gray-50 px-4 py-3 text-left"
     >
       <Checkbox
         aria-label="현재 페이지 캠페인 전체 선택"
@@ -67,7 +74,7 @@ function SelectionHead<T>({ selection }: { selection: DataGridSelection<T> }) {
         labelClassName="min-h-0 border-0 bg-transparent px-0 py-0 has-[:checked]:bg-transparent"
         onChange={selection.onTogglePage}
       />
-    </th>
+    </div>
   );
 }
 
@@ -84,8 +91,8 @@ function HeadCell<T>({
   const active = sort?.columnId === column.id;
   const align = column.align;
   return (
-    <th
-      scope="col"
+    <div
+      role="columnheader"
       style={{
         ...item.style,
         right: item.fixedRightOffset,
@@ -94,6 +101,9 @@ function HeadCell<T>({
         HEAD,
         item.fixedRightOffset && FIXED_HEAD,
         item.fixedLeftEdge && FIXED_LEFT_EDGE,
+        align === "center" && "justify-center",
+        align === "right" && "justify-end",
+        !align && "justify-start",
         align === "center" && "text-center",
         align === "right" && "text-right",
         !align && "text-left",
@@ -109,7 +119,7 @@ function HeadCell<T>({
       ) : (
         column.header
       )}
-    </th>
+    </div>
   );
 }
 
@@ -133,7 +143,11 @@ function SortButton<T>({
     <button
       type="button"
       onClick={() => onSortChange?.(getNextSort(sort, column.id))}
-      className={cn(HEAD_BUTTON, column.align === "right" && "justify-end")}
+      className={cn(
+        HEAD_BUTTON,
+        column.align === "center" && "justify-center",
+        column.align === "right" && "justify-end",
+      )}
     >
       <span>{column.header}</span>
       <Icon
