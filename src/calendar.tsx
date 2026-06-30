@@ -132,14 +132,18 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        Root: ({ className, rootRef, ...rootProps }) => (
-          <div
-            data-slot="calendar"
-            ref={rootRef}
-            className={cn(className)}
-            {...rootProps}
-          />
-        ),
+        Root: ({ className, rootRef, ...rootProps }) => {
+          const htmlProps = rootProps as React.HTMLAttributes<HTMLDivElement>;
+
+          return (
+            <div
+              data-slot="calendar"
+              ref={(node) => setCalendarRootRef(rootRef, node)}
+              className={cn(className)}
+              {...htmlProps}
+            />
+          );
+        },
         Chevron: ({ className, orientation }) => {
           if (orientation === "left") {
             return (
@@ -167,13 +171,18 @@ function Calendar({
           );
         },
         DayButton: CalendarDayButton,
-        WeekNumber: ({ children, ...weekNumberProps }) => (
-          <td {...weekNumberProps}>
-            <div className="flex size-(--cell-size) items-center justify-center text-center">
-              {children}
-            </div>
-          </td>
-        ),
+        WeekNumber: ({ children, ...weekNumberProps }) => {
+          const tableCellProps =
+            weekNumberProps as React.TdHTMLAttributes<HTMLTableCellElement>;
+
+          return (
+            <td {...tableCellProps}>
+              <div className="flex size-(--cell-size) items-center justify-center text-center">
+                {children}
+              </div>
+            </td>
+          );
+        },
         ...components,
       }}
       {...props}
@@ -216,9 +225,22 @@ function CalendarDayButton({
         defaultClassNames.day,
         className,
       )}
-      {...props}
+      {...(props as React.ComponentProps<typeof Button>)}
     />
   );
+}
+
+function setCalendarRootRef(ref: unknown, node: HTMLDivElement | null) {
+  if (!ref) {
+    return;
+  }
+
+  if (typeof ref === "function") {
+    void ref(node);
+    return;
+  }
+
+  (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
 }
 
 export { Calendar, CalendarDayButton };
