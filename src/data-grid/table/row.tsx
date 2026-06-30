@@ -90,7 +90,7 @@ function DataGridSelectionCell<T>({
       )}
     >
       <Checkbox
-        aria-label="캠페인 선택"
+        aria-label="선택"
         checked={selected}
         size="lg"
         labelClassName="min-h-0 border-0 bg-transparent px-0 py-0 has-[:checked]:bg-transparent"
@@ -113,12 +113,11 @@ function DataGridCell<T>({
   return (
     <td
       style={{
-        width: item.fixedWidth ?? column.width,
-        minWidth: item.fixedWidth,
+        ...item.style,
         right: item.fixedRightOffset,
       }}
       className={cn(
-        "px-4 py-3 align-middle text-foreground",
+        "whitespace-nowrap px-4 py-3 align-middle text-foreground",
         item.fixedRightOffset &&
           "sticky z-10 bg-card group-hover:bg-gray-50 group-data-[selected=true]:bg-primary-soft",
         item.fixedLeftEdge && "shadow-[-8px_0_12px_-12px_rgba(15,23,42,0.75)]",

@@ -1,13 +1,16 @@
 import type { DataGridColumn } from "../types";
+import type * as React from "react";
 
 export const ROW_ACTIONS_WIDTH = "64px";
 export const DEFAULT_FIXED_COLUMN_WIDTH = "160px";
+export const DEFAULT_COLUMN_MIN_WIDTH = "96px";
 
 export type DataGridTableColumn<T> = {
   column: DataGridColumn<T>;
   fixedRightOffset?: string;
   fixedWidth?: string;
   fixedLeftEdge?: boolean;
+  style: React.CSSProperties;
 };
 
 export function getDataGridTableLayout<T>(
@@ -20,10 +23,22 @@ export function getDataGridTableLayout<T>(
     .map((column) => ({
       column,
       fixedWidth: column.width ?? DEFAULT_FIXED_COLUMN_WIDTH,
+      style: {
+        width: column.width ?? DEFAULT_FIXED_COLUMN_WIDTH,
+        minWidth: column.width ?? DEFAULT_FIXED_COLUMN_WIDTH,
+      },
     }));
 
   for (const column of columns) {
-    if (column.fixed !== "right") normalColumns.push({ column });
+    if (column.fixed !== "right") {
+      normalColumns.push({
+        column,
+        style: {
+          width: column.width,
+          minWidth: column.width ?? DEFAULT_COLUMN_MIN_WIDTH,
+        },
+      });
+    }
   }
 
   const rightOffsets = getRightFixedOffsets(

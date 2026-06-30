@@ -77,8 +77,7 @@ function SkeletonCell<T>({
   return (
     <td
       style={{
-        width: item?.fixedWidth ?? item?.column.width ?? width,
-        minWidth: item?.fixedWidth ?? width,
+        ...(item?.style ?? { width, minWidth: width }),
         right: fixedRightOffset,
       }}
       className={cn(

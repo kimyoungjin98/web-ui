@@ -6,14 +6,14 @@ import type { DataGridColumn, DataGridSelection, DataGridSort } from "../types";
 import type { DataGridTableColumn } from "./layout";
 
 const HEAD =
-  "sticky top-0 z-10 bg-gray-50 px-4 py-3 text-sm font-semibold uppercase tracking-normal text-muted-foreground";
+  "sticky top-0 z-10 whitespace-nowrap bg-gray-50 px-4 py-3 text-sm font-semibold uppercase tracking-normal text-muted-foreground";
 
 const FIXED_HEAD = "sticky z-30 bg-gray-50";
 
 const FIXED_LEFT_EDGE = "shadow-[-8px_0_12px_-12px_rgba(15,23,42,0.75)]";
 
 const HEAD_BUTTON =
-  "inline-flex items-center gap-1 rounded-sm outline-none transition-colors hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/20";
+  "whitespace-pre-line inline-flex items-center gap-1 rounded-sm outline-none transition-colors hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/20";
 
 type Props<T> = {
   columns: DataGridTableColumn<T>[];
@@ -87,8 +87,7 @@ function HeadCell<T>({
     <th
       scope="col"
       style={{
-        width: item.fixedWidth ?? column.width,
-        minWidth: item.fixedWidth,
+        ...item.style,
         right: item.fixedRightOffset,
       }}
       className={cn(
