@@ -1,12 +1,18 @@
 import type * as React from "react";
+import { useVirtualizer } from "@tanstack/react-virtual";
 import { cn } from "../../lib/tailwind-util";
 import type { DataGridSelection } from "../types";
-import type { DataGridTableColumn } from "./layout";
+import {
+  PINNED_SIDE_SHADOW,
+  ROW_ACTIONS_WIDTH,
+  type DataGridTableColumn,
+} from "./layout";
 import { DataGridRow } from "./row";
 
 type Props<T> = {
-  columns: DataGridTableColumn<T>[];
-  gridTemplateColumns: string;
+  mainCols: DataGridTableColumn<T>[];
+  sideCols: DataGridTableColumn<T>[];
+  minMainWidth: string;
   rows: T[];
   getRowId: (row: T, index: number) => string;
   loading: boolean;
@@ -14,8 +20,9 @@ type Props<T> = {
   pageSize: number;
   selection?: DataGridSelection<T>;
   tableColumnCount: number;
-  rowActionsRightOffset?: string;
-  rowActionsLeftEdge: boolean;
+  scrollRef: React.RefObject<HTMLDivElement | null>;
+  setMain: (node: HTMLDivElement | null) => void;
+  onMainScroll: (event: React.UIEvent<HTMLDivElement>) => void;
   rowClassName?: (row: T, index: number) => string;
   onRowClick?: (row: T, index: number) => void;
   rowActions?: (row: T, index: number) => React.ReactNode;
@@ -23,6 +30,14 @@ type Props<T> = {
 
 export function DataGridBody<T>(p: Props<T>) {
   const count = p.tableColumnCount;
+  const rows = p.rows;
+  const virtualizer = useVirtualizer({
+    count: rows.length,
+    estimateSize: () => 64,
+    getItemKey: (index) => p.getRowId(rows[index], index),
+    getScrollElement: () => p.scrollRef.current,
+    overscan: 8,
+  });
 
   if (p.loading) {
     return (
@@ -30,12 +45,13 @@ export function DataGridBody<T>(p: Props<T>) {
         {Array.from({ length: Math.min(p.pageSize, 5) }).map((_, i) => (
           <SkeletonRow
             key={i}
-            columns={p.columns}
-            gridTemplateColumns={p.gridTemplateColumns}
+            mainCols={p.mainCols}
+            sideCols={p.sideCols}
+            minMainWidth={p.minMainWidth}
             hasSelection={Boolean(p.selection)}
             hasRowActions={Boolean(p.rowActions)}
-            rowActionsRightOffset={p.rowActionsRightOffset}
-            rowActionsLeftEdge={p.rowActionsLeftEdge}
+            setMain={p.setMain}
+            onMainScroll={p.onMainScroll}
           />
         ))}
       </div>
@@ -45,67 +61,95 @@ export function DataGridBody<T>(p: Props<T>) {
   if (!p.rows.length) {
     return (
       <div role="rowgroup">
-        <EmptyRow
-          count={count}
-          gridTemplateColumns={p.gridTemplateColumns}
-          message={p.emptyMessage}
-        />
+        <EmptyRow count={count} message={p.emptyMessage} />
       </div>
     );
   }
 
   return (
-    <div role="rowgroup">
-      {p.rows.map((r, i) => (
-        <DataGridRow
-          key={p.getRowId(r, i)}
-          row={r}
-          index={i}
-          columns={p.columns}
-          gridTemplateColumns={p.gridTemplateColumns}
-          selection={p.selection}
-          onRowClick={p.onRowClick}
-          rowClassName={p.rowClassName}
-          rowActions={p.rowActions}
-          rowActionsRightOffset={p.rowActionsRightOffset}
-          rowActionsLeftEdge={p.rowActionsLeftEdge}
-        />
-      ))}
+    <div
+      role="rowgroup"
+      className="relative"
+      style={{ height: virtualizer.getTotalSize() }}
+    >
+      {virtualizer.getVirtualItems().map((item) => {
+        const row = rows[item.index];
+
+        return (
+          <div
+            key={item.key}
+            ref={virtualizer.measureElement}
+            data-index={item.index}
+            className="absolute left-0 top-0 w-full"
+            style={{ transform: `translateY(${item.start}px)` }}
+          >
+            <DataGridRow
+              row={row}
+              index={item.index}
+              isLast={item.index === rows.length - 1}
+              mainCols={p.mainCols}
+              sideCols={p.sideCols}
+              minMainWidth={p.minMainWidth}
+              selection={p.selection}
+              onRowClick={p.onRowClick}
+              rowClassName={p.rowClassName}
+              rowActions={p.rowActions}
+              setMain={p.setMain}
+              onMainScroll={p.onMainScroll}
+              animate={false}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 }
 
 function SkeletonRow<T>({
-  columns,
-  gridTemplateColumns,
+  mainCols,
+  sideCols,
+  minMainWidth,
   hasSelection,
   hasRowActions,
-  rowActionsRightOffset,
-  rowActionsLeftEdge,
+  setMain,
+  onMainScroll,
 }: {
-  columns: DataGridTableColumn<T>[];
-  gridTemplateColumns: string;
+  mainCols: DataGridTableColumn<T>[];
+  sideCols: DataGridTableColumn<T>[];
+  minMainWidth: string;
   hasSelection: boolean;
   hasRowActions: boolean;
-  rowActionsRightOffset?: string;
-  rowActionsLeftEdge: boolean;
+  setMain: (node: HTMLDivElement | null) => void;
+  onMainScroll: (event: React.UIEvent<HTMLDivElement>) => void;
 }) {
+  const hasSide = sideCols.length > 0 || hasRowActions;
+
   return (
-    <div
-      role="row"
-      className="grid border-b border-border/50"
-      style={{ gridTemplateColumns }}
-    >
-      {hasSelection ? <SkeletonCell /> : null}
-      {columns.map((item) => (
-        <SkeletonCell key={item.column.id} item={item} />
-      ))}
-      {hasRowActions ? (
-        <SkeletonCell
-          width="64px"
-          rightOffset={rowActionsRightOffset}
-          leftEdge={rowActionsLeftEdge}
-        />
+    <div role="row" className="flex w-full min-w-full border-b border-border/50">
+      <div
+        ref={setMain}
+        onScroll={onMainScroll}
+        className="min-w-0 flex-1 overflow-x-hidden"
+      >
+        <div className="flex" style={{ minWidth: minMainWidth }}>
+          {hasSelection ? <SkeletonCell width="48px" /> : null}
+          {mainCols.map((item) => (
+            <SkeletonCell key={item.column.id} item={item} />
+          ))}
+        </div>
+      </div>
+      {hasSide ? (
+        <div
+          className={cn(
+            "flex shrink-0 border-l border-border/70 bg-card",
+            PINNED_SIDE_SHADOW,
+          )}
+        >
+          {sideCols.map((item) => (
+            <SkeletonCell key={item.column.id} item={item} />
+          ))}
+          {hasRowActions ? <SkeletonCell width={ROW_ACTIONS_WIDTH} /> : null}
+        </div>
       ) : null}
     </div>
   );
@@ -113,20 +157,17 @@ function SkeletonRow<T>({
 
 function EmptyRow({
   count,
-  gridTemplateColumns,
   message,
 }: {
   count: number;
-  gridTemplateColumns: string;
   message: string;
 }) {
   return (
-    <div role="row" className="grid" style={{ gridTemplateColumns }}>
+    <div role="row" className="flex w-full min-w-full">
       <div
         role="cell"
         aria-colspan={count}
-        style={{ gridColumn: "1 / -1" }}
-        className="px-4 py-12 text-center text-sm font-semibold text-muted-foreground"
+        className="flex-1 px-4 py-12 text-center text-sm font-semibold text-muted-foreground"
       >
         {message}
       </div>
@@ -137,29 +178,22 @@ function EmptyRow({
 function SkeletonCell<T>({
   item,
   width,
-  rightOffset,
-  leftEdge,
 }: {
   item?: DataGridTableColumn<T>;
   width?: string;
-  rightOffset?: string;
-  leftEdge?: boolean;
 }) {
-  const fixedRightOffset = item?.fixedRightOffset ?? rightOffset;
-  const fixedLeftEdge = item?.fixedLeftEdge ?? leftEdge;
-
   return (
     <div
       role="cell"
       style={{
-        ...(item?.style ?? { width, minWidth: width }),
-        right: fixedRightOffset,
+        ...(item?.style ?? {
+          flex: width ? `0 0 ${width}` : undefined,
+          width,
+          minWidth: width,
+        }),
       }}
       className={cn(
-        "flex min-h-16 items-center p-4",
-        fixedRightOffset && "sticky z-10 bg-card",
-        fixedLeftEdge &&
-          "border-l border-border/70 shadow-[-18px_0_24px_-24px_rgba(15,23,42,0.45)]",
+        "box-border flex min-h-16 shrink-0 items-center p-4",
       )}
     >
       <span className="sr-only">로딩 중</span>

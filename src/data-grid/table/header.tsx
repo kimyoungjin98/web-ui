@@ -1,59 +1,75 @@
 import Icon from "../../icon";
+import type * as React from "react";
 import { Checkbox } from "../../checkbox";
 import { getNextSort } from "../../lib/data-grid/sort";
 import { cn } from "../../lib/tailwind-util";
 import type { DataGridColumn, DataGridSelection, DataGridSort } from "../types";
-import type { DataGridTableColumn } from "./layout";
+import {
+  PINNED_SIDE_SHADOW,
+  ROW_ACTIONS_WIDTH,
+  type DataGridTableColumn,
+} from "./layout";
 
 const HEAD =
-  "sticky top-0 z-10 flex items-center whitespace-nowrap bg-gray-50 px-4 py-3 text-sm font-semibold uppercase tracking-normal text-muted-foreground";
-
-const FIXED_HEAD = "sticky z-30 bg-gray-50";
-
-const FIXED_LEFT_EDGE =
-  "border-l border-border/70 shadow-[-18px_0_24px_-24px_rgba(15,23,42,0.45)]";
+  "flex items-center whitespace-nowrap bg-gray-50 px-4 py-3 text-sm font-semibold uppercase tracking-normal text-muted-foreground";
 
 const HEAD_BUTTON =
   "whitespace-pre-line inline-flex items-center gap-1 rounded-sm outline-none transition-colors hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/20";
 
 type Props<T> = {
-  columns: DataGridTableColumn<T>[];
-  gridTemplateColumns: string;
+  mainCols: DataGridTableColumn<T>[];
+  sideCols: DataGridTableColumn<T>[];
+  minMainWidth: string;
   selection?: DataGridSelection<T>;
   sort: DataGridSort;
   hasRowActions: boolean;
-  rowActionsRightOffset?: string;
-  rowActionsLeftEdge: boolean;
+  setMain: (node: HTMLDivElement | null) => void;
+  onMainScroll: (event: React.UIEvent<HTMLDivElement>) => void;
   onSortChange?: (sort: DataGridSort) => void;
 };
 
 export function DataGridHeader<T>(p: Props<T>) {
+  const hasSide = p.sideCols.length > 0 || p.hasRowActions;
+
   return (
     <div role="rowgroup" className="sticky top-0 z-20">
       <div
         role="row"
-        className="grid border-b border-border bg-gray-50"
-        style={{ gridTemplateColumns: p.gridTemplateColumns }}
+        className="flex w-full min-w-full border-b border-border bg-gray-50"
       >
-        {p.selection ? <SelectionHead selection={p.selection} /> : null}
-        {p.columns.map((c) => (
-          <HeadCell
-            key={c.column.id}
-            item={c}
-            sort={p.sort}
-            onSortChange={p.onSortChange}
-          />
-        ))}
-        {p.hasRowActions ? (
+        <div
+          ref={p.setMain}
+          onScroll={p.onMainScroll}
+          className="min-w-0 flex-1 overflow-x-hidden"
+        >
+          <div className="flex" style={{ minWidth: p.minMainWidth }}>
+            {p.selection ? <SelectionHead selection={p.selection} /> : null}
+            {p.mainCols.map((c) => (
+              <HeadCell
+                key={c.column.id}
+                item={c}
+                sort={p.sort}
+                onSortChange={p.onSortChange}
+              />
+            ))}
+          </div>
+        </div>
+        {hasSide ? (
           <div
-            role="columnheader"
-            style={{ right: p.rowActionsRightOffset, width: "64px" }}
             className={cn(
-              "sticky right-0 top-0 z-30 flex min-h-12 w-16 items-center justify-end bg-gray-50 px-4 py-3 text-right text-sm font-semibold uppercase tracking-normal text-muted-foreground",
-              p.rowActionsLeftEdge && FIXED_LEFT_EDGE,
+              "flex shrink-0 border-l border-border/70 bg-gray-50",
+              PINNED_SIDE_SHADOW,
             )}
           >
-            액션
+            {p.sideCols.map((c) => (
+              <HeadCell
+                key={c.column.id}
+                item={c}
+                sort={p.sort}
+                onSortChange={p.onSortChange}
+              />
+            ))}
+            {p.hasRowActions ? <ActionHead /> : null}
           </div>
         ) : null}
       </div>
@@ -65,7 +81,8 @@ function SelectionHead<T>({ selection }: { selection: DataGridSelection<T> }) {
   return (
     <div
       role="columnheader"
-      className="sticky top-0 z-10 flex min-h-12 w-12 items-center bg-gray-50 px-4 py-3 text-left"
+      style={{ flex: "0 0 48px" }}
+      className="box-border flex min-h-12 w-12 shrink-0 items-center bg-gray-50 px-4 py-3 text-left"
     >
       <Checkbox
         aria-label="현재 페이지 캠페인 전체 선택"
@@ -93,14 +110,10 @@ function HeadCell<T>({
   return (
     <div
       role="columnheader"
-      style={{
-        ...item.style,
-        right: item.fixedRightOffset,
-      }}
+      style={item.style}
       className={cn(
+        "box-border shrink-0",
         HEAD,
-        item.fixedRightOffset && FIXED_HEAD,
-        item.fixedLeftEdge && FIXED_LEFT_EDGE,
         align === "center" && "justify-center",
         align === "right" && "justify-end",
         !align && "justify-start",
@@ -119,6 +132,22 @@ function HeadCell<T>({
       ) : (
         column.header
       )}
+    </div>
+  );
+}
+
+function ActionHead() {
+  return (
+    <div
+      role="columnheader"
+      style={{
+        flex: `0 0 ${ROW_ACTIONS_WIDTH}`,
+        width: ROW_ACTIONS_WIDTH,
+        minWidth: ROW_ACTIONS_WIDTH,
+      }}
+      className="box-border flex min-h-12 shrink-0 items-center justify-end bg-gray-50 px-4 py-3 text-right text-sm font-semibold uppercase tracking-normal text-muted-foreground"
+    >
+      액션
     </div>
   );
 }
