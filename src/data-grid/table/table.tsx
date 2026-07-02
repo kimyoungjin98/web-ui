@@ -65,7 +65,6 @@ export function DataGridTable<T>(p: Props<T>) {
         return;
       }
 
-      event.preventDefault();
       syncMain(nextLeft);
     },
     [],
