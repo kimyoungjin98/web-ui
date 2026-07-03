@@ -3,7 +3,8 @@ import * as React from "react";
 import { cn } from "./lib/tailwind-util";
 import Icon from "./icon";
 
-type RadioProps = Omit<React.ComponentProps<"input">, "type"> & {
+type RadioProps = Omit<React.ComponentProps<"input">, "children" | "type"> & {
+  children?: React.ReactNode;
   icon?: React.ReactNode | string;
   iconClassName?: string;
   image?: React.ReactNode | string;
@@ -15,6 +16,7 @@ type RadioProps = Omit<React.ComponentProps<"input">, "type"> & {
 };
 
 function Radio({
+  children,
   className,
   icon,
   iconClassName,
@@ -70,7 +72,9 @@ function Radio({
           )}
         </span>
       ) : null}
-      {label ? <span className="min-w-0 leading-5">{label}</span> : null}
+      {label ?? children ? (
+        <span className="min-w-0 leading-5">{label ?? children}</span>
+      ) : null}
     </label>
   );
 }

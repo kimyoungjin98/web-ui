@@ -20,7 +20,7 @@ export function FormSection({
   );
 }
 
-export function FormField({
+export function FormItem({
   label,
   required = false,
   children,

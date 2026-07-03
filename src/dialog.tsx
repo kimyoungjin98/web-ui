@@ -70,7 +70,7 @@ const DialogContent = React.forwardRef<
           ref={ref}
           data-slot="dialog-content"
           className={cn(
-            "dialog-content pointer-events-auto relative flex max-h-[calc(100dvh-1rem)] w-[calc(100vw-1rem)] max-w-lg flex-col overflow-hidden rounded-md border border-border bg-background shadow-xl outline-none sm:max-h-[90vh]",
+            "dialog-content pointer-events-auto relative flex max-h-[calc(100dvh-1rem)] w-[calc(100vw-1rem)] max-w-[32rem] flex-col overflow-hidden rounded-md border border-border bg-background shadow-xl outline-none sm:max-h-[90vh]",
             className,
           )}
           onInteractOutside={(event) => {

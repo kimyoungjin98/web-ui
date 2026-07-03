@@ -34,7 +34,7 @@ export function DataGridBody<T>(p: Props<T>) {
   const virtualizer = useVirtualizer({
     count: rows.length,
     estimateSize: () => 64,
-    getItemKey: (index) => p.getRowId(rows[index], index),
+    getItemKey: (index) => p.getRowId(rows[index]!, index),
     getScrollElement: () => p.scrollRef.current,
     overscan: 8,
   });
@@ -74,6 +74,7 @@ export function DataGridBody<T>(p: Props<T>) {
     >
       {virtualizer.getVirtualItems().map((item) => {
         const row = rows[item.index];
+        if (!row) return null;
 
         return (
           <div

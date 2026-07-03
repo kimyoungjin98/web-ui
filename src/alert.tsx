@@ -52,7 +52,7 @@ function ConfirmAlert({
   return (
     <Dialog open={dialogOpen} onOpenChange={handleOpenChange}>
       {children ? <DialogTrigger asChild>{children}</DialogTrigger> : null}
-      <DialogContent className="max-w-sm p-0">
+      <DialogContent className="max-w-[24rem] p-0">
         <DialogHeader className="gap-2">
           <DialogTitle>{title}</DialogTitle>
           {description ? (
