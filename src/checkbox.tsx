@@ -82,7 +82,7 @@ function Checkbox({
         />
       </span>
       {(label ?? children) ? (
-        <span className="min-w-0 leading-5 mt-0.5 font-semibold text-sm">
+        <span className="min-w-0 leading-5 mt-0.5 font-medium text-sm">
           {label ?? children}
         </span>
       ) : null}
