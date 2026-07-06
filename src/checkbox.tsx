@@ -48,7 +48,7 @@ function Checkbox({
   return (
     <label
       className={cn(
-        "group select-none flex cursor-pointer items-center rounded-md border border-input bg-background font-semibold text-foreground transition-all hover:bg-gray-50 has-[:checked]:border-primary-border has-[:checked]:bg-primary/10 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 has-[:focus-visible]:border-ring has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-ring/15",
+        "group select-none flex cursor-pointer items-center rounded-md bg-background font-semibold text-foreground transition-all hover:bg-gray-50 has-[:checked]:border-primary-border has-[:checked]:bg-primary/10 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 has-[:focus-visible]:border-ring has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-ring/15",
         sizeToken.label,
         containerClassName,
         labelClassName,
@@ -81,7 +81,7 @@ function Checkbox({
           )}
         />
       </span>
-      {label ?? children ? (
+      {(label ?? children) ? (
         <span className="min-w-0 leading-5 mt-0.5 font-semibold text-sm">
           {label ?? children}
         </span>

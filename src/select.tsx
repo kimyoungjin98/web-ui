@@ -86,7 +86,7 @@ function SelectContent({
         position={position}
         sideOffset={sideOffset}
         className={cn(
-          "select-none relative z-50 max-h-72 min-w-[var(--radix-select-trigger-width)] overflow-hidden rounded-md border border-border bg-popover text-popover-foreground shadow-lg",
+          "select-none relative z-50 max-h-72 min-w-[var(--radix-select-trigger-width)] overflow-hidden rounded-md bg-popover text-popover-foreground shadow-lg",
           className,
         )}
         {...props}
@@ -110,7 +110,7 @@ function SelectItem({
       data-slot="select-item"
       value={toRadixValue(value)}
       className={cn(
-        "relative flex cursor-default select-none items-center rounded-md py-1.5 pl-8 pr-2 text-sm font-semibold outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[highlighted]:ring-1 data-[highlighted]:ring-ring/15 data-[state=checked]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        "relative flex cursor-default select-none items-center rounded-md py-1.5 pl-8 pr-2 text-sm font-semibold outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[state=checked]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         className,
       )}
       {...props}
