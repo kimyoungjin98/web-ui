@@ -9,7 +9,7 @@ export function createItem(
   const error = validateFile(file, acceptedFileTypes, maxFileSize);
 
   return {
-    id: createUploadId(file),
+    id: `${file.name}-${file.size}-${file.lastModified}-${crypto.randomUUID()}`,
     file,
     name: file.name,
     size: file.size,
@@ -34,8 +34,4 @@ function validateFile(
   }
 
   return null;
-}
-
-function createUploadId(file: File) {
-  return `${file.name}-${file.size}-${file.lastModified}-${crypto.randomUUID()}`;
 }

@@ -26,9 +26,10 @@ type SetItems = Dispatch<SetStateAction<UploadFileItem[]>>;
 type Patch = (id: string, next: Partial<UploadFileItem>) => void;
 
 export function useUploader(props: UploaderProps) {
-  const [items, setItems] = useState<UploadFileItem[]>(() =>
-    createInitialItems(props.initialUrls, props.initialStorageObjects),
-  );
+  const [items, setItems] = useState<UploadFileItem[]>(() => [
+    ...fromObjects(props.initialStorageObjects),
+    ...fromUrls(props.initialUrls),
+  ]);
   const [error, setError] = useState("");
   const controllers = useRef(new Map<string, AbortController>());
   useEffect(
@@ -87,7 +88,12 @@ function addUpload(
   start: (item: UploadFileItem) => void,
   setError: Dispatch<SetStateAction<string>>,
 ) {
-  const selected = createSelectedItems(files, props);
+  const selectedFiles = props.multiple
+    ? Array.from(files)
+    : Array.from(files).slice(0, 1);
+  const selected = selectedFiles.map((file) =>
+    createItem(file, props.acceptedFileTypes, props.maxFileSize),
+  );
   const count = props.multiple
     ? items.length + selected.length
     : selected.length;
@@ -100,14 +106,6 @@ function addUpload(
     props.multiple ? [...current, ...selected] : selected,
   );
   selected.forEach(start);
-}
-
-function createSelectedItems(files: FileList, props: UploaderProps) {
-  const next = Array.from(files).map((file) =>
-    createItem(file, props.acceptedFileTypes, props.maxFileSize),
-  );
-
-  return props.multiple ? next : next.slice(0, 1);
 }
 
 function startUpload(
@@ -209,13 +207,6 @@ function cancelled(item: UploadFileItem): UploadFileItem {
     : item;
 }
 
-function createInitialItems(
-  urls?: string[],
-  objects?: UploadStorageObject[],
-): UploadFileItem[] {
-  return [...fromObjects(objects), ...fromUrls(urls)];
-}
-
 function fromUrls(urls?: string[]): UploadFileItem[] {
   return (urls ?? []).filter(Boolean).map((url) => {
     const name = nameOf(url);
@@ -235,23 +226,22 @@ function fromUrls(urls?: string[]): UploadFileItem[] {
 function fromObjects(objects?: UploadStorageObject[]): UploadFileItem[] {
   return (objects ?? [])
     .filter((object) => object.url)
-    .map(createInitialObject);
-}
+    .map((object) => {
+      const name = object.filename || nameOf(object.url || "");
 
-function createInitialObject(object: UploadStorageObject): UploadFileItem {
-  const name = object.filename || nameOf(object.url || "");
-  return {
-    id: object.id || `initial-${object.key || object.url}`,
-    file: new File([], name),
-    name,
-    size: object.size || 0,
-    extension: getExtension(object.mimeType || name).toUpperCase(),
-    progress: 100,
-    status: "success",
-    key: object.key,
-    storage: object,
-    url: object.url,
-  };
+      return {
+        id: object.id || `initial-${object.key || object.url}`,
+        file: new File([], name),
+        name,
+        size: object.size || 0,
+        extension: getExtension(object.mimeType || name).toUpperCase(),
+        progress: 100,
+        status: "success",
+        key: object.key,
+        storage: object,
+        url: object.url,
+      };
+    });
 }
 
 function nameOf(url: string) {

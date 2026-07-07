@@ -23,13 +23,11 @@ export function getViewModel(types: string[], items: UploadFileItem[]) {
           : type.replace(".", "").toUpperCase(),
       )
       .join(", "),
-    progress: getProgress(items),
+    progress:
+      items.length === 0
+        ? 0
+        : Math.round(
+            items.reduce((sum, item) => sum + item.progress, 0) / items.length,
+          ),
   };
-}
-
-function getProgress(items: UploadFileItem[]) {
-  if (items.length === 0) return 0;
-  const total = items.reduce((sum, item) => sum + item.progress, 0);
-
-  return Math.round(total / items.length);
 }

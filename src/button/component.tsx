@@ -13,14 +13,7 @@ import type {
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    {
-      className,
-      color,
-      variant = "solid",
-      size,
-      asChild = false,
-      ...props
-    },
+    { className, color, variant = "solid", size, asChild = false, ...props },
     ref,
   ) => {
     const Comp = asChild ? Slot : "button";
@@ -67,19 +60,15 @@ function buttonVariants({
   );
 }
 
-function getDefaultColor(variant: ButtonVariant): ButtonColor {
-  return variant === "solid" || variant === "default" ? "primary" : "neutral";
-}
-
 function resolveButtonColor(
   color: ButtonColor | string | undefined,
   variant: ButtonVariant,
 ): ButtonColor {
-  return isButtonColor(color) ? color : getDefaultColor(variant);
-}
+  if (color === "primary" || color === "secondary" || color === "neutral") {
+    return color;
+  }
 
-function isButtonColor(color: ButtonColor | string | undefined): color is ButtonColor {
-  return color === "primary" || color === "secondary" || color === "neutral";
+  return variant === "solid" || variant === "default" ? "primary" : "neutral";
 }
 
 export { Button, buttonVariants };

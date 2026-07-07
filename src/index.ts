@@ -17,6 +17,7 @@ export * from "./metric-card";
 export * from "./radio";
 export * from "./select";
 export * from "./sheet";
+export * from "./spinner";
 export * from "./popover";
 export * from "./tabs";
 export * from "./textarea";

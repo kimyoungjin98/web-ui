@@ -54,13 +54,7 @@ const DialogContent = React.forwardRef<
   }
 >(
   (
-    {
-      className,
-      children,
-      onInteractOutside,
-      showClose = true,
-      ...props
-    },
+    { className, children, onInteractOutside, showClose = true, ...props },
     ref,
   ) => (
     <DialogPortal>
@@ -74,7 +68,12 @@ const DialogContent = React.forwardRef<
             className,
           )}
           onInteractOutside={(event) => {
-            if (isNestedOverlayTarget(event.target)) event.preventDefault();
+            if (
+              event.target instanceof Element &&
+              event.target.closest("[data-slot='popover-content']")
+            ) {
+              event.preventDefault();
+            }
             onInteractOutside?.(event);
           }}
           {...props}
@@ -92,12 +91,6 @@ const DialogContent = React.forwardRef<
   ),
 );
 DialogContent.displayName = DialogPrimitive.Content.displayName;
-
-function isNestedOverlayTarget(target: EventTarget | null) {
-  return target instanceof Element
-    ? Boolean(target.closest("[data-slot='popover-content']"))
-    : false;
-}
 
 const DialogTitle = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Title>,

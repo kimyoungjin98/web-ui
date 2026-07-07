@@ -190,7 +190,12 @@ function DateRangePicker({
   const [portalContainer, setPortalContainer] = React.useState<Element | null>(
     null,
   );
-  const selectedRange = parseDateRangeValue(value);
+  const selectedFrom = parseDateValue(value.from);
+  const selectedTo = parseDateValue(value.to);
+  const selectedRange =
+    selectedFrom || selectedTo
+      ? { from: selectedFrom, to: selectedTo }
+      : undefined;
   const hasValue = Boolean(value.from || value.to);
   const rootRef = React.useCallback((node: HTMLSpanElement | null) => {
     setPortalContainer(node?.closest("[data-slot='dialog-content']") ?? null);
@@ -325,15 +330,6 @@ function DateRangePicker({
       </Popover>
     </span>
   );
-}
-
-function parseDateRangeValue(value: DateRangeValue): DateRange | undefined {
-  const from = parseDateValue(value.from);
-  const to = parseDateValue(value.to);
-
-  if (!from && !to) return undefined;
-
-  return { from, to };
 }
 
 function parseDateValue(value: string): Date | undefined {
