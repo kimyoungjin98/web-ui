@@ -1,6 +1,12 @@
 "use client";
 
-import { useRef, useState, type Dispatch, type SetStateAction } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import type {
   UploadContext,
   UploadResult,
@@ -25,6 +31,10 @@ export function useUploader(props: UploaderProps) {
   );
   const [error, setError] = useState("");
   const controllers = useRef(new Map<string, AbortController>());
+  useEffect(
+    () => () => controllers.current.forEach((controller) => controller.abort()),
+    [],
+  );
 
   return {
     error,

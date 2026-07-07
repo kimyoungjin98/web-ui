@@ -39,10 +39,7 @@ function FileRow(props: RowProps) {
   const { item, disabled, onRemove, onRetry } = props;
 
   return (
-    <li
-      className="rounded border border-gray-200 bg-white p-3"
-      onClick={(event) => event.preventDefault()}
-    >
+    <li className="rounded border border-gray-200 bg-white p-3">
       <div className="flex items-start gap-3">
         <FilePreview item={item} />
         <FileMeta item={item} />
@@ -83,10 +80,14 @@ function FilePreview({ item }: { item: UploadFileItem }) {
   const [src, setSrc] = useState("");
   useEffect(() => {
     if (!image) return;
+    if (item.url) {
+      setSrc(item.url);
+      return;
+    }
     const url = URL.createObjectURL(item.file);
     setSrc(url);
     return () => URL.revokeObjectURL(url);
-  }, [image, item.file]);
+  }, [image, item.file, item.url]);
   if (!image || !src)
     return <FileIcon extension={item.extension} status={item.status} />;
   return (
