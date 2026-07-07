@@ -20,8 +20,18 @@ type AppAlertOptions = {
   onConfirm?: () => void;
 };
 
+type AppConfirmAlertOptions = AppAlertOptions & {
+  cancelLabel?: string;
+  onCancel?: () => void;
+  variant?: AppAlertVariant;
+};
+
 type AppAlertState = AppAlertOptions & {
   id: number;
+  cancelLabel?: string;
+  kind: "alert" | "confirm";
+  onCancel?: () => void;
+  resolve?: (confirmed: boolean) => void;
   title: React.ReactNode;
   variant: AppAlertVariant;
 };
@@ -61,14 +71,19 @@ function normalizeAlertOptions(
 }
 
 function isAlertOptions(
-  value: React.ReactNode | AppAlertOptions,
+  value: React.ReactNode | AppAlertOptions | AppConfirmAlertOptions,
 ): value is AppAlertOptions {
   if (!value || typeof value !== "object" || React.isValidElement(value)) {
     return false;
   }
 
   return (
-    "confirmLabel" in value || "description" in value || "onConfirm" in value
+    "cancelLabel" in value ||
+    "confirmLabel" in value ||
+    "description" in value ||
+    "onCancel" in value ||
+    "onConfirm" in value ||
+    "variant" in value
   );
 }
 
@@ -80,13 +95,37 @@ function createAppAlert(variant: AppAlertVariant) {
   ) => {
     publishAppAlert({
       ...normalizeAlertOptions(descriptionOrOptions, options),
+      kind: "alert",
       title,
       variant,
     });
   };
 }
 
+function createAppConfirmAlert() {
+  return (
+    title: React.ReactNode,
+    descriptionOrOptions?: React.ReactNode | AppConfirmAlertOptions,
+    options?: AppConfirmAlertOptions,
+  ) =>
+    new Promise<boolean>((resolve) => {
+      const alertOptions = normalizeAlertOptions(
+        descriptionOrOptions,
+        options,
+      ) as AppConfirmAlertOptions;
+
+      publishAppAlert({
+        ...alertOptions,
+        kind: "confirm",
+        resolve,
+        title,
+        variant: alertOptions.variant ?? "warning",
+      });
+    });
+}
+
 const appAlert = {
+  confirm: createAppConfirmAlert(),
   error: createAppAlert("error"),
   info: createAppAlert("info"),
   success: createAppAlert("success"),
@@ -100,14 +139,28 @@ function AppAlertHost() {
 
   function handleOpenChange(open: boolean) {
     if (!open) {
+      if (alert?.kind === "confirm") {
+        alert.onCancel?.();
+        alert.resolve?.(false);
+      }
       setAlert(null);
     }
   }
 
   function handleConfirm() {
     const onConfirm = alert?.onConfirm;
+    const resolve = alert?.resolve;
     setAlert(null);
     onConfirm?.();
+    resolve?.(true);
+  }
+
+  function handleCancel() {
+    const onCancel = alert?.onCancel;
+    const resolve = alert?.resolve;
+    setAlert(null);
+    onCancel?.();
+    resolve?.(false);
   }
 
   if (!alert) {
@@ -126,6 +179,11 @@ function AppAlertHost() {
           ) : null}
         </DialogHeader>
         <DialogFooter>
+          {alert.kind === "confirm" ? (
+            <Button type="button" variant="outline" onClick={handleCancel}>
+              {alert.cancelLabel ?? "취소"}
+            </Button>
+          ) : null}
           <Button
             type="button"
             variant="solid"
