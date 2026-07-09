@@ -171,9 +171,7 @@ function AppAlertHost() {
     <Dialog open onOpenChange={handleOpenChange}>
       <DialogContent className="max-w-[24rem] p-0">
         <DialogHeader className="gap-2">
-          <DialogTitle className={getAlertTitleClassName(alert.variant)}>
-            {alert.title}
-          </DialogTitle>
+          <DialogTitle className="text-slate-800">{alert.title}</DialogTitle>
           {alert.description ? (
             <DialogDescription>{alert.description}</DialogDescription>
           ) : null}
@@ -196,13 +194,6 @@ function AppAlertHost() {
       </DialogContent>
     </Dialog>
   );
-}
-
-function getAlertTitleClassName(variant: AppAlertVariant) {
-  if (variant === "error") return "text-destructive";
-  if (variant === "success") return "text-emerald-700";
-  if (variant === "warning") return "text-amber-700";
-  return undefined;
 }
 
 export { AppAlertHost, appAlert };
