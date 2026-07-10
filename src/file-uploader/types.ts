@@ -37,8 +37,11 @@ export type FileUploaderProps = {
   maxCount?: number;
   maxFileSize?: number;
   multiple?: boolean;
-  onCancel?: (f: UploadFileItem[]) => void;
-  onRemove?: (f: UploadFileItem) => void;
-  onRetry?: (f: UploadFileItem) => void;
-  onUpload?: (f: File, c: UploadContext) => Promise<UploadResult | void>;
+  onCancel?: (files: UploadFileItem[]) => void;
+  onRemove?: (file: UploadFileItem) => void;
+  onRetry?: (file: UploadFileItem) => void;
+  onUpload?: (
+    file: File,
+    context: UploadContext,
+  ) => Promise<UploadResult | void>;
 };

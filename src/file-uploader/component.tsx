@@ -1,47 +1,48 @@
 "use client";
 
-import { DEFAULT_MAX_SIZE as MAX } from "./constants";
-import type { FileUploaderProps as Props } from "./types";
-import { acceptedTypes as typesOf, getViewModel as viewOf } from "./model";
+import { DEFAULT_MAX_SIZE } from "./constants";
+import type { FileUploaderProps } from "./types";
+import { acceptedTypes, getViewModel } from "./model";
 import { useUploader } from "./state";
-import { UploaderView as View } from "./view";
+import { UploaderView } from "./view";
 
-export function FileUploader(props: Props) {
+export function FileUploader(props: FileUploaderProps) {
   const {
-    className: c,
-    disabled: d,
-    initialStorageObjects: o,
-    initialUrls: i,
-    labels: l,
-    maxCount: m,
-    maxFileSize = MAX,
-    multiple: mu = true,
-    ...cb
+    className,
+    disabled,
+    initialStorageObjects,
+    initialUrls,
+    labels,
+    maxCount,
+    maxFileSize = DEFAULT_MAX_SIZE,
+    multiple = true,
+    ...callbacks
   } = props;
-  const t = typesOf(props);
-  const up = useUploader({
-    ...cb,
-    acceptedFileTypes: t,
-    initialStorageObjects: o,
-    initialUrls: i,
-    maxCount: m,
+  const acceptedFileTypes = acceptedTypes(props);
+  const uploadState = useUploader({
+    ...callbacks,
+    acceptedFileTypes,
+    initialStorageObjects,
+    initialUrls,
+    maxCount,
     maxFileSize,
-    multiple: mu,
+    multiple,
   });
+
   return (
-    <View
-      {...viewOf(t, up.items)}
-      canAdd={m == null || up.items.length < m}
-      className={c}
-      disabled={d}
-      items={up.items}
-      labels={l}
-      limitError={up.error}
-      multiple={mu}
-      onCancel={up.cancel}
-      onFiles={up.add}
-      onRemove={up.remove}
-      onRetry={up.retry}
+    <UploaderView
+      {...getViewModel(acceptedFileTypes, uploadState.items)}
+      canAdd={maxCount == null || uploadState.items.length < maxCount}
+      className={className}
+      disabled={disabled}
+      items={uploadState.items}
+      labels={labels}
+      limitError={uploadState.error}
+      multiple={multiple}
+      onCancel={uploadState.cancel}
+      onFiles={uploadState.add}
+      onRemove={uploadState.remove}
+      onRetry={uploadState.retry}
     />
   );
 }
