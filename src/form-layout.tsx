@@ -12,10 +12,10 @@ export function FormSection({
 }) {
   return (
     <section className="overflow-hidden rounded-md border border-gray-200 bg-white shadow-sm">
-      <div className="border-b border-gray-200 bg-white px-5 py-4">
+      <div className="border-b border-gray-200 bg-white px-4 py-4 sm:px-5">
         <h3 className="text-base font-bold text-foreground">{title}</h3>
       </div>
-      <div className="grid gap-5 p-5 md:grid-cols-2">{children}</div>
+      <div className="grid gap-5 p-4 sm:p-5 md:grid-cols-2">{children}</div>
     </section>
   );
 }
