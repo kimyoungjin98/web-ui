@@ -145,6 +145,39 @@
   -webkit-mask-size: 100% 100%;
 }
 
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+.accordion-content[data-state="open"] {
+  animation: accordion-down 200ms ease-out;
+}
+
+.accordion-content[data-state="closed"] {
+  animation: accordion-up 200ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accordion-content[data-state="open"],
+  .accordion-content[data-state="closed"] {
+    animation: none;
+  }
+}
+
 .dialog-content {
   width: calc(100vw - 1rem);
   will-change: opacity, margin-top;
