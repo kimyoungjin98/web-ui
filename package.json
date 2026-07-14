@@ -20,7 +20,7 @@
   },
   "scripts": {
     "lint": "tsc -p tsconfig.json --noEmit",
-    "test:file-uploader": "node src/file-uploader/queue.test.ts",
+    "test:file-uploader": "node src/file-uploader/queue/queue.test.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
