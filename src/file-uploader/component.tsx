@@ -1,9 +1,9 @@
 "use client";
 
-import { DEFAULT_MAX_SIZE } from "./constants";
-import type { FileUploaderProps } from "./types";
-import { acceptedTypes, getViewModel } from "./model";
-import { useUploader } from "./state";
+import { DEFAULT_MAX_SIZE } from "./types/const";
+import type { FileUploaderProps } from "./types/types";
+import { acceptedTypes, getViewModel } from "./utils/model";
+import { useUploader } from "./queue/state";
 import { UploaderView } from "./view";
 
 export function FileUploader(props: FileUploaderProps) {

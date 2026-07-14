@@ -1,6 +1,6 @@
-import { DEFAULT_ACCEPTED_TYPES } from "./constants";
-import type { FileUploaderProps, UploadFileItem } from "./types";
-import { toAccept } from "./utils";
+import { DEFAULT_ACCEPTED_TYPES } from "../types/const";
+import type { FileUploaderProps, UploadFileItem } from "../types/types";
+import { toAccept } from "../types/utils";
 
 export function acceptedTypes(props: FileUploaderProps) {
   if (Array.isArray(props.accept)) return props.accept;

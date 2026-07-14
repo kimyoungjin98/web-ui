@@ -4,9 +4,9 @@ export type {
   FileUploaderProps,
   UploadFileItem,
   UploadStatus,
-} from "./file-uploader/types";
+} from "./file-uploader/types/types";
 export type {
   UploadContext,
   UploadResult,
   UploadStorageObject,
-} from "./file-uploader/storage-types";
+} from "./file-uploader/types/storage-types";

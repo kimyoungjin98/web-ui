@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { Button } from "../button";
 import { Icon } from "../icon";
-import type { UploadFileItem } from "./types";
-import { formatBytes } from "./utils";
+import type { UploadFileItem } from "./types/types";
+import { formatBytes } from "./types/utils";
 
 type Props = {
   disabled?: boolean;

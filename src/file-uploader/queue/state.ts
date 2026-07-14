@@ -11,10 +11,11 @@ import type {
   UploadContext,
   UploadResult,
   UploadStorageObject,
-} from "./storage-types";
-import type { FileUploaderProps, UploadFileItem } from "./types";
-import { createItem } from "./file";
-import { getExtension } from "./utils";
+} from "../types/storage-types";
+import type { FileUploaderProps, UploadFileItem } from "../types/types";
+import { createItem } from "../utils/file";
+import { UploadQueue } from "./queue";
+import { getExtension } from "../types/utils";
 
 type UploaderProps = Required<
   Pick<FileUploaderProps, "acceptedFileTypes" | "maxFileSize">
@@ -31,19 +32,20 @@ export function useUploader(props: UploaderProps) {
     ...fromUrls(props.initialUrls),
   ]);
   const [error, setError] = useState("");
-  const controllers = useRef(new Map<string, AbortController>());
-  useEffect(
-    () => () => controllers.current.forEach((controller) => controller.abort()),
-    [],
-  );
+  const queue = useRef<UploadQueue<UploadFileItem> | null>(null);
+
+  if (queue.current === null) queue.current = new UploadQueue();
+
+  const uploadQueue = queue.current;
+  useEffect(() => () => uploadQueue.cancelAll(), [uploadQueue]);
 
   return {
     error,
     items,
     ...createActions({
-      controllers: controllers.current,
       items,
       props,
+      queue: uploadQueue,
       setError,
       setItems,
     }),
@@ -51,32 +53,34 @@ export function useUploader(props: UploaderProps) {
 }
 
 function createActions(args: {
-  controllers: Map<string, AbortController>;
   items: UploadFileItem[];
   props: UploaderProps;
+  queue: UploadQueue<UploadFileItem>;
   setError: Dispatch<SetStateAction<string>>;
   setItems: SetItems;
 }) {
-  const { controllers, items, props, setError, setItems } = args;
+  const { items, props, queue, setError, setItems } = args;
   const upload = props.onUpload ?? defaultUpload;
   const patch = (id: string, next: Partial<UploadFileItem>) =>
     patchItem(setItems, id, next);
-  const start = (item: UploadFileItem) =>
-    startUpload(item, upload, controllers, patch);
+  const enqueue = (queuedItems: UploadFileItem[]) =>
+    queue.add(queuedItems, (item, signal) =>
+      startUpload(item, upload, signal, patch),
+    );
 
   return {
     add: (files: FileList) =>
-      addUpload(files, items, props, setItems, start, setError),
+      addUpload(files, items, props, setItems, enqueue, setError),
     cancel: () => (
       setError(""),
-      cancelUploads(items, controllers, setItems, props.onCancel)
+      cancelUploads(items, queue, setItems, props.onCancel)
     ),
     remove: (item: UploadFileItem) => (
       setError(""),
-      removeUpload(item, controllers, setItems, props.onRemove)
+      removeUpload(item, queue, setItems, props.onRemove)
     ),
     retry: (item: UploadFileItem) =>
-      retryUpload(item, patch, start, props.onRetry),
+      retryUpload(item, patch, enqueue, props.onRetry),
   };
 }
 
@@ -85,7 +89,7 @@ function addUpload(
   items: UploadFileItem[],
   props: UploaderProps,
   setItems: SetItems,
-  start: (item: UploadFileItem) => void,
+  enqueue: (items: UploadFileItem[]) => void,
   setError: Dispatch<SetStateAction<string>>,
 ) {
   const selectedFiles = props.multiple
@@ -105,29 +109,32 @@ function addUpload(
   setItems((current) =>
     props.multiple ? [...current, ...selected] : selected,
   );
-  selected.forEach(start);
+  enqueue(selected);
 }
 
-function startUpload(
+async function startUpload(
   item: UploadFileItem,
   upload: Upload,
-  controllers: Map<string, AbortController>,
+  signal: AbortSignal,
   patch: Patch,
 ) {
   if (item.status === "error") return;
-  const controller = new AbortController();
-  controllers.set(item.id, controller);
   patch(item.id, { status: "uploading", progress: 1, error: undefined });
-  void upload(item.file, {
-    signal: controller.signal,
-    onProgress: (progress) => patch(item.id, { progress }),
-  })
-    .then((result) => finishUpload(item, result, patch))
-    .catch(() => {
-      if (!controller.signal.aborted)
-        patch(item.id, { status: "error", error: "업로드에 실패했습니다." });
-    })
-    .finally(() => controllers.delete(item.id));
+
+  try {
+    const result = await upload(item.file, {
+      signal,
+      onProgress: (progress) => {
+        if (!signal.aborted) patch(item.id, { progress });
+      },
+    });
+
+    if (!signal.aborted) finishUpload(item, result, patch);
+  } catch {
+    if (!signal.aborted) {
+      patch(item.id, { status: "error", error: "업로드에 실패했습니다." });
+    }
+  }
 }
 
 function finishUpload(
@@ -149,23 +156,23 @@ function finishUpload(
 
 function cancelUploads(
   items: UploadFileItem[],
-  controllers: Map<string, AbortController>,
+  queue: UploadQueue<UploadFileItem>,
   setItems: SetItems,
   onCancel?: (files: UploadFileItem[]) => void,
 ) {
   const active = items.filter(isActive);
-  controllers.forEach((controller) => controller.abort());
+  queue.cancelAll();
   setItems((list) => list.map(cancelled));
   onCancel?.(active);
 }
 
 function removeUpload(
   item: UploadFileItem,
-  controllers: Map<string, AbortController>,
+  queue: UploadQueue<UploadFileItem>,
   setItems: SetItems,
   onRemove?: (item: UploadFileItem) => void,
 ) {
-  controllers.get(item.id)?.abort();
+  queue.cancel(item.id);
   setItems((list) => list.filter((current) => current.id !== item.id));
   onRemove?.(item);
 }
@@ -173,7 +180,7 @@ function removeUpload(
 function retryUpload(
   item: UploadFileItem,
   patch: Patch,
-  start: (item: UploadFileItem) => void,
+  enqueue: (items: UploadFileItem[]) => void,
   onRetry?: (item: UploadFileItem) => void,
 ) {
   const next = {
@@ -184,7 +191,7 @@ function retryUpload(
   };
   patch(item.id, next);
   onRetry?.(item);
-  start(next);
+  enqueue([next]);
 }
 
 function patchItem(

@@ -11,7 +11,7 @@ import {
 } from "react";
 import { Icon } from "../icon";
 import { cn } from "../lib/tailwind-util";
-import type { FileUploaderLabels } from "./types";
+import type { FileUploaderLabels } from "./types/types";
 
 const FRAME =
   "grid cursor-pointer place-items-center rounded-md border border-dashed p-8 text-center transition focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/25";

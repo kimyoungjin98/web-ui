@@ -1,7 +1,7 @@
 "use client";
 
 import { FileUploader } from "./component";
-import type { UploadContext } from "./storage-types";
+import type { UploadContext } from "./types/storage-types";
 
 export function FileUploaderExample() {
   return (

@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Button } from "../button";
 import { Icon } from "../icon";
 import { cn } from "../lib/tailwind-util";
-import type { FileUploaderLabels, UploadFileItem } from "./types";
+import type { FileUploaderLabels, UploadFileItem } from "./types/types";
 import { DropZone } from "./drop-zone";
 import { FileList } from "./file-list";
 
