@@ -6,6 +6,7 @@ import { DataGridHeader } from "./header";
 import { getDataGridTableLayout, ROW_ACTIONS_WIDTH } from "./layout";
 
 type Props<T> = {
+  ariaLabel?: string;
   columns: DataGridColumn<T>[];
   rows: T[];
   getRowId: (row: T, index: number) => string;
@@ -119,10 +120,12 @@ export function DataGridTable<T>(p: Props<T>) {
       ref={scrollRef}
       className="min-h-0 flex-auto overflow-y-auto"
       role="region"
+      aria-label={p.ariaLabel ?? "데이터 표"}
     >
       <div
         role="table"
         aria-busy={p.loading || undefined}
+        aria-colcount={p.tableColumnCount}
         className="w-full text-sm"
         onWheel={onTableWheel}
       >
@@ -209,4 +212,3 @@ function DataGridScrollBar<T>({
     </div>
   );
 }
-

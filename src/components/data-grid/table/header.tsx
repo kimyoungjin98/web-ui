@@ -110,6 +110,15 @@ function HeadCell<T>({
   return (
     <div
       role="columnheader"
+      aria-sort={
+        column.sortable
+          ? active
+            ? sort?.direction === "asc"
+              ? "ascending"
+              : "descending"
+            : "none"
+          : undefined
+      }
       style={item.style}
       className={cn(
         "box-border shrink-0",
@@ -171,6 +180,7 @@ function SortButton<T>({
   return (
     <button
       type="button"
+      disabled={!onSortChange}
       onClick={() => onSortChange?.(getNextSort(sort, column.id))}
       className={cn(
         HEAD_BUTTON,

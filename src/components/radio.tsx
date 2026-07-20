@@ -3,7 +3,7 @@ import * as React from "react";
 import { cn } from "../libs/tailwind-util";
 import Icon from "./icon";
 
-type RadioProps = Omit<React.ComponentProps<"input">, "children" | "type"> & {
+export type RadioProps = Omit<React.ComponentProps<"input">, "children" | "type"> & {
   children?: React.ReactNode;
   icon?: React.ReactNode | string;
   iconClassName?: string;
@@ -79,9 +79,16 @@ function Radio({
   );
 }
 
-function RadioGroup({ className, ...props }: React.ComponentProps<"div">) {
+export type RadioGroupProps = Omit<React.ComponentProps<"div">, "role"> &
+  (
+    | { "aria-label": string; "aria-labelledby"?: never }
+    | { "aria-label"?: never; "aria-labelledby": string }
+  );
+
+function RadioGroup({ className, ...props }: RadioGroupProps) {
   return (
     <div
+      role="radiogroup"
       data-slot="radio-group"
       className={cn("grid gap-2 sm:grid-cols-2", className)}
       {...props}

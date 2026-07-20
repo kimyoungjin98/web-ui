@@ -43,6 +43,7 @@ function DataGridView<T>({
         />
       ) : null}
       <DataGridTable
+        ariaLabel={props.ariaLabel}
         columns={props.columns}
         rows={props.rows}
         getRowId={props.getRowId}

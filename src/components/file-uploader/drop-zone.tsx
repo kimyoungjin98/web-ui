@@ -108,6 +108,8 @@ const DropInput = forwardRef<HTMLInputElement, InputProps>(function DropInput(
       className="hidden"
       type="file"
       accept={accept || undefined}
+      aria-hidden="true"
+      tabIndex={-1}
       multiple={multiple}
       disabled={disabled}
       onChange={change}
@@ -137,6 +139,7 @@ function DropFrame(props: FrameProps) {
       role="button"
       tabIndex={props.disabled ? -1 : 0}
       aria-label="파일 업로드 영역"
+      aria-disabled={props.disabled || undefined}
       onClick={click}
       onKeyDown={keydown}
       onDragOver={props.onDragOver}
@@ -155,7 +158,10 @@ function DropFrame(props: FrameProps) {
 
 function usePickKey(onPick: () => void) {
   return function keydown(event: KeyboardEvent<HTMLDivElement>) {
-    if (event.key === "Enter" || event.key === " ") onPick();
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      onPick();
+    }
   };
 }
 

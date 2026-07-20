@@ -9,7 +9,7 @@ type TabOption<TValue extends string> = {
 };
 
 type TabsProps<TValue extends string> = {
-  "aria-label"?: string;
+  "aria-label": string;
   className?: string;
   onValueChange: (value: TValue) => void;
   options: TabOption<TValue>[];
@@ -46,6 +46,7 @@ function Tabs<TValue extends string>({
             disabled={option.disabled}
             data-slot="tabs-trigger"
             data-state={selected ? "active" : "inactive"}
+            data-value={option.value}
             className={cn(
               "flex flex-1 items-center justify-center whitespace-nowrap rounded-md px-2 py-1 text-xs font-semibold transition-colors outline-none sm:flex-none",
               "text-muted-foreground hover:text-foreground hover:bg-background",
@@ -56,6 +57,9 @@ function Tabs<TValue extends string>({
               triggerClassName,
             )}
             onClick={() => onValueChange(option.value)}
+            onKeyDown={(event) =>
+              handleSegmentedControlKeyDown(event, options, onValueChange)
+            }
           >
             <span className="text-sm">{option.label}</span>
           </button>
@@ -63,6 +67,40 @@ function Tabs<TValue extends string>({
       })}
     </div>
   );
+}
+
+function handleSegmentedControlKeyDown<TValue extends string>(
+  event: React.KeyboardEvent<HTMLButtonElement>,
+  options: TabOption<TValue>[],
+  onValueChange: (value: TValue) => void,
+) {
+  const enabled = options.filter((option) => !option.disabled);
+  if (enabled.length === 0) return;
+
+  const current = enabled.findIndex(
+    (option) => option.value === event.currentTarget.dataset.value,
+  );
+  const nextIndex =
+    event.key === "ArrowRight" || event.key === "ArrowDown"
+      ? (current + 1) % enabled.length
+      : event.key === "ArrowLeft" || event.key === "ArrowUp"
+        ? (current - 1 + enabled.length) % enabled.length
+        : event.key === "Home"
+          ? 0
+          : event.key === "End"
+            ? enabled.length - 1
+            : -1;
+
+  if (nextIndex < 0) return;
+
+  event.preventDefault();
+  const next = enabled[nextIndex]!;
+  onValueChange(next.value);
+  const group = event.currentTarget.closest("[data-slot='tabs']");
+  const nextButton = group?.querySelector<HTMLButtonElement>(
+    `[data-value="${CSS.escape(next.value)}"]`,
+  );
+  nextButton?.focus();
 }
 
 export { Tabs };

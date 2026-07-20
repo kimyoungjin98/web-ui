@@ -2,6 +2,7 @@ import type * as React from "react";
 import type { DataGridColumn, DataGridExcelDownloadAction, DataGridSelection, DataGridSort } from "./types";
 
 export type DataGridProps<T> = {
+  ariaLabel?: string;
   className?: string;
   columns: DataGridColumn<T>[];
   rows: T[];
@@ -29,4 +30,3 @@ export type DataGridProps<T> = {
   onRowClick?: (row: T, index: number) => void;
   rowActions?: (row: T, index: number) => React.ReactNode;
 };
-

@@ -37,8 +37,17 @@ Spacing과 radius는 Tailwind 기본 유틸리티를 사용합니다. 예를 들
   </FormItem>
   ```
 
-- 오류 메시지가 있으면 입력 요소에 `aria-invalid`와 `aria-describedby`를 연결합니다.
+- 오류 메시지가 있으면 `FormItem`의 `error`/`errorId`와 입력 요소의 `aria-invalid`/`aria-describedby`를 연결합니다. 안내 문구도 동일하게 `hintId`로 연결합니다.
+
+  ```tsx
+  <FormItem error="올바른 이메일 주소를 입력하세요." errorId="email-error" htmlFor="email" label="이메일">
+    <Input aria-describedby="email-error" aria-invalid="true" id="email" />
+  </FormItem>
+  ```
 - 현재 `Tabs`는 패널을 소유하지 않는 선택 컨트롤입니다. `role="group"`과 `aria-pressed`를 사용하므로, 탭 패널이 필요한 화면에는 ARIA Tabs primitive를 별도로 사용합니다.
+- 선택 컨트롤은 방향키, Home, End로 비활성화된 항목을 건너뛰어 이동할 수 있어야 합니다.
+- DataGrid는 `ariaLabel`로 표의 목적을 제공해야 합니다. 정렬 가능한 열은 현재 정렬 방향을 `aria-sort`로 전달합니다.
+- 파일 업로더의 드롭 영역은 키보드 Enter/Space로 파일 선택기를 열 수 있어야 하며, Space 입력은 페이지 스크롤을 유발하지 않아야 합니다.
 - 모션을 추가할 때는 `prefers-reduced-motion` 대체 동작도 함께 제공합니다.
 - 새 컴포넌트는 기본/hover/focus/disabled/error 상태와 키보드 조작을 검증한 뒤 추가합니다.
 
