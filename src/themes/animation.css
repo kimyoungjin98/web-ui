@@ -80,6 +80,27 @@
   animation: data-grid-row-enter 160ms ease-out both;
 }
 
+.ui-transition {
+  transition-property: opacity, transform;
+  will-change: opacity, transform;
+}
+
+.ui-transition[data-state="closed"] {
+  opacity: 0;
+}
+
+.ui-transition--scale[data-state="closed"] {
+  transform: scale(0.96);
+}
+
+.ui-transition--slide-down[data-state="closed"] {
+  transform: translate3d(0, -0.5rem, 0);
+}
+
+.ui-transition--slide-up[data-state="closed"] {
+  transform: translate3d(0, 0.5rem, 0);
+}
+
 @keyframes data-grid-row-enter {
   from {
     opacity: 0.96;
@@ -185,5 +206,9 @@
   .sheet-content[data-state],
   .data-grid-row-enter {
     animation: none;
+  }
+
+  .ui-transition {
+    transition: none;
   }
 }

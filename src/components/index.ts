@@ -23,6 +23,10 @@ export * from "./popover";
 export * from "./tabs";
 export * from "./textarea";
 
+// 트랜지션
+export * from "./transition/transition";
+export * from "./transition/page-transition";
+
 // 토스트
 export * from "./toast/toaster";
 export * from "./toast/toast";
