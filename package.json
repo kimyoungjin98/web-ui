@@ -8,14 +8,10 @@
       "types": "./src/index.ts",
       "default": "./src/index.ts"
     },
-    "./styles.css": "./src/styles.css",
+    "./styles.css": "./src/themes/styles.css",
     "./*": {
-      "types": "./src/*.tsx",
-      "default": "./src/*.tsx"
-    },
-    "./data-grid/*": {
-      "types": "./src/data-grid/*.tsx",
-      "default": "./src/data-grid/*.tsx"
+      "types": "./src/components/*.tsx",
+      "default": "./src/components/*.tsx"
     }
   },
   "scripts": {
