@@ -1,8 +1,8 @@
 @source "../components";
 @source "../file-uploader";
 
-@import "./themes/font.css";
-@import "./themes/animation.css";
+@import "./font.css";
+@import "./animation.css";
 
 @theme inline {
   --spacing: 4px;
