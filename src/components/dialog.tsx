@@ -1,10 +1,14 @@
 "use client";
 
 import * as React from "react";
-import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { Dialog as DialogPrimitive } from "radix-ui";
 
 import Icon from "./icon";
 import { cn } from "../libs/tailwind-util";
+
+export function getDialogContentPointerEvents(selectIsOpen: boolean) {
+  return selectIsOpen ? ("auto" as const) : undefined;
+}
 
 function Dialog({
   ...props

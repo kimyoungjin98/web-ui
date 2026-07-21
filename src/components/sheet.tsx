@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import * as SheetPrimitive from "@radix-ui/react-dialog";
+import { Dialog as SheetPrimitive } from "radix-ui";
 
 import Icon from "./icon";
 import { cn } from "../libs/tailwind-util";

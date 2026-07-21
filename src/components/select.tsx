@@ -1,7 +1,7 @@
 "use client";
 
-import * as SelectPrimitive from "@radix-ui/react-select";
 import * as React from "react";
+import { Select as SelectPrimitive } from "radix-ui";
 
 import Icon from "./icon";
 import { cn } from "../libs/tailwind-util";
