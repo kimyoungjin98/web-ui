@@ -10,6 +10,29 @@ export function getDialogContentPointerEvents(selectIsOpen: boolean) {
   return selectIsOpen ? ("auto" as const) : undefined;
 }
 
+type DialogOutsideInteractionTarget = {
+  closest: (selectors: string) => unknown;
+};
+
+export function shouldPreventDialogOutsideInteraction(
+  target: unknown,
+) {
+  if (
+    !target ||
+    typeof target !== "object" ||
+    !("closest" in target) ||
+    typeof target.closest !== "function"
+  ) {
+    return false;
+  }
+
+  return Boolean(
+    (target as DialogOutsideInteractionTarget).closest(
+      "[data-slot='popover-content'], [data-slot='select-content']",
+    ),
+  );
+}
+
 function Dialog({
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Root>) {
@@ -72,10 +95,7 @@ const DialogContent = React.forwardRef<
             className,
           )}
           onInteractOutside={(event) => {
-            if (
-              event.target instanceof Element &&
-              event.target.closest("[data-slot='popover-content']")
-            ) {
+            if (shouldPreventDialogOutsideInteraction(event.target)) {
               event.preventDefault();
             }
             onInteractOutside?.(event);
