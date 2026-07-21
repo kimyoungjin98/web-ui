@@ -34,4 +34,3 @@ export type DataGridSelection<T> = {
   onTogglePage: () => void;
   allPageSelected: boolean;
 };
-

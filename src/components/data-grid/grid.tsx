@@ -20,7 +20,7 @@ function DataGridView<T>({
   props: DataGridProps<T>;
   model: Model;
 }) {
-  const showToolbar = props.showToolbar ?? props.toolbar ?? true;
+  const showToolbar = props.toolbar ?? true;
   const showPagination = props.pagination ?? true;
 
   return (

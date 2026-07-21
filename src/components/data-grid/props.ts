@@ -1,5 +1,10 @@
 import type * as React from "react";
-import type { DataGridColumn, DataGridExcelDownloadAction, DataGridSelection, DataGridSort } from "./types";
+import type {
+  DataGridColumn,
+  DataGridExcelDownloadAction,
+  DataGridSelection,
+  DataGridSort,
+} from "./types";
 
 export type DataGridProps<T> = {
   ariaLabel?: string;

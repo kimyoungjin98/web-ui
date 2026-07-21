@@ -5,7 +5,6 @@ export * from "./button/button";
 export * from "./calendar";
 export * from "./card";
 export * from "./checkbox";
-export * from "./data-grid";
 export * from "./date-picker";
 export * from "./dialog";
 export * from "./dots-dropdown";
@@ -30,3 +29,9 @@ export * from "./transition/page-transition";
 // 토스트
 export * from "./toast/toaster";
 export * from "./toast/toast";
+
+// 그리드
+export * from "./data-grid";
+export * from "./data-grid/actions/actions-button";
+export * from "./data-grid/actions/row-actions";
+export * from "./data-grid/actions/row-actions-menu";
