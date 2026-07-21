@@ -101,6 +101,20 @@
   transform: translate3d(0, 0.5rem, 0);
 }
 
+@keyframes page-transition-enter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.ui-page-transition-enter {
+  animation: page-transition-enter 220ms ease-out both;
+}
+
 @keyframes data-grid-row-enter {
   from {
     opacity: 0.96;
@@ -205,6 +219,10 @@
   .sheet-overlay[data-state],
   .sheet-content[data-state],
   .data-grid-row-enter {
+    animation: none;
+  }
+
+  .ui-page-transition-enter {
     animation: none;
   }
 
