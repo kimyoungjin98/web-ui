@@ -10,7 +10,6 @@ export * from "./dialog";
 export * from "./dots-dropdown";
 export * from "./dropdown-menu";
 export * from "./file-uploader/file-uploader";
-export * from "./form-layout";
 export * from "./hint";
 export * from "./input";
 export * from "./metric-card";
@@ -21,6 +20,10 @@ export * from "./spinner";
 export * from "./popover";
 export * from "./tabs";
 export * from "./textarea";
+
+// 폼
+export * from "./form/form-layout";
+export * from "./form/tanstack-form-error";
 
 // 트랜지션
 export * from "./transition/transition";

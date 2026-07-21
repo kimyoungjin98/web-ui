@@ -1,7 +1,7 @@
 import { useId, type ComponentProps, type ReactNode } from "react";
 
-import { cn } from "../libs/tailwind-util";
-import { Hint } from "./hint";
+import { cn } from "../../libs/tailwind-util";
+import { Hint } from "../hint";
 
 export function FormSection({
   title,
@@ -68,7 +68,11 @@ export function FormItem({
       ) : null}
       {children}
       {error ? (
-        <p id={errorId} role="alert" className="text-sm font-medium text-destructive">
+        <p
+          id={errorId}
+          role="alert"
+          className="text-sm font-medium text-destructive"
+        >
           {error}
         </p>
       ) : null}
