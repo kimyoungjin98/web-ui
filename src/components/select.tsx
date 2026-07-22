@@ -8,6 +8,36 @@ import { cn } from "../libs/tailwind-util";
 
 const EMPTY_VALUE = "__empty_select_value__";
 
+type SelectPortalContainer = React.ComponentProps<
+  typeof SelectPrimitive.Portal
+>["container"];
+
+type SelectPortalContextValue = {
+  portalContainer: SelectPortalContainer;
+  setPortalTrigger: (trigger: HTMLButtonElement | null) => void;
+};
+
+const SelectPortalContext =
+  React.createContext<SelectPortalContextValue | null>(null);
+
+type ClosestTarget<T> = {
+  closest: (selectors: string) => T | null;
+};
+
+export function resolveSelectPortalContainer<T>(
+  trigger: ClosestTarget<T> | null,
+): T | undefined {
+  return trigger?.closest("[data-slot='dialog-content']") ?? undefined;
+}
+
+function setReactRef<T>(ref: React.Ref<T> | undefined, value: T | null) {
+  if (typeof ref === "function") {
+    ref(value);
+  } else if (ref) {
+    ref.current = value;
+  }
+}
+
 function toRadixValue(value: string): string;
 function toRadixValue(value: undefined): undefined;
 function toRadixValue(value: string | undefined): string | undefined;
@@ -23,29 +53,59 @@ function Select({
   value,
   defaultValue,
   onValueChange,
+  children,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Root>) {
+  const [portalContainer, setPortalContainer] =
+    React.useState<SelectPortalContainer>();
+  const setPortalTrigger = React.useCallback(
+    (trigger: HTMLButtonElement | null) => {
+      setPortalContainer(resolveSelectPortalContainer(trigger));
+    },
+    [],
+  );
+  const portalContext = React.useMemo(
+    () => ({ portalContainer, setPortalTrigger }),
+    [portalContainer, setPortalTrigger],
+  );
+
   return (
-    <SelectPrimitive.Root
-      value={toRadixValue(value)}
-      defaultValue={toRadixValue(defaultValue)}
-      onValueChange={
-        onValueChange
-          ? (nextValue) => onValueChange(fromRadixValue(nextValue))
-          : undefined
-      }
-      {...props}
-    />
+    <SelectPortalContext.Provider value={portalContext}>
+      <SelectPrimitive.Root
+        value={toRadixValue(value)}
+        defaultValue={toRadixValue(defaultValue)}
+        onValueChange={
+          onValueChange
+            ? (nextValue) => onValueChange(fromRadixValue(nextValue))
+            : undefined
+        }
+        {...props}
+      >
+        {children}
+      </SelectPrimitive.Root>
+    </SelectPortalContext.Provider>
   );
 }
 
 function SelectTrigger({
   className,
   children,
+  ref,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Trigger>) {
+  const setPortalTrigger =
+    React.useContext(SelectPortalContext)?.setPortalTrigger;
+  const triggerRef = React.useCallback(
+    (trigger: HTMLButtonElement | null) => {
+      setPortalTrigger?.(trigger);
+      setReactRef(ref, trigger);
+    },
+    [ref, setPortalTrigger],
+  );
+
   return (
     <SelectPrimitive.Trigger
+      ref={triggerRef}
       data-slot="select-trigger"
       className={cn(
         "select-none flex h-9 w-full items-center justify-between gap-2 rounded-md border border-input bg-card px-3 text-sm font-semibold outline-none transition-all disabled:cursor-not-allowed disabled:opacity-50 data-[placeholder]:text-muted-foreground focus:border-ring focus:ring-3 focus:ring-ring/15 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/15 data-[state=open]:border-ring data-[state=open]:ring-3 data-[state=open]:ring-ring/15",
@@ -79,8 +139,13 @@ function SelectContent({
   sideOffset = 6,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Content>) {
+  const portalContainer =
+    React.useContext(SelectPortalContext)?.portalContainer;
+
   return (
-    <SelectPrimitive.Portal>
+    <SelectPrimitive.Portal
+      {...(portalContainer ? { container: portalContainer } : undefined)}
+    >
       <SelectPrimitive.Content
         data-slot="select-content"
         position={position}
