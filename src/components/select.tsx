@@ -2,6 +2,8 @@
 
 import * as React from "react";
 import { Select as SelectPrimitive } from "radix-ui";
+// @ts-expect-error -- Legacy Node10 resolution cannot read Radix's wildcard exports.
+import { useComposedRefs } from "radix-ui/internal";
 
 import Icon from "./icon";
 import { cn } from "../libs/tailwind-util";
@@ -28,14 +30,6 @@ export function resolveSelectPortalContainer<T>(
   trigger: ClosestTarget<T> | null,
 ): T | undefined {
   return trigger?.closest("[data-slot='dialog-content']") ?? undefined;
-}
-
-function setReactRef<T>(ref: React.Ref<T> | undefined, value: T | null) {
-  if (typeof ref === "function") {
-    ref(value);
-  } else if (ref) {
-    ref.current = value;
-  }
 }
 
 function toRadixValue(value: string): string;
@@ -95,13 +89,7 @@ function SelectTrigger({
 }: React.ComponentProps<typeof SelectPrimitive.Trigger>) {
   const setPortalTrigger =
     React.useContext(SelectPortalContext)?.setPortalTrigger;
-  const triggerRef = React.useCallback(
-    (trigger: HTMLButtonElement | null) => {
-      setPortalTrigger?.(trigger);
-      setReactRef(ref, trigger);
-    },
-    [ref, setPortalTrigger],
-  );
+  const triggerRef = useComposedRefs(setPortalTrigger, ref);
 
   return (
     <SelectPrimitive.Trigger
