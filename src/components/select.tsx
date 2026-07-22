@@ -2,8 +2,6 @@
 
 import * as React from "react";
 import { Select as SelectPrimitive } from "radix-ui";
-// @ts-expect-error -- Legacy Node10 resolution cannot read Radix's wildcard exports.
-import { useComposedRefs } from "radix-ui/internal";
 
 import Icon from "./icon";
 import { cn } from "../libs/tailwind-util";
@@ -30,6 +28,43 @@ export function resolveSelectPortalContainer<T>(
   trigger: ClosestTarget<T> | null,
 ): T | undefined {
   return trigger?.closest("[data-slot='dialog-content']") ?? undefined;
+}
+
+type PossibleRef<T> = React.Ref<T> | undefined;
+
+function setSelectRef<T>(ref: PossibleRef<T>, value: T | null) {
+  if (typeof ref === "function") {
+    return ref(value);
+  } else if (ref) {
+    ref.current = value;
+  }
+}
+
+export function composeSelectRefs<T>(
+  ...refs: PossibleRef<T>[]
+): React.RefCallback<T> {
+  return (value) => {
+    let hasCleanup = false;
+    const cleanups = refs.map((ref) => {
+      const cleanup = setSelectRef(ref, value);
+      if (!hasCleanup && typeof cleanup === "function") {
+        hasCleanup = true;
+      }
+      return cleanup;
+    });
+
+    if (hasCleanup) {
+      return () => {
+        cleanups.forEach((cleanup, index) => {
+          if (typeof cleanup === "function") {
+            cleanup();
+          } else {
+            setSelectRef(refs[index], null);
+          }
+        });
+      };
+    }
+  };
 }
 
 function toRadixValue(value: string): string;
@@ -89,7 +124,10 @@ function SelectTrigger({
 }: React.ComponentProps<typeof SelectPrimitive.Trigger>) {
   const setPortalTrigger =
     React.useContext(SelectPortalContext)?.setPortalTrigger;
-  const triggerRef = useComposedRefs(setPortalTrigger, ref);
+  const triggerRef = React.useMemo(
+    () => composeSelectRefs(setPortalTrigger, ref),
+    [ref, setPortalTrigger],
+  );
 
   return (
     <SelectPrimitive.Trigger
