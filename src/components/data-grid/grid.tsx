@@ -1,24 +1,39 @@
 "use client";
 
 import { cn } from "../../libs/tailwind-util";
+import { createDataGridColumns } from "./libs/json";
 import { getDataGridModel } from "./model";
 import { DataGridPagination } from "./pagination";
-import type { DataGridProps } from "./props";
+import type { DataGridProps, ResolvedDataGridProps } from "./props";
 import { DataGridTable } from "./table/table";
 import { DataGridToolbar } from "./toolbar/toolbar";
 
-type Model = ReturnType<typeof getDataGridModel>;
+type Model<T extends object> = ReturnType<typeof getDataGridModel<T>>;
 
-export function DataGrid<T>(props: DataGridProps<T>) {
-  return <DataGridView props={props} model={getDataGridModel(props)} />;
+export function DataGrid<T extends object>(props: DataGridProps<T>) {
+  const resolvedProps: ResolvedDataGridProps<T> = {
+    ...props,
+    columns: props.columns ?? createDataGridColumns(props.columnDefs ?? []),
+    getRowId:
+      props.getRowId ??
+      ((row, index) => String((row as { id?: unknown }).id ?? `row-${index}`)),
+    rows: props.rows ?? props.rowData ?? [],
+  };
+
+  return (
+    <DataGridView
+      props={resolvedProps}
+      model={getDataGridModel(resolvedProps)}
+    />
+  );
 }
 
-function DataGridView<T>({
+function DataGridView<T extends object>({
   props,
   model,
 }: {
-  props: DataGridProps<T>;
-  model: Model;
+  props: ResolvedDataGridProps<T>;
+  model: Model<T>;
 }) {
   const showToolbar = props.toolbar ?? true;
   const showPagination = props.pagination ?? true;
@@ -58,6 +73,7 @@ function DataGridView<T>({
         onRowClick={props.onRowClick}
         rowClassName={props.rowClassName}
         rowActions={props.rowActions}
+        density={props.density ?? "default"}
       />
       {showPagination ? (
         <DataGridPagination

@@ -1,13 +1,14 @@
 import type * as React from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { cn } from "../../../libs/tailwind-util";
-import type { DataGridSelection } from "../types";
+import type { DataGridDensity, DataGridSelection } from "../types";
 import {
   PINNED_SIDE_SHADOW,
   ROW_ACTIONS_WIDTH,
   type DataGridTableColumn,
 } from "./layout";
 import { DataGridRow } from "./row";
+import { getDataGridDensity } from "./density";
 
 type Props<T> = {
   mainCols: DataGridTableColumn<T>[];
@@ -17,6 +18,7 @@ type Props<T> = {
   getRowId: (row: T, index: number) => string;
   loading: boolean;
   emptyMessage: string;
+  density: DataGridDensity;
   pageSize: number;
   selection?: DataGridSelection<T>;
   tableColumnCount: number;
@@ -33,7 +35,7 @@ export function DataGridBody<T>(p: Props<T>) {
   const rows = p.rows;
   const virtualizer = useVirtualizer({
     count: rows.length,
-    estimateSize: () => 64,
+    estimateSize: () => getDataGridDensity(p.density).rowHeight,
     getItemKey: (index) => p.getRowId(rows[index]!, index),
     getScrollElement: () => p.scrollRef.current,
     overscan: 8,
@@ -48,6 +50,7 @@ export function DataGridBody<T>(p: Props<T>) {
             mainCols={p.mainCols}
             sideCols={p.sideCols}
             minMainWidth={p.minMainWidth}
+            density={p.density}
             hasSelection={Boolean(p.selection)}
             hasRowActions={Boolean(p.rowActions)}
             setMain={p.setMain}
@@ -91,6 +94,7 @@ export function DataGridBody<T>(p: Props<T>) {
               mainCols={p.mainCols}
               sideCols={p.sideCols}
               minMainWidth={p.minMainWidth}
+              density={p.density}
               selection={p.selection}
               onRowClick={p.onRowClick}
               rowClassName={p.rowClassName}
@@ -107,6 +111,7 @@ export function DataGridBody<T>(p: Props<T>) {
 }
 
 function SkeletonRow<T>({
+  density,
   mainCols,
   sideCols,
   minMainWidth,
@@ -115,6 +120,7 @@ function SkeletonRow<T>({
   setMain,
   onMainScroll,
 }: {
+  density: DataGridDensity;
   mainCols: DataGridTableColumn<T>[];
   sideCols: DataGridTableColumn<T>[];
   minMainWidth: string;
@@ -136,9 +142,14 @@ function SkeletonRow<T>({
         className="min-w-0 flex-1 overflow-x-hidden"
       >
         <div className="flex" style={{ minWidth: minMainWidth }}>
-          {hasSelection ? <SkeletonCell width="48px" /> : null}
+          {hasSelection ? (
+            <SkeletonCell
+              width={getDataGridDensity(density).selectionWidth}
+              density={density}
+            />
+          ) : null}
           {mainCols.map((item) => (
-            <SkeletonCell key={item.column.id} item={item} />
+            <SkeletonCell key={item.column.id} item={item} density={density} />
           ))}
         </div>
       </div>
@@ -150,9 +161,11 @@ function SkeletonRow<T>({
           )}
         >
           {sideCols.map((item) => (
-            <SkeletonCell key={item.column.id} item={item} />
+            <SkeletonCell key={item.column.id} item={item} density={density} />
           ))}
-          {hasRowActions ? <SkeletonCell width={ROW_ACTIONS_WIDTH} /> : null}
+          {hasRowActions ? (
+            <SkeletonCell width={ROW_ACTIONS_WIDTH} density={density} />
+          ) : null}
         </div>
       ) : null}
     </div>
@@ -174,9 +187,11 @@ function EmptyRow({ count, message }: { count: number; message: string }) {
 }
 
 function SkeletonCell<T>({
+  density,
   item,
   width,
 }: {
+  density: DataGridDensity;
   item?: DataGridTableColumn<T>;
   width?: string;
 }) {
@@ -190,7 +205,10 @@ function SkeletonCell<T>({
           minWidth: width,
         }),
       }}
-      className={cn("box-border flex min-h-16 shrink-0 items-center p-4")}
+      className={cn(
+        "box-border flex shrink-0 items-center",
+        getDataGridDensity(density).cell,
+      )}
     >
       <span className="sr-only">로딩 중</span>
       <div aria-hidden="true" className="h-4 w-full rounded bg-muted" />

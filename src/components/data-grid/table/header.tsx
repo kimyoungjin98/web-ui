@@ -9,9 +9,11 @@ import {
   ROW_ACTIONS_WIDTH,
   type DataGridTableColumn,
 } from "./layout";
+import { getDataGridDensity } from "./density";
+import type { DataGridDensity } from "../types";
 
 const HEAD =
-  "flex items-center whitespace-nowrap bg-gray-50 px-4 py-3 text-sm font-semibold uppercase tracking-normal text-muted-foreground";
+  "flex items-center whitespace-nowrap bg-gray-50 font-semibold uppercase tracking-normal text-muted-foreground";
 
 const HEAD_BUTTON =
   "whitespace-pre-line inline-flex items-center gap-1 rounded-sm outline-none transition-colors hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/20";
@@ -23,6 +25,7 @@ type Props<T> = {
   selection?: DataGridSelection<T>;
   sort: DataGridSort;
   hasRowActions: boolean;
+  density: DataGridDensity;
   setMain: (node: HTMLDivElement | null) => void;
   onMainScroll: (event: React.UIEvent<HTMLDivElement>) => void;
   onSortChange?: (sort: DataGridSort) => void;
@@ -43,12 +46,15 @@ export function DataGridHeader<T>(p: Props<T>) {
           className="min-w-0 flex-1 overflow-x-hidden"
         >
           <div className="flex" style={{ minWidth: p.minMainWidth }}>
-            {p.selection ? <SelectionHead selection={p.selection} /> : null}
+            {p.selection ? (
+              <SelectionHead selection={p.selection} density={p.density} />
+            ) : null}
             {p.mainCols.map((c) => (
               <HeadCell
                 key={c.column.id}
                 item={c}
                 sort={p.sort}
+                density={p.density}
                 onSortChange={p.onSortChange}
               />
             ))}
@@ -66,10 +72,11 @@ export function DataGridHeader<T>(p: Props<T>) {
                 key={c.column.id}
                 item={c}
                 sort={p.sort}
+                density={p.density}
                 onSortChange={p.onSortChange}
               />
             ))}
-            {p.hasRowActions ? <ActionHead /> : null}
+            {p.hasRowActions ? <ActionHead density={p.density} /> : null}
           </div>
         ) : null}
       </div>
@@ -77,12 +84,22 @@ export function DataGridHeader<T>(p: Props<T>) {
   );
 }
 
-function SelectionHead<T>({ selection }: { selection: DataGridSelection<T> }) {
+function SelectionHead<T>({
+  density,
+  selection,
+}: {
+  density: DataGridDensity;
+  selection: DataGridSelection<T>;
+}) {
+  const densityStyles = getDataGridDensity(density);
   return (
     <div
       role="columnheader"
-      style={{ flex: "0 0 48px" }}
-      className="box-border flex min-h-12 w-12 shrink-0 items-center bg-gray-50 px-4 py-3 text-left"
+      style={{ flex: `0 0 ${densityStyles.selectionWidth}` }}
+      className={cn(
+        "box-border flex shrink-0 items-center bg-gray-50 text-left",
+        densityStyles.header,
+      )}
     >
       <Checkbox
         aria-label="현재 페이지 캠페인 전체 선택"
@@ -96,15 +113,18 @@ function SelectionHead<T>({ selection }: { selection: DataGridSelection<T> }) {
 }
 
 function HeadCell<T>({
+  density,
   item,
   sort,
   onSortChange,
 }: {
+  density: DataGridDensity;
   item: DataGridTableColumn<T>;
   sort: DataGridSort;
   onSortChange?: (sort: DataGridSort) => void;
 }) {
   const column = item.column;
+  const densityStyles = getDataGridDensity(density);
   const active = sort?.columnId === column.id;
   const align = column.align;
   return (
@@ -123,6 +143,7 @@ function HeadCell<T>({
       className={cn(
         "box-border shrink-0",
         HEAD,
+        densityStyles.header,
         align === "center" && "justify-center",
         align === "right" && "justify-end",
         !align && "justify-start",
@@ -145,7 +166,8 @@ function HeadCell<T>({
   );
 }
 
-function ActionHead() {
+function ActionHead({ density }: { density: DataGridDensity }) {
+  const densityStyles = getDataGridDensity(density);
   return (
     <div
       role="columnheader"
@@ -154,7 +176,10 @@ function ActionHead() {
         width: ROW_ACTIONS_WIDTH,
         minWidth: ROW_ACTIONS_WIDTH,
       }}
-      className="box-border flex min-h-12 shrink-0 items-center justify-end bg-gray-50 px-4 py-3 text-right text-sm font-semibold uppercase tracking-normal text-muted-foreground"
+      className={cn(
+        "box-border flex shrink-0 items-center justify-end bg-gray-50 text-right font-semibold uppercase tracking-normal text-muted-foreground",
+        densityStyles.header,
+      )}
     >
       액션
     </div>

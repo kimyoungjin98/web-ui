@@ -3,12 +3,13 @@ import type { ReactNode } from "react";
 import { Checkbox } from "../../checkbox";
 import { resolveCellContent } from "../libs/cell";
 import { cn } from "../../../libs/tailwind-util";
-import type { DataGridSelection } from "../types";
+import type { DataGridDensity, DataGridSelection } from "../types";
 import {
   PINNED_SIDE_SHADOW,
   ROW_ACTIONS_WIDTH,
   type DataGridTableColumn,
 } from "./layout";
+import { getDataGridDensity } from "./density";
 
 const ROW = "group hover:bg-gray-50";
 
@@ -34,6 +35,7 @@ type Props<T> = {
   setMain: (node: HTMLDivElement | null) => void;
   onMainScroll: (event: React.UIEvent<HTMLDivElement>) => void;
   animate?: boolean;
+  density: DataGridDensity;
 };
 
 export function DataGridRow<T>(p: Props<T>) {
@@ -68,6 +70,7 @@ export function DataGridRow<T>(p: Props<T>) {
         <div className="flex" style={{ minWidth: p.minMainWidth }}>
           {p.selection ? (
             <DataGridSelectionCell
+              density={p.density}
               row={p.row}
               index={p.index}
               selected={selected}
@@ -80,6 +83,7 @@ export function DataGridRow<T>(p: Props<T>) {
               row={p.row}
               index={p.index}
               item={c}
+              density={p.density}
             />
           ))}
         </div>
@@ -97,10 +101,12 @@ export function DataGridRow<T>(p: Props<T>) {
               row={p.row}
               index={p.index}
               item={c}
+              density={p.density}
             />
           ))}
           {p.rowActions ? (
             <DataGridRowActionsCell
+              density={p.density}
               row={p.row}
               index={p.index}
               rowActions={p.rowActions}
@@ -113,23 +119,27 @@ export function DataGridRow<T>(p: Props<T>) {
 }
 
 function DataGridSelectionCell<T>({
+  density,
   row,
   index,
   selected,
   selection,
 }: {
+  density: DataGridDensity;
   row: T;
   index: number;
   selected: boolean;
   selection: DataGridSelection<T>;
 }) {
+  const densityStyles = getDataGridDensity(density);
   return (
     <div
       role="cell"
       data-row-click-ignore
-      style={{ flex: "0 0 48px" }}
+      style={{ flex: `0 0 ${densityStyles.selectionWidth}` }}
       className={cn(
-        "box-border flex min-h-16 shrink-0 items-center px-4 py-3",
+        "box-border flex shrink-0 items-center",
+        densityStyles.selectionCell,
         selected && "shadow-[inset_3px_0_0_hsl(var(--primary))]",
       )}
     >
@@ -145,21 +155,25 @@ function DataGridSelectionCell<T>({
 }
 
 function DataGridCell<T>({
+  density,
   row,
   index,
   item,
 }: {
+  density: DataGridDensity;
   row: T;
   index: number;
   item: DataGridTableColumn<T>;
 }) {
   const column = item.column;
+  const densityStyles = getDataGridDensity(density);
   return (
     <div
       role="cell"
       style={item.style}
       className={cn(
-        "box-border flex min-w-0 shrink-0 items-center overflow-hidden whitespace-nowrap px-4 py-3 text-foreground",
+        "box-border flex min-w-0 shrink-0 items-center overflow-hidden whitespace-nowrap text-foreground",
+        densityStyles.cell,
         column.align === "center" && "justify-center",
         column.align === "right" && "justify-end",
         !column.align && "justify-start",
@@ -174,14 +188,17 @@ function DataGridCell<T>({
 }
 
 function DataGridRowActionsCell<T>({
+  density,
   row,
   index,
   rowActions,
 }: {
+  density: DataGridDensity;
   row: T;
   index: number;
   rowActions: (row: T, index: number) => React.ReactNode;
 }) {
+  const densityStyles = getDataGridDensity(density);
   return (
     <div
       role="cell"
@@ -191,7 +208,10 @@ function DataGridRowActionsCell<T>({
         width: ROW_ACTIONS_WIDTH,
         minWidth: ROW_ACTIONS_WIDTH,
       }}
-      className="box-border flex min-h-16 shrink-0 items-center justify-end px-4 py-3 text-right"
+      className={cn(
+        "box-border flex shrink-0 items-center justify-end text-right",
+        densityStyles.actionCell,
+      )}
     >
       {rowActions(row, index)}
     </div>

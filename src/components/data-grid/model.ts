@@ -1,7 +1,9 @@
 import { downloadDataGridAsExcel } from "./libs/export";
-import type { DataGridProps } from "./props";
+import type { ResolvedDataGridProps } from "./props";
 
-export function getDataGridModel<T>(p: DataGridProps<T>) {
+export function getDataGridModel<T extends object>(
+  p: ResolvedDataGridProps<T>,
+) {
   const action = p.excelDownload;
   const pageCount = Math.max(1, Math.ceil(p.total / p.pageSize));
   const firstItem = p.total === 0 ? 0 : (p.page - 1) * p.pageSize + 1;

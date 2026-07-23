@@ -5,6 +5,20 @@ export type DataGridSort = {
   direction: "asc" | "desc";
 } | null;
 
+export type DataGridDensity = "default" | "compact" | "ultra-compact";
+
+/** AG Grid와 유사하게 JSON으로 전달할 수 있는 컬럼 정의입니다. */
+export type DataGridColumnDef<T extends object> = {
+  align?: "left" | "center" | "right";
+  field: Extract<keyof T, string>;
+  headerName?: string;
+  hide?: boolean;
+  pinned?: "right";
+  sortable?: boolean;
+  type?: "text" | "number" | "date" | "boolean";
+  width?: number | string;
+};
+
 export type DataGridColumn<T> = {
   id: string;
   header: React.ReactNode;

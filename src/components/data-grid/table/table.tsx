@@ -1,6 +1,11 @@
 import type * as React from "react";
 import { useCallback, useRef, useState } from "react";
-import type { DataGridColumn, DataGridSelection, DataGridSort } from "../types";
+import type {
+  DataGridColumn,
+  DataGridDensity,
+  DataGridSelection,
+  DataGridSort,
+} from "../types";
 import { DataGridBody } from "./body";
 import { DataGridHeader } from "./header";
 import { getDataGridTableLayout, ROW_ACTIONS_WIDTH } from "./layout";
@@ -8,6 +13,7 @@ import { getDataGridTableLayout, ROW_ACTIONS_WIDTH } from "./layout";
 type Props<T> = {
   ariaLabel?: string;
   columns: DataGridColumn<T>[];
+  density: DataGridDensity;
   rows: T[];
   getRowId: (row: T, index: number) => string;
   loading: boolean;
@@ -134,6 +140,7 @@ export function DataGridTable<T>(p: Props<T>) {
           sideCols={layout.sideCols}
           sort={p.sort}
           hasRowActions={Boolean(p.rowActions)}
+          density={p.density}
           minMainWidth={p.minTableWidth}
           setMain={setMain}
           onMainScroll={onMainScroll}

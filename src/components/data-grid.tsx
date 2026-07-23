@@ -1,5 +1,7 @@
 export type {
   DataGridColumn,
+  DataGridColumnDef,
+  DataGridDensity,
   DataGridSelection,
   DataGridSort,
 } from "./data-grid/types";
