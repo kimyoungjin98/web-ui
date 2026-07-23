@@ -14,9 +14,7 @@ type DialogOutsideInteractionTarget = {
   closest: (selectors: string) => unknown;
 };
 
-export function shouldPreventDialogOutsideInteraction(
-  target: unknown,
-) {
+export function shouldPreventDialogOutsideInteraction(target: unknown) {
   if (
     !target ||
     typeof target !== "object" ||
@@ -105,7 +103,7 @@ const DialogContent = React.forwardRef<
           {children}
           {showClose ? (
             <DialogPrimitive.Close className="absolute right-4 top-4 z-20 rounded-md opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring">
-              <Icon name="lucide:x" className="size-4" />
+              <Icon name="lucide:x" className="size-4 cursor-pointer" />
               <span className="sr-only">닫기</span>
             </DialogPrimitive.Close>
           ) : null}

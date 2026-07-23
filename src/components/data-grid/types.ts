@@ -17,6 +17,7 @@ export type DataGridColumn<T> = {
   width?: string;
   fixed?: "right";
   className?: string;
+  type?: "text" | "number" | "date" | "boolean";
 };
 
 export type DataGridExcelDownloadAction = {
