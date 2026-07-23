@@ -5,6 +5,7 @@ import { Select as SelectPrimitive } from "radix-ui";
 
 import Icon from "./icon";
 import { cn } from "../libs/tailwind-util";
+import { getFormSize, type FormSize } from "./form-size";
 
 const EMPTY_VALUE = "__empty_select_value__";
 
@@ -15,6 +16,7 @@ type SelectPortalContainer = React.ComponentProps<
 type SelectPortalContextValue = {
   portalContainer: SelectPortalContainer;
   setPortalTrigger: (trigger: HTMLButtonElement | null) => void;
+  size: FormSize;
 };
 
 const SelectPortalContext =
@@ -83,8 +85,9 @@ function Select({
   defaultValue,
   onValueChange,
   children,
+  size = "default",
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Root>) {
+}: React.ComponentProps<typeof SelectPrimitive.Root> & { size?: FormSize }) {
   const [portalContainer, setPortalContainer] =
     React.useState<SelectPortalContainer>();
   const setPortalTrigger = React.useCallback(
@@ -94,8 +97,8 @@ function Select({
     [],
   );
   const portalContext = React.useMemo(
-    () => ({ portalContainer, setPortalTrigger }),
-    [portalContainer, setPortalTrigger],
+    () => ({ portalContainer, setPortalTrigger, size }),
+    [portalContainer, setPortalTrigger, size],
   );
 
   return (
@@ -120,10 +123,12 @@ function SelectTrigger({
   className,
   children,
   ref,
+  size,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Trigger>) {
-  const setPortalTrigger =
-    React.useContext(SelectPortalContext)?.setPortalTrigger;
+}: React.ComponentProps<typeof SelectPrimitive.Trigger> & { size?: FormSize }) {
+  const selectContext = React.useContext(SelectPortalContext);
+  const setPortalTrigger = selectContext?.setPortalTrigger;
+  const sizeStyle = getFormSize(size ?? selectContext?.size);
   const triggerRef = React.useMemo(
     () => composeSelectRefs(setPortalTrigger, ref),
     [ref, setPortalTrigger],
@@ -134,12 +139,15 @@ function SelectTrigger({
       ref={triggerRef}
       data-slot="select-trigger"
       className={cn(
-        "select-none flex h-9 w-full items-center justify-between gap-2 rounded-md border border-input bg-card px-3 text-sm font-semibold outline-none transition-all disabled:cursor-not-allowed disabled:opacity-50 data-[placeholder]:text-muted-foreground focus:border-ring focus:ring-3 focus:ring-ring/15 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/15 data-[state=open]:border-ring data-[state=open]:ring-3 data-[state=open]:ring-ring/15",
+        "select-none flex w-full items-center justify-between gap-2 rounded-md border border-input bg-card font-semibold outline-none transition-all disabled:cursor-not-allowed disabled:opacity-50 data-[placeholder]:text-muted-foreground focus:border-ring focus:ring-3 focus:ring-ring/15 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/15 data-[state=open]:border-ring data-[state=open]:ring-3 data-[state=open]:ring-ring/15",
+        sizeStyle.height,
+        sizeStyle.inputPadding,
+        sizeStyle.text,
         className,
       )}
       {...props}
     >
-      <span className="min-w-0 flex-1 truncate text-left text-sm">
+      <span className={cn("min-w-0 flex-1 truncate text-left", sizeStyle.text)}>
         {children}
       </span>
       <SelectPrimitive.Icon className="flex items-center">
@@ -196,12 +204,15 @@ function SelectItem({
   value,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Item>) {
+  const sizeStyle = getFormSize(React.useContext(SelectPortalContext)?.size);
+
   return (
     <SelectPrimitive.Item
       data-slot="select-item"
       value={toRadixValue(value)}
       className={cn(
-        "relative flex cursor-default select-none items-center rounded-md py-1.5 pl-8 pr-2 text-sm font-semibold outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[state=checked]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        "relative flex cursor-default select-none items-center rounded-md font-semibold outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[state=checked]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        sizeStyle.selectItem,
         className,
       )}
       {...props}

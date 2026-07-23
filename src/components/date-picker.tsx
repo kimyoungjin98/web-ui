@@ -8,6 +8,7 @@ import type { DateRange } from "react-day-picker";
 import { Button } from "./button/button";
 import { Calendar } from "./calendar";
 import Icon from "./icon";
+import { getFormSize, type FormSize } from "./form-size";
 import { cn } from "../libs/tailwind-util";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 
@@ -22,6 +23,7 @@ type DatePickerProps = {
   disabled?: boolean;
   name?: string;
   className?: string;
+  size?: FormSize;
 };
 
 type DateRangeValue = {
@@ -39,6 +41,7 @@ type DateRangePickerProps = {
   fromName?: string;
   toName?: string;
   className?: string;
+  size?: FormSize;
 };
 
 type DateParts = {
@@ -49,7 +52,7 @@ type DateParts = {
 
 const DATE_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/;
 const PICKER_TRIGGER_CLASS =
-  "h-9 w-full justify-start rounded-md border border-input bg-card px-3 text-left font-semibold shadow-none outline-none transition-all hover:bg-card hover:text-foreground focus:border-ring focus:ring-3 focus:ring-ring/15 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/15 data-[state=open]:border-ring data-[state=open]:ring-3 data-[state=open]:ring-ring/15 disabled:cursor-not-allowed disabled:opacity-50";
+  "w-full justify-start rounded-md border border-input bg-card text-left font-semibold shadow-none outline-none transition-all hover:bg-card hover:text-foreground focus:border-ring focus:ring-3 focus:ring-ring/15 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/15 data-[state=open]:border-ring data-[state=open]:ring-3 data-[state=open]:ring-ring/15 disabled:cursor-not-allowed disabled:opacity-50";
 
 function DatePicker({
   value,
@@ -60,12 +63,14 @@ function DatePicker({
   disabled,
   name,
   className,
+  size = "default",
 }: DatePickerProps) {
   const [open, setOpen] = React.useState(false);
   const [portalContainer, setPortalContainer] = React.useState<Element | null>(
     null,
   );
   const selectedDate = parseDateValue(value);
+  const sizeStyle = getFormSize(size);
   const rootRef = React.useCallback((node: HTMLSpanElement | null) => {
     setPortalContainer(node?.closest("[data-slot='dialog-content']") ?? null);
   }, []);
@@ -101,17 +106,24 @@ function DatePicker({
               aria-label={value ? `선택한 날짜 ${value}` : placeholder}
               className={cn(
                 PICKER_TRIGGER_CLASS,
+                sizeStyle.height,
+                sizeStyle.inputPadding,
+                sizeStyle.text,
                 value ? "pr-16" : "pr-9",
                 className,
               )}
             >
               <Icon
                 name="lucide:calendar"
-                className="size-4 shrink-0 text-muted-foreground"
+                className={cn(
+                  "shrink-0 text-muted-foreground",
+                  size === "xs" ? "size-3.5" : "size-4",
+                )}
               />
               <span
                 className={cn(
                   "min-w-0 flex-1 truncate",
+                  sizeStyle.text,
                   !value && "text-muted-foreground",
                 )}
               >
@@ -185,6 +197,7 @@ function DateRangePicker({
   fromName,
   toName,
   className,
+  size = "default",
 }: DateRangePickerProps) {
   const [open, setOpen] = React.useState(false);
   const [portalContainer, setPortalContainer] = React.useState<Element | null>(
@@ -197,6 +210,7 @@ function DateRangePicker({
       ? { from: selectedFrom, to: selectedTo }
       : undefined;
   const hasValue = Boolean(value.from || value.to);
+  const sizeStyle = getFormSize(size);
   const rootRef = React.useCallback((node: HTMLSpanElement | null) => {
     setPortalContainer(node?.closest("[data-slot='dialog-content']") ?? null);
   }, []);
@@ -263,17 +277,24 @@ function DateRangePicker({
               }
               className={cn(
                 PICKER_TRIGGER_CLASS,
+                sizeStyle.height,
+                sizeStyle.inputPadding,
+                sizeStyle.text,
                 hasValue ? "pr-16" : "pr-9",
                 className,
               )}
             >
               <Icon
                 name="lucide:calendar-range"
-                className="size-4 shrink-0 text-muted-foreground"
+                className={cn(
+                  "shrink-0 text-muted-foreground",
+                  size === "xs" ? "size-3.5" : "size-4",
+                )}
               />
               <span
                 className={cn(
                   "min-w-0 flex-1 truncate",
+                  sizeStyle.text,
                   !hasValue && "text-muted-foreground",
                 )}
               >
