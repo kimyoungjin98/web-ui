@@ -6,7 +6,7 @@ export const SELECTION_COLUMN_WIDTH = "48px";
 export const DEFAULT_FIXED_COLUMN_WIDTH = "160px";
 export const DEFAULT_COLUMN_MIN_WIDTH = "96px";
 export const PINNED_SIDE_SHADOW =
-  "shadow-[-12px_0_18px_-22px_rgba(15,23,42,0.30)]";
+  "shadow-[-12px_0_18px_-22px_var(--border)]";
 
 export type DataGridTableColumn<T> = {
   column: DataGridColumn<T>;
@@ -62,4 +62,3 @@ function createSideStyle(width: string): React.CSSProperties {
     minWidth: width,
   };
 }
-

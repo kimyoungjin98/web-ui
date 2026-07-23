@@ -39,7 +39,7 @@ function FileRow(props: RowProps) {
   const { item, disabled, onRemove, onRetry } = props;
 
   return (
-    <li className="rounded border border-gray-200 bg-white p-3">
+    <li className="rounded border border-border bg-card p-3">
       <div className="flex items-start gap-3">
         <FilePreview item={item} />
         <FileMeta item={item} />
@@ -186,7 +186,7 @@ function ProgressBar({
         : "bg-primary";
 
   return (
-    <div className="h-2 overflow-hidden rounded-full bg-gray-100">
+    <div className="h-2 overflow-hidden rounded-full bg-muted">
       <div
         className={`h-full rounded-full transition-all ${color}`}
         style={{ width: `${Math.max(0, Math.min(value, 100))}%` }}

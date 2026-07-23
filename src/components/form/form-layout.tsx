@@ -15,9 +15,9 @@ export function FormSection({
   return (
     <section
       aria-labelledby={titleId}
-      className="overflow-hidden rounded-md border border-gray-200 bg-white shadow-sm"
+      className="overflow-hidden rounded-md border border-border bg-card shadow-sm"
     >
-      <div className="border-b border-gray-200 bg-white px-4 py-4 sm:px-5">
+      <div className="border-b border-border bg-card px-4 py-4 sm:px-5">
         <h3 id={titleId} className="text-base font-bold text-foreground">
           {title}
         </h3>

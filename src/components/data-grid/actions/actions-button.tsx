@@ -10,7 +10,7 @@ export const ActionsButton = React.forwardRef<HTMLButtonElement, ActionsButtonPr
       ref={ref}
       type={type}
       aria-label="액션 더보기"
-      className={`grid size-8 cursor-pointer place-items-center rounded-md text-gray-500 hover:bg-muted hover:text-primary ${className ?? ""}`}
+      className={`grid size-8 cursor-pointer place-items-center rounded-md text-muted-foreground hover:bg-muted hover:text-primary ${className ?? ""}`}
       {...props}
     >
       <Icon name="lucide:more-horizontal" className="size-4" />

@@ -12,7 +12,7 @@ type Props = {
 
 export function DataGridPagination(p: Props) {
   return (
-    <div className="-mt-px flex flex-col gap-3 border-t border-border bg-white px-3 py-3 text-sm font-semibold text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-4">
+    <div className="-mt-px flex flex-col gap-3 border-t border-border bg-card px-3 py-3 text-sm font-semibold text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-4">
       <span className="text-center sm:text-left">
         {p.firstItem}-{p.lastItem} / {p.total}
       </span>

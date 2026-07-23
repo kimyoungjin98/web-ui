@@ -45,6 +45,8 @@ export type DataGridProps<T extends object> = {
   searchable?: boolean;
   /** 가로 스크롤이 필요한 경우 메인 표에 적용할 최소 너비입니다. */
   minTableWidth?: string;
+  /** `true`이면 헤더와 행의 셀 경계선을 표시합니다. 기본값은 `false`입니다. */
+  gridLines?: boolean;
   /** Excel 내려받기 버튼의 동작과 상태입니다. `false`면 버튼을 숨깁니다. */
   excelDownload?: DataGridExcelDownloadAction | false;
   /** 행 선택 상태와 선택 토글 동작입니다. */

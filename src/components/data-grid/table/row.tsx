@@ -11,7 +11,7 @@ import {
 } from "./layout";
 import { getDataGridDensity } from "./density";
 
-const ROW = "group hover:bg-gray-50";
+const ROW = "group transition-colors hover:bg-muted/60";
 
 const ROW_ENTER = "data-grid-row-enter";
 
@@ -19,7 +19,7 @@ const SELECTED_ROW =
   "bg-primary-soft hover:bg-primary-soft focus-visible:bg-primary-soft";
 
 const CLICKABLE =
-  "cursor-pointer outline-none focus-visible:bg-gray-50 focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/20";
+  "cursor-pointer outline-none focus-visible:bg-muted focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/20";
 
 type Props<T> = {
   row: T;
@@ -91,7 +91,7 @@ export function DataGridRow<T>(p: Props<T>) {
       {hasSide ? (
         <div
           className={cn(
-            "flex shrink-0 border-l border-border/70 bg-card group-hover:bg-gray-50 group-data-[selected=true]:bg-primary-soft",
+            "flex shrink-0 border-l border-border/70 bg-card transition-colors group-hover:bg-muted/60 group-data-[selected=true]:bg-primary-soft",
             PINNED_SIDE_SHADOW,
           )}
         >

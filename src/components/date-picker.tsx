@@ -24,6 +24,7 @@ type DatePickerProps = {
   name?: string;
   className?: string;
   size?: FormSize;
+  hiddenResetButton?: boolean;
 };
 
 type DateRangeValue = {
@@ -63,6 +64,7 @@ function DatePicker({
   disabled,
   name,
   className,
+  hiddenResetButton = false,
   size = "default",
 }: DatePickerProps) {
   const [open, setOpen] = React.useState(false);
@@ -122,7 +124,7 @@ function DatePicker({
               />
               <span
                 className={cn(
-                  "min-w-0 flex-1 truncate",
+                  "min-w-0 flex-1",
                   sizeStyle.text,
                   !value && "text-muted-foreground",
                 )}
@@ -131,7 +133,7 @@ function DatePicker({
               </span>
             </Button>
           </PopoverTrigger>
-          {value && !disabled ? (
+          {value && !disabled && !hiddenResetButton ? (
             <button
               type="button"
               aria-label="날짜 초기화"

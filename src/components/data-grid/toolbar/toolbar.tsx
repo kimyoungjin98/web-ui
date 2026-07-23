@@ -24,7 +24,7 @@ type Props = {
 
 export function DataGridToolbar(p: Props) {
   return (
-    <div className="flex flex-col gap-3 border-b border-border bg-white p-3 sm:flex-row sm:items-center sm:justify-between sm:p-4">
+    <div className="flex flex-col gap-3 border-b border-border bg-card p-3 sm:flex-row sm:items-center sm:justify-between sm:p-4">
       <div className="flex min-w-0 w-full flex-wrap items-center gap-2 sm:gap-3">
         <ToolbarSearch
           search={p.search}

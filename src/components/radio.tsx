@@ -33,7 +33,7 @@ function Radio({
     <label
       data-slot="radio-label"
       className={cn(
-        "select-none group flex min-h-10 cursor-pointer items-center gap-2.5 rounded-md border border-input hover:bg-gray-50 bg-background px-3.5 text-sm font-semibold text-foreground transition-all has-[:checked]:border-primary-border has-[:checked]:bg-primary/5 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 has-[:focus-visible]:border-ring has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-ring/15",
+        "select-none group flex min-h-10 cursor-pointer items-center gap-2.5 rounded-md border border-input hover:bg-muted bg-background px-3.5 text-sm font-semibold text-foreground transition-all has-[:checked]:border-primary-border has-[:checked]:bg-primary/5 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 has-[:focus-visible]:border-ring has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-ring/15",
         labelClassName,
       )}
     >

@@ -5,17 +5,17 @@ import { cn } from "../libs/tailwind-util";
 import Icon from "./icon";
 
 const hintVariants = cva(
-  "flex items-start gap-2 rounded-md px-3 py-2.5 text-[13px] font-medium leading-5 text-[#37352f] shadow-none [&_svg]:mt-0.5 [&_svg]:size-4 [&_svg]:shrink-0 [&_[data-slot=icon]]:mt-0.5 [&_[data-slot=icon]]:size-4 [&_[data-slot=icon]]:shrink-0",
+  "flex items-start gap-2 rounded-md px-3 py-2.5 text-[13px] font-medium leading-5 text-foreground shadow-none [&_svg]:mt-0.5 [&_svg]:size-4 [&_svg]:shrink-0 [&_[data-slot=icon]]:mt-0.5 [&_[data-slot=icon]]:size-4 [&_[data-slot=icon]]:shrink-0",
   {
     variants: {
       variant: {
         default:
-          "bg-[#f7f6f3] [&_svg]:text-[#787774] [&_[data-slot=icon]]:text-[#787774]",
-        info: "bg-[#f3f6fb] [&_svg]:text-[#337ea9] [&_[data-slot=icon]]:text-[#337ea9]",
+          "bg-muted [&_svg]:text-muted-foreground [&_[data-slot=icon]]:text-muted-foreground",
+        info: "bg-info [&_svg]:text-info-foreground [&_[data-slot=icon]]:text-info-foreground",
         warning:
-          "bg-[#fbf3db] [&_svg]:text-[#cb912f] [&_[data-slot=icon]]:text-[#cb912f]",
+          "bg-warning [&_svg]:text-warning-foreground [&_[data-slot=icon]]:text-warning-foreground",
         success:
-          "bg-[#edf3ec] [&_svg]:text-[#448361] [&_[data-slot=icon]]:text-[#448361]",
+          "bg-success [&_svg]:text-success-foreground [&_[data-slot=icon]]:text-success-foreground",
       },
     },
     defaultVariants: {

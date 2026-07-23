@@ -105,7 +105,7 @@ function OverallProgress({
   if (!active) return null;
 
   return (
-    <div className="rounded border border-primary-border bg-white p-3">
+    <div className="rounded border border-primary-border bg-card p-3">
       <div className="mb-2 flex items-center justify-between gap-3">
         <p className="text-sm font-bold text-foreground">업로드 중</p>
         <p className="text-xs font-bold text-muted-foreground">
@@ -119,7 +119,7 @@ function OverallProgress({
 
 function ProgressBar({ value }: { value: number }) {
   return (
-    <div className="h-2 overflow-hidden rounded-full bg-gray-100">
+    <div className="h-2 overflow-hidden rounded-full bg-muted">
       <div
         className="h-full rounded-full bg-primary transition-all"
         style={{ width: `${Math.max(0, Math.min(value, 100))}%` }}

@@ -13,7 +13,7 @@ import { getDataGridDensity } from "./density";
 import type { DataGridDensity } from "../types";
 
 const HEAD =
-  "flex items-center whitespace-nowrap bg-gray-50 font-semibold uppercase tracking-normal text-muted-foreground";
+  "flex items-center whitespace-nowrap bg-muted font-bold uppercase tracking-normal text-muted-foreground";
 
 const HEAD_BUTTON =
   "whitespace-pre-line inline-flex items-center gap-1 rounded-sm outline-none transition-colors hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/20";
@@ -38,7 +38,7 @@ export function DataGridHeader<T>(p: Props<T>) {
     <div role="rowgroup" className="sticky top-0 z-20">
       <div
         role="row"
-        className="flex w-full min-w-full border-b border-border bg-gray-50"
+        className="flex w-full min-w-full border-b border-border bg-muted"
       >
         <div
           ref={p.setMain}
@@ -63,7 +63,7 @@ export function DataGridHeader<T>(p: Props<T>) {
         {hasSide ? (
           <div
             className={cn(
-              "flex shrink-0 border-l border-border/70 bg-gray-50",
+              "flex shrink-0 border-l border-border/70 bg-muted",
               PINNED_SIDE_SHADOW,
             )}
           >
@@ -97,7 +97,7 @@ function SelectionHead<T>({
       role="columnheader"
       style={{ flex: `0 0 ${densityStyles.selectionWidth}` }}
       className={cn(
-        "box-border flex shrink-0 items-center bg-gray-50 text-left",
+        "box-border flex shrink-0 items-center bg-muted text-left",
         densityStyles.header,
       )}
     >
@@ -177,7 +177,7 @@ function ActionHead({ density }: { density: DataGridDensity }) {
         minWidth: ROW_ACTIONS_WIDTH,
       }}
       className={cn(
-        "box-border flex shrink-0 items-center justify-end bg-gray-50 text-right font-semibold uppercase tracking-normal text-muted-foreground",
+        "box-border flex shrink-0 items-center justify-end bg-muted text-right font-bold uppercase tracking-normal text-muted-foreground",
         densityStyles.header,
       )}
     >

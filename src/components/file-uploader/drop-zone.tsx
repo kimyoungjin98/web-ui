@@ -16,7 +16,7 @@ import type { FileUploaderLabels } from "./types/types";
 const FRAME =
   "grid cursor-pointer place-items-center rounded-md border border-dashed p-8 text-center transition focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/25";
 const IDLE_FRAME =
-  "border-primary/30 bg-white hover:border-primary/60 hover:bg-primary/5 hover:shadow-sm focus-visible:border-primary/70 focus-visible:bg-primary/5";
+  "border-primary/30 bg-card hover:border-primary/60 hover:bg-primary/5 hover:shadow-sm focus-visible:border-primary/70 focus-visible:bg-primary/5";
 const READY_FRAME =
   "border-primary bg-primary/10 shadow-sm ring-3 ring-primary/15";
 const DISABLED_FRAME = "pointer-events-none opacity-50";
