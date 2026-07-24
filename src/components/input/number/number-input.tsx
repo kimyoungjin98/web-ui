@@ -5,10 +5,10 @@ import { getInputClassName, InputFrame } from "../style/input-style";
 
 type NumberInputProps = Omit<
   NumericFormatProps,
-  "allowNegative" | "onValueChange" | "size" | "thousandSeparator" | "value"
+  "allowNegative" | "onChange" | "size" | "thousandSeparator" | "value"
 > & {
   value?: number;
-  onValueChange: (value: number) => void;
+  onChange: (value: number) => void;
   thousandSeparator?: boolean;
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
@@ -22,7 +22,7 @@ function getNumberInputValue(floatValue: number | undefined) {
 function NumberInput({
   className,
   endIcon,
-  onValueChange,
+  onChange,
   size = "default",
   startIcon,
   thousandSeparator,
@@ -41,7 +41,7 @@ function NumberInput({
         thousandSeparator={thousandSeparator}
         {...props}
         onValueChange={({ floatValue }) =>
-          onValueChange(getNumberInputValue(floatValue))
+          onChange(getNumberInputValue(floatValue))
         }
       />
     </InputFrame>

@@ -214,7 +214,7 @@ function AppAlertHost() {
     <Dialog open onOpenChange={handleOpenChange}>
       <DialogContent className="max-w-[24rem] p-0">
         <DialogHeader className="gap-2">
-          <DialogTitle className="text-slate-800">{alert.title}</DialogTitle>
+          <DialogTitle className="text-base">{alert.title}</DialogTitle>
           {alert.description ? (
             <DialogDescription>{alert.description}</DialogDescription>
           ) : null}
