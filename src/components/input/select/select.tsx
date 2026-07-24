@@ -3,9 +3,9 @@
 import * as React from "react";
 import { Select as SelectPrimitive } from "radix-ui";
 
-import Icon from "./icon";
-import { cn } from "../libs/tailwind-util";
-import { getFormSize, type FormSize } from "./form-size";
+import Icon from "../../icon";
+import { cn } from "../../../libs/tailwind-util";
+import { getFormSize, type FormSize } from "../../form-size";
 
 const EMPTY_VALUE = "__empty_select_value__";
 

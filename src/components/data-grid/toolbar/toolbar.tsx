@@ -5,7 +5,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../select";
+} from "../../input/select/select";
 import type { DataGridExcelDownloadAction } from "../types";
 import { ToolbarSearch } from "./search";
 
