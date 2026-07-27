@@ -211,7 +211,7 @@ function SelectItem({
       data-slot="select-item"
       value={toRadixValue(value)}
       className={cn(
-        "relative flex cursor-default select-none items-center rounded-md font-semibold outline-none transition-colors focus:bg-muted focus:text-base-content data-[highlighted]:bg-muted data-[highlighted]:text-base-content data-[state=checked]:text-base-content data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        "relative flex cursor-pointer select-none items-center rounded-md font-semibold outline-none transition-colors focus:bg-muted focus:text-base-content data-[highlighted]:bg-muted data-[highlighted]:text-base-content data-[state=checked]:text-base-content data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         sizeStyle.selectItem,
         className,
       )}
