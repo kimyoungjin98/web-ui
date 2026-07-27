@@ -52,7 +52,7 @@ export function MultiSelect({
             />
           ) : null}
           <span className="min-w-0 flex-1 truncate">
-            {value.length ? `${label} ${value.length}개 선택` : `전체 ${label}`}
+            {value.length ? `${label} ${value.length}개 선택` : `${label}`}
           </span>
           <Icon
             name="lucide:chevron-down"
