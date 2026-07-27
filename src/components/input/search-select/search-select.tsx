@@ -5,6 +5,7 @@ import * as React from "react";
 import Icon from "../../icon";
 import { Popover, PopoverContent, PopoverTrigger } from "../../popover";
 import { cn } from "../../../libs/tailwind-util";
+import { getFormSize, type FormSize } from "../../form-size";
 import { Input } from "../input";
 import { resolveSelectPortalContainer } from "../select/select";
 import {
@@ -18,6 +19,7 @@ export type { SearchSelectOption } from "./search-select.utils";
 export type SearchSelectProps<TOption extends SearchSelectOption> = {
   options: readonly TOption[];
   value?: string;
+  selectedLabel?: React.ReactNode;
   onValueChange?: (value: string) => void;
   onCreateOption?: (query: string) => TOption | void | Promise<TOption | void>;
   onSearchChange?: (query: string) => void;
@@ -29,11 +31,13 @@ export type SearchSelectProps<TOption extends SearchSelectOption> = {
   emptyMessage?: string;
   createMessage?: (query: string) => React.ReactNode;
   disabled?: boolean;
+  size?: FormSize;
 };
 
 export function SearchSelect<TOption extends SearchSelectOption>({
   options,
   value,
+  selectedLabel,
   onValueChange,
   onCreateOption,
   onSearchChange,
@@ -45,11 +49,13 @@ export function SearchSelect<TOption extends SearchSelectOption>({
   emptyMessage = "검색 결과가 없습니다.",
   createMessage = (query) => `“${query}” 등록`,
   disabled = false,
+  size = "default",
 }: SearchSelectProps<TOption>) {
   const [open, setOpen] = React.useState(false);
   const [query, setQuery] = React.useState("");
   const [isCreating, setIsCreating] = React.useState(false);
   const [trigger, setTrigger] = React.useState<HTMLButtonElement | null>(null);
+  const sizeStyle = getFormSize(size);
 
   const matchingOptions = React.useMemo(
     () =>
@@ -99,7 +105,12 @@ export function SearchSelect<TOption extends SearchSelectOption>({
           ref={setTrigger}
           type="button"
           disabled={disabled}
-          className="flex w-full select-none items-center justify-between gap-2 rounded-md border border-input bg-card px-3 py-2 text-sm font-semibold outline-none transition-all disabled:cursor-not-allowed disabled:opacity-50 data-[state=open]:border-ring data-[state=open]:ring-3 data-[state=open]:ring-ring/15"
+          className={cn(
+            "flex w-full select-none items-center justify-between gap-2 rounded-md border border-input bg-card font-semibold outline-none transition-all disabled:cursor-not-allowed disabled:opacity-50 data-[state=open]:border-ring data-[state=open]:ring-3 data-[state=open]:ring-ring/15",
+            sizeStyle.height,
+            sizeStyle.inputPadding,
+            sizeStyle.text,
+          )}
         >
           <span
             className={cn(
@@ -107,11 +118,17 @@ export function SearchSelect<TOption extends SearchSelectOption>({
               !selectedOption && "text-muted-foreground",
             )}
           >
-            {selectedOption?.label ?? placeholder}
+            {selectedOption?.label ?? selectedLabel ?? placeholder}
           </span>
           <Icon
             name="lucide:chevron-down"
-            className="size-4 shrink-0 text-muted-foreground"
+            className={cn(
+              "shrink-0 text-muted-foreground",
+              sizeStyle.icon
+                .replace("left-2.5", "size-4")
+                .replace("left-2", "size-3.5")
+                .replace("left-3", "size-5"),
+            )}
           />
         </button>
       </PopoverTrigger>
@@ -125,6 +142,7 @@ export function SearchSelect<TOption extends SearchSelectOption>({
           value={query}
           disabled={disabled || isCreating}
           placeholder={searchPlaceholder}
+          size={size}
           onChange={(event) => {
             setQuery(event.target.value);
             onSearchChange?.(event.target.value);
@@ -149,7 +167,8 @@ export function SearchSelect<TOption extends SearchSelectOption>({
                   aria-selected={selected}
                   disabled={disabled || isCreating || option.disabled}
                   className={cn(
-                    "flex w-full cursor-pointer items-center rounded-md px-3 py-2 text-left text-sm font-semibold outline-none transition-colors hover:bg-muted focus:bg-muted disabled:pointer-events-none disabled:opacity-50",
+                    "flex w-full cursor-pointer items-center rounded-md text-left font-semibold outline-none transition-colors hover:bg-muted focus:bg-muted disabled:pointer-events-none disabled:opacity-50",
+                    sizeStyle.selectItem,
                     selected && "bg-muted",
                   )}
                   onClick={() => {
@@ -163,7 +182,12 @@ export function SearchSelect<TOption extends SearchSelectOption>({
               );
             })
           ) : (
-            <p className="px-3 py-6 text-center text-sm text-muted-foreground">
+            <p
+              className={cn(
+                "px-3 py-6 text-center text-muted-foreground",
+                sizeStyle.text,
+              )}
+            >
               {canCreate ? createMessage(query.trim()) : emptyMessage}
             </p>
           )}
