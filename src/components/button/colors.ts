@@ -7,21 +7,27 @@ const solid: Record<ButtonColor, string> = {
 };
 
 const outline: Record<ButtonColor, string> = {
-  primary: "border-primary-border bg-background text-primary-hover hover:bg-primary-soft",
-  secondary: "border-border bg-background text-secondary-foreground hover:bg-secondary",
-  neutral: "border-input bg-background hover:bg-muted",
+  primary:
+    "border-primary-border bg-background text-primary-hover hover:bg-primary-soft",
+  secondary:
+    "border-border bg-background text-secondary-foreground hover:bg-secondary",
+  neutral: "border-input bg-card hover:bg-muted",
 };
 
 const ghost: Record<ButtonColor, string> = {
   primary: "text-primary-hover hover:bg-primary-soft",
   secondary: "text-secondary-foreground hover:bg-secondary",
-  neutral: "hover:bg-muted",
+  neutral: "hover:bg-muted-foreground/20",
 };
 
-export function getButtonColorClass(variant: ButtonVariant, color: ButtonColor) {
+export function getButtonColorClass(
+  variant: ButtonVariant,
+  color: ButtonColor,
+) {
   if (variant === "default") return solid.primary;
   if (variant === "secondary") return solid.secondary;
-  if (variant === "destructive") return "bg-destructive text-primary-foreground hover:bg-destructive/90";
+  if (variant === "destructive")
+    return "bg-destructive text-primary-foreground hover:bg-destructive/90";
   if (variant === "link") return "text-link";
 
   return { ghost, outline, solid }[variant][color];

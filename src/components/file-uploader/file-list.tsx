@@ -58,7 +58,7 @@ function FileRow(props: RowProps) {
 function FileMeta({ item }: { item: UploadFileItem }) {
   return (
     <div className="min-w-0 flex-1">
-      <p className="truncate text-sm font-bold text-foreground">{item.name}</p>
+      <p className="truncate text-sm font-bold text-base-content">{item.name}</p>
       <p className="mt-0.5 text-xs font-semibold text-muted-foreground">
         {formatBytes(item.size)} · {item.extension || "FILE"}
       </p>

@@ -18,7 +18,7 @@ export function FormSection({
       className="overflow-hidden rounded-md border border-border bg-card shadow-sm"
     >
       <div className="border-b border-border bg-card px-4 py-4 sm:px-5">
-        <h3 id={titleId} className="text-base font-bold text-foreground">
+        <h3 id={titleId} className="text-base font-bold text-base-content">
           {title}
         </h3>
       </div>

@@ -107,7 +107,7 @@ function OverallProgress({
   return (
     <div className="rounded border border-primary-border bg-card p-3">
       <div className="mb-2 flex items-center justify-between gap-3">
-        <p className="text-sm font-bold text-foreground">업로드 중</p>
+        <p className="text-sm font-bold text-base-content">업로드 중</p>
         <p className="text-xs font-bold text-muted-foreground">
           전체 {progress}%
         </p>

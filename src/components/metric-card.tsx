@@ -51,7 +51,7 @@ function MetricCard({
       <CardContent>
         <p
           className={cn(
-            "text-2xl font-bold leading-none text-foreground",
+            "text-2xl font-bold leading-none text-base-content",
             valueClassName,
           )}
         >

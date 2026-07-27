@@ -80,7 +80,7 @@ export function Toaster(props: ToasterProps) {
         toastOptions={{
           classNames: {
             toast:
-              "cursor-pointer border-border bg-card text-foreground shadow-lg rounded-md font-medium ring-1 ring-border/50",
+              "cursor-pointer border-border bg-card text-base-content shadow-lg rounded-md font-medium ring-1 ring-border/50",
             title: "text-sm font-bold",
             description: "text-xs font-semibold text-muted-foreground",
             icon: "text-current",

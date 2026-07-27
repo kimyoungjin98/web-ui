@@ -50,7 +50,7 @@ function Checkbox({
   return (
     <label
       className={cn(
-            "group select-none flex cursor-pointer items-center rounded-md bg-background font-semibold text-foreground transition-all hover:bg-muted has-[:checked]:border-primary-border has-[:checked]:bg-primary/10 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 has-[:focus-visible]:border-ring has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-ring/15",
+            "group select-none flex cursor-pointer items-center rounded-md bg-background font-semibold text-base-content transition-all hover:bg-muted has-[:checked]:border-primary-border has-[:checked]:bg-primary/10 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 has-[:focus-visible]:border-ring has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-ring/15",
         sizeToken.label,
         containerClassName,
         labelClassName,

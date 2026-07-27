@@ -11,7 +11,7 @@ import {
 } from "./layout";
 import { getDataGridDensity } from "./density";
 
-const ROW = "group transition-colors hover:bg-muted/60";
+const ROW = "group transition-colors hover:bg-muted";
 
 const ROW_ENTER = "data-grid-row-enter";
 
@@ -91,7 +91,7 @@ export function DataGridRow<T>(p: Props<T>) {
       {hasSide ? (
         <div
           className={cn(
-            "flex shrink-0 border-l border-border/70 bg-card transition-colors group-hover:bg-muted/60 group-data-[selected=true]:bg-primary-soft",
+            "flex shrink-0 border-l border-border/70 bg-inherit",
             PINNED_SIDE_SHADOW,
           )}
         >
@@ -172,7 +172,7 @@ function DataGridCell<T>({
       role="cell"
       style={item.style}
       className={cn(
-        "box-border flex min-w-0 shrink-0 items-center overflow-hidden whitespace-nowrap text-foreground",
+        "box-border flex min-w-0 shrink-0 items-center overflow-hidden whitespace-nowrap text-base-content",
         densityStyles.cell,
         column.align === "center" && "justify-center",
         column.align === "right" && "justify-end",

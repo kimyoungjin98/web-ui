@@ -7,27 +7,24 @@ export function resolveCellContent<T>(
   column: DataGridColumn<T>,
   index: number,
 ) {
-  if (column.cell) {
-    return column.cell(row, index);
-  }
+  const accessor = column.accessor;
+  const renderer =
+    column.cell ?? (typeof accessor === "function" ? accessor : undefined);
 
-  if (typeof column.accessor === "function") {
-    return column.accessor(row, index);
-  }
+  if (renderer) return renderer(row, index);
 
-  if (column.accessor) {
-    const value = row[column.accessor];
+  const key = typeof accessor === "function" ? column.id : accessor ?? column.id;
 
-    if (React.isValidElement(value)) {
-      return value;
-    }
+  return formatCellValue(getRowValue(row, key));
+}
 
-    if (value == null) {
-      return "";
-    }
+function getRowValue<T>(row: T, key: PropertyKey): unknown {
+  return (row as Record<PropertyKey, unknown>)[key];
+}
 
-    return String(value);
-  }
+function formatCellValue(value: unknown): React.ReactNode {
+  if (React.isValidElement(value)) return value;
+  if (value == null) return "";
 
-  return "";
+  return String(value);
 }

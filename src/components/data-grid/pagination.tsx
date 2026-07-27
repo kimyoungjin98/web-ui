@@ -23,7 +23,7 @@ export function DataGridPagination(p: Props) {
           label="이전"
           onClick={() => p.onPageChange?.(Math.max(1, p.page - 1))}
         />
-        <span className="min-w-16 flex-1 text-center text-foreground sm:flex-none">
+        <span className="min-w-16 flex-1 text-center text-base-content sm:flex-none">
           {p.page} / {p.pageCount}
         </span>
         <PageButton

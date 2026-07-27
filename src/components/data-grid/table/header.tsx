@@ -12,11 +12,10 @@ import {
 import { getDataGridDensity } from "./density";
 import type { DataGridDensity } from "../types";
 
-const HEAD =
-  "flex items-center whitespace-nowrap bg-muted font-bold uppercase tracking-normal text-muted-foreground";
+const HEAD = "flex items-center whitespace-nowrap uppercase tracking-normal";
 
 const HEAD_BUTTON =
-  "whitespace-pre-line inline-flex items-center gap-1 rounded-sm outline-none transition-colors hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/20";
+  "whitespace-pre-line inline-flex items-center gap-1 rounded-sm outline-none transition-colors hover:text-base-content focus-visible:ring-3 focus-visible:ring-ring/20";
 
 type Props<T> = {
   mainCols: DataGridTableColumn<T>[];
@@ -38,7 +37,7 @@ export function DataGridHeader<T>(p: Props<T>) {
     <div role="rowgroup" className="sticky top-0 z-20">
       <div
         role="row"
-        className="flex w-full min-w-full border-b border-border bg-muted"
+        className="flex w-full min-w-full border-b border-border bg-base-content/5 font-semibold text-base-content"
       >
         <div
           ref={p.setMain}
@@ -63,7 +62,7 @@ export function DataGridHeader<T>(p: Props<T>) {
         {hasSide ? (
           <div
             className={cn(
-              "flex shrink-0 border-l border-border/70 bg-muted",
+              "flex shrink-0 border-l border-border/70",
               PINNED_SIDE_SHADOW,
             )}
           >
@@ -97,7 +96,7 @@ function SelectionHead<T>({
       role="columnheader"
       style={{ flex: `0 0 ${densityStyles.selectionWidth}` }}
       className={cn(
-        "box-border flex shrink-0 items-center bg-muted text-left",
+        "box-border flex shrink-0 items-center text-left",
         densityStyles.header,
       )}
     >
@@ -177,7 +176,7 @@ function ActionHead({ density }: { density: DataGridDensity }) {
         minWidth: ROW_ACTIONS_WIDTH,
       }}
       className={cn(
-        "box-border flex shrink-0 items-center justify-end bg-muted text-right font-bold uppercase tracking-normal text-muted-foreground",
+        "box-border flex shrink-0 items-center justify-end text-right font-bold uppercase tracking-normal",
         densityStyles.header,
       )}
     >
@@ -218,7 +217,7 @@ function SortButton<T>({
         name={icon}
         className={cn(
           "size-3.5",
-          active ? "text-foreground" : "text-muted-foreground",
+          active ? "text-base-content" : "text-muted-foreground",
         )}
       />
     </button>

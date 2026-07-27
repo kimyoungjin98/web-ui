@@ -49,11 +49,11 @@ function Tabs<TValue extends string>({
             data-value={option.value}
             className={cn(
               "flex flex-1 items-center justify-center whitespace-nowrap rounded-md px-2 py-1 text-xs font-semibold transition-colors outline-none sm:flex-none",
-              "text-muted-foreground hover:text-foreground hover:bg-background",
+              "text-muted-foreground hover:text-base-content hover:bg-muted",
               "focus-visible:ring-3 focus-visible:ring-ring/15 focus-visible:border-ring",
               "disabled:pointer-events-none disabled:opacity-50",
               selected &&
-                "bg-background text-foreground hover:bg-background *:font-semibold",
+                "bg-background text-base-content hover:bg-background *:font-semibold",
               triggerClassName,
             )}
             onClick={() => onValueChange(option.value)}
