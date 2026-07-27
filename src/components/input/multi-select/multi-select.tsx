@@ -13,11 +13,13 @@ export type MultiSelectOption = { value: string; label: string };
 
 export function MultiSelect({
   label,
+  icon,
   options,
   value,
   onValueChange,
 }: {
   label: string;
+  icon?: string;
   options: MultiSelectOption[];
   value: string[];
   onValueChange: (value: string[]) => void;
@@ -43,6 +45,12 @@ export function MultiSelect({
             open && "border-ring ring-3 ring-ring/15",
           )}
         >
+          {icon ? (
+            <Icon
+              name={icon}
+              className="size-4 shrink-0 text-muted-foreground"
+            />
+          ) : null}
           <span className="min-w-0 flex-1 truncate">
             {value.length ? `${label} ${value.length}개 선택` : `전체 ${label}`}
           </span>

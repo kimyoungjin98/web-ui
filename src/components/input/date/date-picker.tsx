@@ -51,6 +51,16 @@ type DateParts = {
   day: number;
 };
 
+type MonthPickerProps = Omit<DatePickerProps, "value" | "onValueChange"> & {
+  value: string;
+  onValueChange: (value: string) => void;
+};
+
+type YearPickerProps = Omit<DatePickerProps, "value" | "onValueChange"> & {
+  value: string;
+  onValueChange: (value: string) => void;
+};
+
 const DATE_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/;
 const PICKER_TRIGGER_CLASS =
   "w-full justify-start rounded-md border border-input bg-card hover:bg-card text-left font-semibold shadow-none outline-none transition-all hover:text-base-content focus:border-ring focus:ring-3 focus:ring-ring/15 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/15 data-[state=open]:border-ring data-[state=open]:ring-3 data-[state=open]:ring-ring/15 disabled:cursor-not-allowed disabled:opacity-50";
@@ -355,6 +365,207 @@ function DateRangePicker({
   );
 }
 
+function MonthPicker({
+  value,
+  onValueChange,
+  placeholder = "월 선택",
+  disabled,
+  size = "default",
+  className,
+}: MonthPickerProps) {
+  const [open, setOpen] = React.useState(false);
+  const [year, setYear] = React.useState(
+    () => Number(value.slice(0, 4)) || dayjs().year(),
+  );
+  const sizeStyle = getFormSize(size);
+  const selectedMonth = value.slice(5, 7);
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          type="button"
+          variant="outline"
+          disabled={disabled}
+          className={cn(
+            PICKER_TRIGGER_CLASS,
+            sizeStyle.height,
+            sizeStyle.inputPadding,
+            sizeStyle.text,
+            className,
+          )}
+        >
+          <Icon
+            name="lucide:calendar"
+            className="size-4 shrink-0 text-muted-foreground"
+          />
+          <span
+            className={cn(
+              "flex-1 text-left",
+              !value && "text-muted-foreground",
+            )}
+          >
+            {value || placeholder}
+          </span>
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent align="start" className="w-72 p-3">
+        <div className="mb-3 flex items-center justify-between">
+          <b>{year}년</b>
+          <div className="flex items-center gap-1">
+            <Button
+              type="button"
+              size="icon"
+              variant="ghost"
+              aria-label="이전 연도"
+              onClick={() => setYear((current) => current - 1)}
+            >
+              <Icon name="lucide:chevron-left" />
+            </Button>
+            <Button
+              type="button"
+              size="sm"
+              variant="ghost"
+              onClick={() => setYear(dayjs().year())}
+            >
+              오늘
+            </Button>
+            <Button
+              type="button"
+              size="icon"
+              variant="ghost"
+              aria-label="다음 연도"
+              onClick={() => setYear((current) => current + 1)}
+            >
+              <Icon name="lucide:chevron-right" />
+            </Button>
+          </div>
+        </div>
+        <div className="grid grid-cols-3 gap-1">
+          {Array.from({ length: 12 }, (_, index) => {
+            const month = String(index + 1).padStart(2, "0");
+            const next = `${year}-${month}`;
+            return (
+              <Button
+                key={month}
+                type="button"
+                size="sm"
+                variant={value === next ? "default" : "ghost"}
+                onClick={() => {
+                  onValueChange(next);
+                  setOpen(false);
+                }}
+              >
+                {index + 1}월
+              </Button>
+            );
+          })}
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
+function YearPicker({
+  value,
+  onValueChange,
+  placeholder = "연도 선택",
+  disabled,
+  size = "default",
+  className,
+}: YearPickerProps) {
+  const [open, setOpen] = React.useState(false);
+  const [startYear, setStartYear] = React.useState(
+    () => Math.floor((Number(value) || dayjs().year()) / 12) * 12,
+  );
+  const sizeStyle = getFormSize(size);
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          type="button"
+          variant="outline"
+          disabled={disabled}
+          className={cn(
+            PICKER_TRIGGER_CLASS,
+            sizeStyle.height,
+            sizeStyle.inputPadding,
+            sizeStyle.text,
+            className,
+          )}
+        >
+          <Icon
+            name="lucide:calendar"
+            className="size-4 shrink-0 text-muted-foreground"
+          />
+          <span
+            className={cn(
+              "flex-1 text-left",
+              !value && "text-muted-foreground",
+            )}
+          >
+            {value ? `${value}년` : placeholder}
+          </span>
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent align="start" className="w-72 p-3">
+        <div className="mb-3 flex items-center justify-between">
+          <b>
+            {startYear}–{startYear + 11}
+          </b>
+          <div className="flex items-center gap-1">
+            <Button
+              type="button"
+              size="icon"
+              variant="ghost"
+              aria-label="이전 연도 범위"
+              onClick={() => setStartYear((current) => current - 12)}
+            >
+              <Icon name="lucide:chevron-left" />
+            </Button>
+            <Button
+              type="button"
+              size="sm"
+              variant="ghost"
+              onClick={() => setStartYear(Math.floor(dayjs().year() / 12) * 12)}
+            >
+              오늘
+            </Button>
+            <Button
+              type="button"
+              size="icon"
+              variant="ghost"
+              aria-label="다음 연도 범위"
+              onClick={() => setStartYear((current) => current + 12)}
+            >
+              <Icon name="lucide:chevron-right" />
+            </Button>
+          </div>
+        </div>
+        <div className="grid grid-cols-3 gap-1">
+          {Array.from({ length: 12 }, (_, index) => {
+            const year = String(startYear + index);
+            return (
+              <Button
+                key={year}
+                type="button"
+                size="sm"
+                variant={value === year ? "default" : "ghost"}
+                onClick={() => {
+                  onValueChange(year);
+                  setOpen(false);
+                }}
+              >
+                {year}
+              </Button>
+            );
+          })}
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
 function parseDateValue(value: string): Date | undefined {
   const date = parseDateParts(value);
 
@@ -385,5 +596,11 @@ function isDateDisabled(value: string, min?: string, max?: string) {
   return Boolean((min && value < min) || (max && value > max));
 }
 
-export { DatePicker, DateRangePicker };
-export type { DatePickerProps, DateRangePickerProps, DateRangeValue };
+export { DatePicker, DateRangePicker, MonthPicker, YearPicker };
+export type {
+  DatePickerProps,
+  DateRangePickerProps,
+  DateRangeValue,
+  MonthPickerProps,
+  YearPickerProps,
+};
