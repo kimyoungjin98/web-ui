@@ -154,7 +154,10 @@ export function SearchSelect<TOption extends SearchSelectOption>({
             }
           }}
         />
-        <div className="mt-1 max-h-60 overflow-y-auto" role="listbox">
+        <div
+          className="flex flex-col gap-0.5 mt-1 max-h-60 overflow-y-auto"
+          role="listbox"
+        >
           {matchingOptions.length > 0 ? (
             matchingOptions.map((option) => {
               const selected = option.value === value;

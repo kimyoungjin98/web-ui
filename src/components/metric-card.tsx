@@ -33,7 +33,7 @@ function MetricCard({
 }: MetricCardProps) {
   return (
     <Card className={cn(className)} {...props}>
-      <CardHeader className="flex flex-row items-center justify-between gap-3 pb-3">
+      <CardHeader className="flex flex-row items-start justify-between gap-3 pb-3">
         <CardTitle className="text-sm font-bold text-muted-foreground">
           {label}
         </CardTitle>
