@@ -18,6 +18,7 @@ export type { SearchSelectOption } from "./search-select.utils";
 
 export type SearchSelectProps<TOption extends SearchSelectOption> = {
   options: readonly TOption[];
+  id?: string;
   value?: string;
   selectedLabel?: React.ReactNode;
   onValueChange?: (value: string) => void;
@@ -36,6 +37,7 @@ export type SearchSelectProps<TOption extends SearchSelectOption> = {
 
 export function SearchSelect<TOption extends SearchSelectOption>({
   options,
+  id,
   value,
   selectedLabel,
   onValueChange,
@@ -103,6 +105,7 @@ export function SearchSelect<TOption extends SearchSelectOption>({
       <PopoverTrigger asChild>
         <button
           ref={setTrigger}
+          id={id}
           type="button"
           disabled={disabled}
           className={cn(

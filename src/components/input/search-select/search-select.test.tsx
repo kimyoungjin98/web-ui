@@ -14,6 +14,18 @@ import { SearchSelect } from "./search-select";
 afterEach(cleanup);
 
 describe("SearchSelect", () => {
+  it("forwards an id to the interactive trigger", () => {
+    render(
+      <SearchSelect
+        id="advertiser-filter"
+        options={[]}
+        placeholder="광고주"
+      />,
+    );
+
+    expect(screen.getByRole("button").id).toBe("advertiser-filter");
+  });
+
   it("creates and selects an entered value with no matching option", async () => {
     const onCreateOption = vi.fn().mockResolvedValue({
       value: "incheon",
