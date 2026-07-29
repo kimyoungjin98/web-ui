@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "./card";
 import Icon from "./icon";
 import { cn } from "../libs/tailwind-util";
 
-type MetricCardTone = "default" | "brand" | "sky" | "amber" | "rose";
+type MetricCardTone = "default" | "blue" | "green" | "red" | "orange";
 
 type MetricCardProps = React.ComponentProps<typeof Card> & {
   label: React.ReactNode;
@@ -16,10 +16,10 @@ type MetricCardProps = React.ComponentProps<typeof Card> & {
 
 const toneClassNames: Record<MetricCardTone, string> = {
   default: "border-border bg-muted text-muted-foreground",
-  brand: "border-primary-border bg-primary-soft text-primary-hover",
-  sky: "border-sky-100 bg-sky-50 text-sky-700",
-  amber: "border-amber-100 bg-amber-50 text-amber-700",
-  rose: "border-rose-100 bg-rose-50 text-rose-700",
+  blue: "border-sky-100 bg-sky-50 text-sky-700",
+  green: "border-green-100 bg-green-50 text-green-700",
+  red: "border-red-100 bg-red-50 text-red-700",
+  orange: "border-orange-100 bg-orange-50 text-orange-700",
 };
 
 function MetricCard({
@@ -34,7 +34,7 @@ function MetricCard({
   return (
     <Card className={cn(className)} {...props}>
       <CardHeader className="flex flex-row items-start justify-between gap-3 pb-3">
-        <CardTitle className="text-sm font-bold text-muted-foreground">
+        <CardTitle className="text-sm font-semibold text-muted-foreground">
           {label}
         </CardTitle>
         {icon ? (
@@ -51,7 +51,7 @@ function MetricCard({
       <CardContent>
         <p
           className={cn(
-            "text-2xl font-bold leading-none text-base-content",
+            "text-2xl font-medium leading-none text-base-content",
             valueClassName,
           )}
         >
