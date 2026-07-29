@@ -16,7 +16,7 @@ const ROW = "group transition-colors hover:bg-muted";
 const ROW_ENTER = "data-grid-row-enter";
 
 const SELECTED_ROW =
-  "bg-primary-soft hover:bg-primary-soft focus-visible:bg-primary-soft";
+  "bg-primary/15 hover:bg-primary/15 focus-visible:bg-primary/15";
 
 const CLICKABLE =
   "cursor-pointer outline-none focus-visible:bg-muted focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/20";
@@ -91,7 +91,7 @@ export function DataGridRow<T>(p: Props<T>) {
       {hasSide ? (
         <div
           className={cn(
-            "flex shrink-0 border-l border-border/70 bg-inherit",
+            "flex shrink-0 border-l border-border/70",
             PINNED_SIDE_SHADOW,
           )}
         >

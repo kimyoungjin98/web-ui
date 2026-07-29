@@ -47,7 +47,7 @@ function SelectedCountPill({ count }: { count: number }) {
   if (count <= 0) return null;
 
   return (
-    <div className="inline-flex w-fit items-center text-primary text-sm font-semibold">
+    <div className="inline-flex w-fit items-center text-primary-foreground text-sm font-semibold">
       {count}개 선택됨
     </div>
   );
