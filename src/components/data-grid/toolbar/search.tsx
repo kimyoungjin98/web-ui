@@ -17,7 +17,7 @@ export function ToolbarSearch({
   if (!searchable) return <div className="hidden sm:block" />;
 
   return (
-    <div className="block w-full sm:max-w-56">
+    <div className="block w-full sm:max-w-[25rem]">
       <label htmlFor={field.id} className="sr-only">
         검색
       </label>
