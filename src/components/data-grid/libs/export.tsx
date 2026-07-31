@@ -9,40 +9,37 @@ type DownloadDataGridAsExcelOptions<T> = {
   filename: string;
 };
 
-export function downloadDataGridAsExcel<T>({
+export async function downloadDataGridAsExcel<T>({
   columns,
   rows,
   filename,
 }: DownloadDataGridAsExcelOptions<T>) {
+  const { utils, write } = await import("xlsx");
   const exportableColumns = columns.filter(
     (column) => column.exportable !== false,
   );
-  const headerCells = exportableColumns.map((column) =>
-    renderExcelCell(reactNodeToText(column.header), "th"),
-  );
-  const bodyRows = rows.map(
-    (row, index) =>
-      `<tr>${exportableColumns
-        .map((column) => {
-          const value = column.exportValue
-            ? column.exportValue(row, index)
-            : resolveCellContent(row, column, index);
+  const worksheet = utils.aoa_to_sheet([
+    exportableColumns.map((column) => reactNodeToText(column.header)),
+    ...rows.map((row, index) =>
+      exportableColumns.map((column) => {
+        const value = column.exportValue
+          ? column.exportValue(row, index)
+          : resolveCellContent(row, column, index);
 
-          return renderExcelCell(reactNodeToText(value), "td");
-        })
-        .join("")}</tr>`,
-  );
-  const html = `<!doctype html><html><head><meta charset="utf-8" /></head><body><table><thead><tr>${headerCells.join(
-    "",
-  )}</tr></thead><tbody>${bodyRows.join("")}</tbody></table></body></html>`;
-  const blob = new Blob([html], {
-    type: "application/vnd.ms-excel;charset=utf-8",
+        return reactNodeToText(value);
+      }),
+    ),
+  ]);
+  const workbook = utils.book_new();
+  utils.book_append_sheet(workbook, worksheet, "Data");
+  const blob = new Blob([write(workbook, { bookType: "xlsx", type: "array" })], {
+    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
   });
   const url = window.URL.createObjectURL(blob);
   const anchor = document.createElement("a");
 
   anchor.href = url;
-  anchor.download = `${sanitizeFilename(filename)}.xls`;
+  anchor.download = `${sanitizeFilename(filename)}.xlsx`;
   document.body.appendChild(anchor);
   anchor.click();
   anchor.remove();
@@ -71,19 +68,6 @@ function reactNodeToText(node: React.ReactNode): string {
   }
 
   return "";
-}
-
-function renderExcelCell(content: string, tagName: "td" | "th") {
-  return `<${tagName}>${escapeHtml(content)}</${tagName}>`;
-}
-
-function escapeHtml(value: string) {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
 }
 
 function sanitizeFilename(filename: string) {
