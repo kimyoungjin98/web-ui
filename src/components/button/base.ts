@@ -1,13 +1,13 @@
 import type { ButtonSize, ButtonVariant } from "./types";
 
 export const buttonBase =
-  "cursor-pointer select-none inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm! font-semibold transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] outline-none";
+  "cursor-pointer select-none inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-semibold transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] outline-none";
 
 export const buttonSizes: Record<ButtonSize, string> = {
-  default: "h-9 px-4 py-2",
-  xs: "h-7 px-2.5 py-1 text-xs",
+  default: "h-9 px-4 py-2 text-sm",
+  xs: "h-7 px-2.5 py-1 !text-xs",
   sm: "h-8 px-3 text-xs",
-  lg: "h-11 px-6",
+  lg: "h-11 px-6 text-base",
   icon: "size-10",
 };
 
