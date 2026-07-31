@@ -1,6 +1,12 @@
 // @vitest-environment jsdom
 
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import {
@@ -13,11 +19,15 @@ import {
 
 afterEach(cleanup);
 
-function RoleSelect({ onValueChange = vi.fn() }: { onValueChange?: (value: string) => void }) {
+function RoleSelect({
+  onValueChange = vi.fn(),
+}: {
+  onValueChange?: (value: string) => void;
+}) {
   return (
     <Select defaultValue="USER" onValueChange={onValueChange}>
       <SelectTrigger aria-label="역할">
-        <SelectValue placeholder="역할 선택" />
+        <SelectValue>역할 선택</SelectValue>
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="ADMIN">관리자</SelectItem>
@@ -32,7 +42,9 @@ describe("Select keyboard interaction", () => {
   it("renders the selected label before the popover is opened", () => {
     render(<RoleSelect />);
 
-    expect(screen.getByRole("button", { name: "역할" }).textContent).toContain("일반 사용자");
+    expect(screen.getByRole("button", { name: "역할" }).textContent).toContain(
+      "일반 사용자",
+    );
   });
 
   it("opens with ArrowDown and focuses the current option", () => {

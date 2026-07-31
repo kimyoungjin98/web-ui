@@ -11,9 +11,10 @@ type CheckboxProps = Omit<React.ComponentProps<"input">, "size" | "type"> & {
   children?: React.ReactNode;
   containerClassName?: string;
   indeterminate?: boolean;
-  label?: React.ReactNode;
+  label?: string;
   labelClassName?: string;
   size?: CheckboxSize;
+  title?: string;
 };
 
 const checkboxSizeTokens: Record<
@@ -37,6 +38,7 @@ function Checkbox({
   label,
   labelClassName,
   disabled,
+  title,
   size = "md",
   ...props
 }: CheckboxProps) {
@@ -49,8 +51,9 @@ function Checkbox({
 
   return (
     <label
+      title={title || label}
       className={cn(
-            "group select-none flex cursor-pointer items-center rounded-md bg-background font-semibold text-base-content transition-all hover:bg-muted has-[:checked]:border-primary-border has-[:checked]:bg-primary/10 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 has-[:focus-visible]:border-ring has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-ring/15",
+        "group select-none flex cursor-pointer items-center rounded-md bg-background font-semibold text-base-content transition-all hover:bg-muted has-[:checked]:border-primary-border has-[:checked]:bg-primary/10 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 has-[:focus-visible]:border-ring has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-ring/15",
         sizeToken.label,
         containerClassName,
         labelClassName,
@@ -83,9 +86,9 @@ function Checkbox({
           )}
         />
       </span>
-      {(label ?? children) ? (
+      {label || children ? (
         <span className="min-w-0 leading-5 mt-0.5 font-medium text-sm">
-          {label ?? children}
+          {label || children}
         </span>
       ) : null}
     </label>
