@@ -157,6 +157,7 @@ export function OptionSelect<TOption extends SelectOption>(
       >
         {searchable ? (
           <Input
+            className="mb-0.5"
             autoFocus
             value={query}
             disabled={disabled || isCreating}

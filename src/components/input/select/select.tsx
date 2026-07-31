@@ -21,9 +21,11 @@ export {
 export { SelectValue } from "./select-value";
 
 function Select(props: CompoundSelectProps): React.ReactElement;
+
 function Select<TOption extends SelectOption>(
   props: OptionSelectProps<TOption>,
 ): React.ReactElement;
+
 function Select<TOption extends SelectOption>(
   props: CompoundSelectProps | OptionSelectProps<TOption>,
 ) {
