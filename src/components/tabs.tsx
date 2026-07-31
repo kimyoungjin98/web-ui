@@ -31,7 +31,7 @@ function Tabs<TValue extends string>({
       aria-label={ariaLabel}
       data-slot="tabs"
       className={cn(
-        "flex min-w-0 w-full rounded-md bg-muted p-1 gap-1 sm:w-max",
+        "flex min-w-0 w-full rounded-md bg-card border border-border/50 p-1 gap-1 sm:w-max",
         className,
       )}
     >
@@ -48,12 +48,12 @@ function Tabs<TValue extends string>({
             data-state={selected ? "active" : "inactive"}
             data-value={option.value}
             className={cn(
-              "flex flex-1 items-center justify-center whitespace-nowrap rounded-md px-2 py-1 text-xs font-semibold transition-colors outline-none sm:flex-none",
-              "text-muted-foreground hover:text-base-content hover:bg-muted",
+              "cursor-pointer flex flex-1 items-center justify-center whitespace-nowrap rounded-md px-2 py-1 text-xs font-semibold transition-colors outline-none sm:flex-none",
+              "text-muted-foreground hover:text-base-content hover:bg-muted-foreground/20",
               "focus-visible:ring-3 focus-visible:ring-ring/15 focus-visible:border-ring",
               "disabled:pointer-events-none disabled:opacity-50",
               selected &&
-                "bg-background text-base-content hover:bg-background *:font-semibold",
+                "bg-foreground text-background hover:text-background hover:bg-foreground/80 *:font-semibold",
               triggerClassName,
             )}
             onClick={() => onValueChange(option.value)}
