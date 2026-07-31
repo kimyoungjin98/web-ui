@@ -71,7 +71,7 @@ export function FormItem({
         <p
           id={errorId}
           role="alert"
-          className="text-sm font-medium text-destructive"
+          className="text-xs font-medium text-destructive"
         >
           {error}
         </p>
