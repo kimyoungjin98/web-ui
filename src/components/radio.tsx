@@ -3,7 +3,10 @@ import * as React from "react";
 import { cn } from "../libs/tailwind-util";
 import Icon from "./icon";
 
-export type RadioProps = Omit<React.ComponentProps<"input">, "children" | "type"> & {
+export type RadioProps = Omit<
+  React.ComponentProps<"input">,
+  "children" | "type"
+> & {
   children?: React.ReactNode;
   icon?: React.ReactNode | string;
   iconClassName?: string;
@@ -33,11 +36,11 @@ function Radio({
     <label
       data-slot="radio-label"
       className={cn(
-        "select-none group flex min-h-10 cursor-pointer items-center gap-2.5 rounded-md border border-input hover:bg-muted bg-background px-3.5 text-sm font-semibold text-base-content transition-all has-[:checked]:border-primary-border has-[:checked]:bg-primary/5 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 has-[:focus-visible]:border-ring has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-ring/15",
+        "bg-card select-none group flex min-h-10 cursor-pointer items-center gap-2.5 rounded-md border border-input hover:bg-muted px-3.5 text-sm font-semibold text-base-content transition-all has-[:checked]:border-primary-border has-[:checked]:bg-primary/10 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 has-[:focus-visible]:border-ring has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-ring/15",
         labelClassName,
       )}
     >
-      <span className="relative grid size-4 shrink-0 place-items-center">
+      <span className="bg-card rounded-full relative grid size-4 shrink-0 place-items-center">
         <input
           data-slot="radio"
           type="radio"
@@ -72,7 +75,7 @@ function Radio({
           )}
         </span>
       ) : null}
-      {label ?? children ? (
+      {(label ?? children) ? (
         <span className="min-w-0 leading-5">{label ?? children}</span>
       ) : null}
     </label>
