@@ -22,7 +22,9 @@ export function FormSection({
           {title}
         </h3>
       </div>
-      <div className="grid gap-5 p-4 sm:p-5 md:grid-cols-2">{children}</div>
+      <div className="grid gap-x-2 gap-y-6 p-4 sm:p-5 md:grid-cols-2">
+        {children}
+      </div>
     </section>
   );
 }
