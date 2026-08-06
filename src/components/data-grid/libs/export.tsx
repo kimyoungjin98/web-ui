@@ -32,9 +32,12 @@ export async function downloadDataGridAsExcel<T>({
   ]);
   const workbook = utils.book_new();
   utils.book_append_sheet(workbook, worksheet, "Data");
-  const blob = new Blob([write(workbook, { bookType: "xlsx", type: "array" })], {
-    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-  });
+  const blob = new Blob(
+    [write(workbook, { bookType: "xlsx", type: "array" })],
+    {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    },
+  );
   const url = window.URL.createObjectURL(blob);
   const anchor = document.createElement("a");
 
