@@ -18,22 +18,22 @@ const outline: Record<ColorToken, string> = {
   secondary:
     "border-border bg-background text-secondary-foreground hover:bg-secondary",
   success:
-    "border-success bg-success/10 text-success-foreground hover:bg-success/20",
+    "border-success bg-success/10 text-success-soft-foreground hover:bg-success/20",
   warning:
-    "border-warning bg-warning/10 text-warning-foreground hover:bg-warning/20",
+    "border-warning bg-warning/10 text-warning-soft-foreground hover:bg-warning/20",
   destructive:
-    "border-destructive/30 bg-destructive/10 text-destructive hover:bg-destructive/20",
-  info: "border-info bg-info/10 text-info-foreground hover:bg-info/20",
+    "border-destructive/30 bg-destructive/10 text-destructive-soft-foreground hover:bg-destructive/20",
+  info: "border-info bg-info/10 text-info-soft-foreground hover:bg-info/20",
   neutral: "border-input bg-card text-neutral hover:bg-muted",
 };
 
 const ghost: Record<ColorToken, string> = {
   primary: "text-primary-hover hover:bg-primary-soft",
   secondary: "text-secondary-foreground hover:bg-secondary",
-  success: "text-success-foreground hover:bg-success/10",
-  warning: "text-warning-foreground hover:bg-warning/10",
-  destructive: "text-destructive hover:bg-destructive/10",
-  info: "text-info-foreground hover:bg-info/10",
+  success: "text-success-soft-foreground hover:bg-success/10",
+  warning: "text-warning-soft-foreground hover:bg-warning/10",
+  destructive: "text-destructive-soft-foreground hover:bg-destructive/10",
+  info: "text-info-soft-foreground hover:bg-info/10",
   neutral: "text-neutral hover:bg-muted-foreground/20",
 };
 

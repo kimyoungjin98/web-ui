@@ -85,12 +85,12 @@ export function Toaster(props: ToasterProps) {
             description: "text-xs font-semibold text-muted-foreground",
             icon: "text-current",
             success:
-              "border-l-4 border-l-success text-success-foreground [&_[data-description]]:text-success-foreground/80 [&_[data-icon]]:text-success-foreground [&_[data-icon]_svg]:text-success-foreground [&_[data-title]]:text-success-foreground",
+              "border-l-4 border-l-success text-success-soft-foreground [&_[data-description]]:text-success-soft-foreground/80 [&_[data-icon]]:text-success-soft-foreground [&_[data-icon]_svg]:text-success-soft-foreground [&_[data-title]]:text-success-soft-foreground",
             error:
               "border-l-4 border-l-destructive text-destructive [&_[data-description]]:text-destructive/80 [&_[data-icon]]:text-destructive [&_[data-icon]_svg]:text-destructive [&_[data-title]]:text-destructive",
             warning:
-              "border-l-4 border-l-warning text-warning-foreground [&_[data-description]]:text-warning-foreground/80 [&_[data-icon]]:text-warning-foreground [&_[data-icon]_svg]:text-warning-foreground [&_[data-title]]:text-warning-foreground",
-            info: "border-l-4 border-l-info text-info-foreground [&_[data-description]]:text-info-foreground/80 [&_[data-icon]]:text-info-foreground [&_[data-icon]_svg]:text-info-foreground [&_[data-title]]:text-info-foreground",
+              "border-l-4 border-l-warning text-warning-soft-foreground [&_[data-description]]:text-warning-soft-foreground/80 [&_[data-icon]]:text-warning-soft-foreground [&_[data-icon]_svg]:text-warning-soft-foreground [&_[data-title]]:text-warning-soft-foreground",
+            info: "border-l-4 border-l-info text-info-soft-foreground [&_[data-description]]:text-info-soft-foreground/80 [&_[data-icon]]:text-info-soft-foreground [&_[data-icon]_svg]:text-info-soft-foreground [&_[data-title]]:text-info-soft-foreground",
             actionButton: "bg-primary text-primary-foreground",
             cancelButton: "bg-secondary text-secondary-foreground",
           },

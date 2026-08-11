@@ -55,6 +55,7 @@ export function DataGridRow<T>(p: Props<T>) {
       className={cn(
         "flex w-full min-w-full",
         ROW,
+        p.index % 2 === 1 && "bg-muted/20",
         !p.isLast && "border-b border-border/50",
         p.animate !== false && ROW_ENTER,
         canClick && CLICKABLE,

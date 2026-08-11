@@ -3,6 +3,8 @@ import type * as React from "react";
 export type DataGridSort = {
   /** 정렬 대상 컬럼 ID입니다. */
   columnId: string;
+  /** 서버 정렬 요청에 사용할 키입니다. 생략하면 columnId를 사용합니다. */
+  orderBy?: string;
   /** 오름차순 또는 내림차순 방향입니다. */
   direction: "asc" | "desc";
 } | null;
@@ -24,6 +26,8 @@ export type DataGridColumnDef<T extends object> = {
   pinned?: "right";
   /** 헤더 클릭을 통한 정렬 허용 여부입니다. */
   sortable?: boolean;
+  /** 서버 정렬 요청에 사용할 키입니다. 생략하면 field를 사용합니다. */
+  orderBy?: string;
   /** 정렬·표시 형식을 위한 데이터 유형 힌트입니다. */
   type?: "text" | "number" | "date" | "boolean";
   /** 컬럼 너비입니다. 숫자는 px, 문자열은 CSS 길이로 해석합니다. */
@@ -46,6 +50,8 @@ export type DataGridColumn<T> = {
   exportable?: boolean;
   /** 헤더 클릭을 통한 정렬 허용 여부입니다. */
   sortable?: boolean;
+  /** 서버 정렬 요청에 사용할 키입니다. 생략하면 id를 사용합니다. */
+  orderBy?: string;
   /** 셀 내용의 가로 정렬입니다. */
   align?: "left" | "center" | "right";
   /** CSS 길이 문자열로 지정한 컬럼 너비입니다. */

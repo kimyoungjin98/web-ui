@@ -161,7 +161,7 @@ function StatusIcon({ status }: { status: string }) {
     return (
       <Icon
         name="lucide:check-circle-2"
-        className="size-5 text-success-foreground"
+        className="size-5 text-success-soft-foreground"
       />
     );
   if (status === "error")

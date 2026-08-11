@@ -31,6 +31,7 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive-soft-foreground: var(--destructive-soft-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
@@ -38,10 +39,13 @@
   --color-overlay: var(--overlay);
   --color-info: var(--info);
   --color-info-foreground: var(--info-foreground);
+  --color-info-soft-foreground: var(--info-soft-foreground);
   --color-warning: var(--warning);
   --color-warning-foreground: var(--warning-foreground);
+  --color-warning-soft-foreground: var(--warning-soft-foreground);
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
+  --color-success-soft-foreground: var(--success-soft-foreground);
 
   --shadow-card: var(--shadow-card-value);
 }

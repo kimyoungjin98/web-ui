@@ -13,6 +13,7 @@ export function createDataGridColumns<T extends object>(
       fixed: definition.pinned === "right" ? "right" : undefined,
       header: definition.headerName ?? definition.field,
       id: definition.field,
+      orderBy: definition.orderBy ?? definition.field,
       sortable: definition.sortable,
       type: definition.type,
       width:

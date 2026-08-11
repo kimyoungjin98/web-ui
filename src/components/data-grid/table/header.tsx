@@ -205,7 +205,9 @@ function SortButton<T>({
     <button
       type="button"
       disabled={!onSortChange}
-      onClick={() => onSortChange?.(getNextSort(sort, column.id))}
+      onClick={() =>
+        onSortChange?.(getNextSort(sort, column.id, column.orderBy))
+      }
       className={cn(
         HEAD_BUTTON,
         column.align === "center" && "justify-center",
