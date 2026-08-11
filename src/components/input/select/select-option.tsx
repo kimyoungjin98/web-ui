@@ -73,7 +73,10 @@ export function OptionSelect<TOption extends SelectOption>(
 
   const handleOpenChange = (nextOpen: boolean) => {
     setOpen(nextOpen);
-    if (!nextOpen) setQuery("");
+    if (!nextOpen) {
+      setQuery("");
+      onSearchChange?.("");
+    }
   };
 
   const handleCreate = async () => {
