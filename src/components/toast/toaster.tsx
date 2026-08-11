@@ -85,12 +85,12 @@ export function Toaster(props: ToasterProps) {
             description: "text-xs font-semibold text-muted-foreground",
             icon: "text-current",
             success:
-              "border-l-4 border-l-emerald-500 text-emerald-600 [&_[data-description]]:text-emerald-700/80 [&_[data-icon]]:text-emerald-600 [&_[data-icon]_svg]:text-emerald-600 [&_[data-title]]:text-emerald-700",
+              "border-l-4 border-l-success text-success-foreground [&_[data-description]]:text-success-foreground/80 [&_[data-icon]]:text-success-foreground [&_[data-icon]_svg]:text-success-foreground [&_[data-title]]:text-success-foreground",
             error:
               "border-l-4 border-l-destructive text-destructive [&_[data-description]]:text-destructive/80 [&_[data-icon]]:text-destructive [&_[data-icon]_svg]:text-destructive [&_[data-title]]:text-destructive",
             warning:
-              "border-l-4 border-l-amber-500 text-amber-600 [&_[data-description]]:text-amber-700/80 [&_[data-icon]]:text-amber-600 [&_[data-icon]_svg]:text-amber-600 [&_[data-title]]:text-amber-700",
-            info: "border-l-4 border-l-primary text-primary [&_[data-description]]:text-primary/80 [&_[data-icon]]:text-primary [&_[data-icon]_svg]:text-primary [&_[data-title]]:text-primary",
+              "border-l-4 border-l-warning text-warning-foreground [&_[data-description]]:text-warning-foreground/80 [&_[data-icon]]:text-warning-foreground [&_[data-icon]_svg]:text-warning-foreground [&_[data-title]]:text-warning-foreground",
+            info: "border-l-4 border-l-info text-info-foreground [&_[data-description]]:text-info-foreground/80 [&_[data-icon]]:text-info-foreground [&_[data-icon]_svg]:text-info-foreground [&_[data-title]]:text-info-foreground",
             actionButton: "bg-primary text-primary-foreground",
             cancelButton: "bg-secondary text-secondary-foreground",
           },

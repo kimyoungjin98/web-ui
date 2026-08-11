@@ -2,14 +2,10 @@ import { Slot } from "@radix-ui/react-slot";
 import * as React from "react";
 
 import { cn } from "../../libs/tailwind-util";
+import type { ColorToken } from "../../themes/color-token";
 import { buttonBase, buttonSizes, buttonVariantBase } from "./base";
 import { getButtonColorClass } from "./colors";
-import type {
-  ButtonColor,
-  ButtonProps,
-  ButtonSize,
-  ButtonVariant,
-} from "./types";
+import type { ButtonProps, ButtonSize, ButtonVariant } from "./types";
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -45,7 +41,7 @@ function buttonVariants({
   variant = "solid",
 }: {
   className?: string;
-  color?: ButtonColor | string;
+  color?: ColorToken;
   size?: ButtonSize;
   variant?: ButtonVariant;
 } = {}) {
@@ -61,14 +57,13 @@ function buttonVariants({
 }
 
 function resolveButtonColor(
-  color: ButtonColor | string | undefined,
+  color: ColorToken | undefined,
   variant: ButtonVariant,
-): ButtonColor {
-  if (color === "primary" || color === "secondary" || color === "neutral") {
-    return color;
-  }
-
-  return variant === "solid" || variant === "default" ? "primary" : "neutral";
+): ColorToken {
+  return (
+    color ??
+    (variant === "solid" || variant === "default" ? "primary" : "neutral")
+  );
 }
 
 export { Button, buttonVariants };

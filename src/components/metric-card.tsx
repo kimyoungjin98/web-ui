@@ -3,30 +3,31 @@ import * as React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./card";
 import Icon from "./icon";
 import { cn } from "../libs/tailwind-util";
-
-type MetricCardTone = "default" | "blue" | "green" | "red" | "orange";
+import type { ColorToken } from "../themes/color-token";
 
 type MetricCardProps = React.ComponentProps<typeof Card> & {
   label: React.ReactNode;
   value?: React.ReactNode;
   icon?: string;
-  tone?: MetricCardTone;
+  tone?: ColorToken;
   valueClassName?: string;
 };
 
-const toneClassNames: Record<MetricCardTone, string> = {
-  default: "border-border bg-muted text-muted-foreground",
-  blue: "border-sky-100 bg-sky-50 text-sky-700",
-  green: "border-green-100 bg-green-50 text-green-700",
-  red: "border-red-100 bg-red-50 text-red-700",
-  orange: "border-orange-100 bg-orange-50 text-orange-700",
+const toneClassNames: Record<ColorToken, string> = {
+  primary: "border-primary-border bg-primary-soft text-primary",
+  secondary: "border-border bg-secondary text-secondary-foreground",
+  success: "border-success bg-success/20 text-success-foreground",
+  warning: "border-warning bg-warning/20 text-warning-foreground",
+  destructive: "border-destructive/30 bg-destructive/10 text-destructive",
+  info: "border-info bg-info/20 text-info-foreground",
+  neutral: "border-neutral/30 bg-neutral/10 text-neutral",
 };
 
 function MetricCard({
   label,
   value,
   icon,
-  tone = "default",
+  tone = "neutral",
   className,
   valueClassName,
   ...props
@@ -63,4 +64,4 @@ function MetricCard({
 }
 
 export { MetricCard };
-export type { MetricCardProps, MetricCardTone };
+export type { MetricCardProps };

@@ -7,5 +7,5 @@ export function TanstackFormError({ errors }: Props) {
 
   if (!error) return null;
 
-  return <p className="text-red-600 text-xs">{error}</p>;
+  return <p className="text-xs text-destructive">{error}</p>;
 }

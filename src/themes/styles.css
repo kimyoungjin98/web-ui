@@ -4,12 +4,16 @@
 @import "./font.css";
 @import "./animation.css";
 
+/* Token names are shared here; each app owns the light/dark values. */
+
 @theme inline {
   --spacing: 4px;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-base-content: var(--foreground);
+  --color-neutral: var(--neutral);
+  --color-neutral-foreground: var(--neutral-foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
@@ -26,10 +30,12 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-link: var(--link);
+  --color-overlay: var(--overlay);
   --color-info: var(--info);
   --color-info-foreground: var(--info-foreground);
   --color-warning: var(--warning);
@@ -38,71 +44,6 @@
   --color-success-foreground: var(--success-foreground);
 
   --shadow-card: var(--shadow-card-value);
-}
-
-:root {
-  --background: #fff;
-  --foreground: #263442;
-  --card: #ffffff;
-  --card-foreground: #263442;
-  --popover: #ffffff;
-  --popover-foreground: #263442;
-  --primary: #192642;
-  --primary-hover: #22345a;
-  --primary-soft: #eef2f8;
-  --primary-border: #c8d2e3;
-  --primary-foreground: #ffffff;
-  --secondary: #f3f6fb;
-  --secondary-foreground: #263442;
-  --muted: #f3f6fb;
-  --muted-foreground: #6b7890;
-  --accent: #eef2f8;
-  --accent-foreground: #192642;
-  --destructive: #f06548;
-  --border: #e3e8ef;
-  --input: #d8e0ea;
-  --ring: #192642;
-  --link: #192642;
-  --info: #f3f6fb;
-  --info-foreground: #337ea9;
-  --warning: #fbf3db;
-  --warning-foreground: #a86f14;
-  --success: #edf3ec;
-  --success-foreground: #35734e;
-  --shadow-card-value: 0 1px 2px rgb(56 65 74 / 0.04);
-}
-
-:root[data-theme="dark"] {
-  color-scheme: dark;
-  --background: oklch(24.353% 0 0);
-  --foreground: oklch(84.87% 0 0);
-  --card: oklch(22.648% 0 0);
-  --card-foreground: oklch(84.87% 0 0);
-  --popover: oklch(22.648% 0 0);
-  --popover-foreground: oklch(84.87% 0 0);
-  --primary: oklch(41.703% 0.099 251.473);
-  --primary-hover: oklch(47% 0.099 251.473);
-  --primary-soft: oklch(30% 0.05 251.473);
-  --primary-border: oklch(48% 0.075 251.473);
-  --primary-foreground: oklch(88.34% 0.019 251.473);
-  --secondary: oklch(64.092% 0.027 229.389);
-  --secondary-foreground: oklch(12.818% 0.005 229.389);
-  --muted: oklch(20.944% 0 0);
-  --muted-foreground: oklch(68% 0 0);
-  --accent: oklch(67.271% 0.167 35.791);
-  --accent-foreground: oklch(13.454% 0.033 35.791);
-  --destructive: oklch(51.61% 0.146 29.674);
-  --border: oklch(32% 0 0);
-  --input: oklch(38% 0 0);
-  --ring: oklch(64.092% 0.027 229.389);
-  --link: oklch(64.092% 0.027 229.389);
-  --info: oklch(62.616% 0.143 240.033);
-  --info-foreground: oklch(12.523% 0.028 240.033);
-  --warning: oklch(77.482% 0.115 81.519);
-  --warning-foreground: oklch(15.496% 0.023 81.519);
-  --success: oklch(70.226% 0.094 156.596);
-  --success-foreground: oklch(14.045% 0.018 156.596);
-  --shadow-card-value: 0 1px 2px rgb(0 0 0 / 0.24);
 }
 
 .icon-mask {

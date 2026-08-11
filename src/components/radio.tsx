@@ -16,6 +16,7 @@ export type RadioProps = Omit<
   imageContainerClassName?: string;
   label?: React.ReactNode;
   labelClassName?: string;
+  direction?: "horizontal" | "vertical";
 };
 
 function Radio({
@@ -84,16 +85,33 @@ function Radio({
 
 export type RadioGroupProps = Omit<React.ComponentProps<"div">, "role"> &
   (
-    | { "aria-label": string; "aria-labelledby"?: never }
-    | { "aria-label"?: never; "aria-labelledby": string }
+    | {
+        "aria-label": string;
+        "aria-labelledby"?: never;
+        direction?: "horizontal" | "vertical";
+      }
+    | {
+        "aria-label"?: never;
+        "aria-labelledby": string;
+        direction?: "horizontal" | "vertical";
+      }
   );
 
-function RadioGroup({ className, ...props }: RadioGroupProps) {
+function RadioGroup({
+  className,
+  direction = "horizontal",
+  ...props
+}: RadioGroupProps) {
   return (
     <div
       role="radiogroup"
       data-slot="radio-group"
-      className={cn("grid gap-2 sm:grid-cols-2", className)}
+      className={cn(
+        direction === "vertical"
+          ? "flex flex-col gap-2"
+          : "grid gap-2 sm:grid-cols-2",
+        className,
+      )}
       {...props}
     />
   );

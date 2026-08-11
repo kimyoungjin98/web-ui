@@ -130,7 +130,7 @@ function ProgressBar({ value }: { value: number }) {
 
 function Limit({ message }: { message: string }) {
   return message ? (
-    <p className="text-xs font-bold text-red-600">{message}</p>
+    <p className="text-xs font-bold text-destructive">{message}</p>
   ) : null;
 }
 

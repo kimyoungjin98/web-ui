@@ -61,7 +61,7 @@ export function FormItem({
         htmlFor={htmlFor}
       >
         {label}
-        {required ? <span className="text-red-500"> *</span> : null}
+        {required ? <span className="text-destructive"> *</span> : null}
       </label>
       {hint ? (
         <Hint id={hintId} variant={hintVariant}>

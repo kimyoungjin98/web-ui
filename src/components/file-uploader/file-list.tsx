@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "../button/button";
 import { Icon } from "../icon";
+import type { ColorToken } from "../../themes/color-token";
 import type { UploadFileItem } from "./types/types";
 import { formatBytes } from "./types/utils";
 
@@ -58,12 +59,14 @@ function FileRow(props: RowProps) {
 function FileMeta({ item }: { item: UploadFileItem }) {
   return (
     <div className="min-w-0 flex-1">
-      <p className="truncate text-sm font-bold text-base-content">{item.name}</p>
+      <p className="truncate text-sm font-bold text-base-content">
+        {item.name}
+      </p>
       <p className="mt-0.5 text-xs font-semibold text-muted-foreground">
         {formatBytes(item.size)} · {item.extension || "FILE"}
       </p>
       {item.error ? (
-        <p className="mt-1 text-xs font-bold text-red-600" role="alert">
+        <p className="mt-1 text-xs font-bold text-destructive" role="alert">
           {item.error}
         </p>
       ) : null}
@@ -94,7 +97,7 @@ function FilePreview({ item }: { item: UploadFileItem }) {
     <img
       src={src}
       alt=""
-      className="size-10 shrink-0 rounded object-cover ring-1 ring-gray-200"
+      className="size-10 shrink-0 rounded object-cover ring-1 ring-border"
     />
   );
 }
@@ -102,10 +105,10 @@ function FilePreview({ item }: { item: UploadFileItem }) {
 function FileRowFooter({ item, disabled, onRemove, onRetry }: RowProps) {
   const tone =
     item.status === "error"
-      ? "red"
+      ? "destructive"
       : item.status === "success"
-        ? "green"
-        : "blue";
+        ? "success"
+        : "primary";
 
   return (
     <div className="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-center">
@@ -143,7 +146,7 @@ function FileIcon({
 }) {
   const tone =
     status === "error"
-      ? "bg-red-50 text-red-600"
+      ? "bg-destructive/10 text-destructive"
       : "bg-primary-soft text-primary";
 
   return (
@@ -156,10 +159,15 @@ function FileIcon({
 function StatusIcon({ status }: { status: string }) {
   if (status === "success")
     return (
-      <Icon name="lucide:check-circle-2" className="size-5 text-emerald-600" />
+      <Icon
+        name="lucide:check-circle-2"
+        className="size-5 text-success-foreground"
+      />
     );
   if (status === "error")
-    return <Icon name="lucide:circle-alert" className="size-5 text-red-600" />;
+    return (
+      <Icon name="lucide:circle-alert" className="size-5 text-destructive" />
+    );
   return <Icon name="lucide:loader-circle" className="size-5 text-primary" />;
 }
 
@@ -173,17 +181,12 @@ function iconName(ext: string) {
 
 function ProgressBar({
   value,
-  tone = "blue",
+  tone = "primary",
 }: {
   value: number;
-  tone?: "blue" | "green" | "red";
+  tone?: ColorToken;
 }) {
-  const color =
-    tone === "green"
-      ? "bg-emerald-500"
-      : tone === "red"
-        ? "bg-red-500"
-        : "bg-primary";
+  const color = progressColorClassNames[tone];
 
   return (
     <div className="h-2 overflow-hidden rounded-full bg-muted">
@@ -194,6 +197,16 @@ function ProgressBar({
     </div>
   );
 }
+
+const progressColorClassNames: Record<ColorToken, string> = {
+  primary: "bg-primary",
+  secondary: "bg-secondary",
+  success: "bg-success",
+  warning: "bg-warning",
+  destructive: "bg-destructive",
+  info: "bg-info",
+  neutral: "bg-neutral",
+};
 
 function RetryButton(props: { disabled?: boolean; onClick: () => void }) {
   return (

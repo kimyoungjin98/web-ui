@@ -1,4 +1,5 @@
 import type * as React from "react";
+import type { ColorToken } from "../../themes/color-token";
 
 export type ButtonVariant =
   | "solid"
@@ -8,12 +9,11 @@ export type ButtonVariant =
   | "secondary"
   | "destructive"
   | "link";
-export type ButtonColor = "primary" | "secondary" | "neutral";
 export type ButtonSize = "default" | "xs" | "sm" | "lg" | "icon";
 
 export type ButtonProps = React.ComponentProps<"button"> & {
   asChild?: boolean;
-  color?: ButtonColor | string;
+  color?: ColorToken;
   size?: ButtonSize;
   variant?: ButtonVariant;
 };

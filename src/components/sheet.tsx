@@ -35,7 +35,7 @@ function SheetOverlay({
   return (
     <SheetPrimitive.Overlay
       data-slot="sheet-overlay"
-      className={cn("sheet-overlay fixed inset-0 z-50 bg-black/45", className)}
+      className={cn("sheet-overlay fixed inset-0 z-50 bg-overlay", className)}
       {...props}
     />
   );
