@@ -37,7 +37,7 @@ export function DataGridHeader<T>(p: Props<T>) {
     <div role="rowgroup" className="sticky top-0 z-20">
       <div
         role="row"
-        className="flex w-full min-w-full border-b border-border bg-base-content/5 font-semibold text-base-content"
+        className="flex w-full min-w-full border-b border-border bg-muted font-semibold text-base-content"
       >
         <div
           ref={p.setMain}
