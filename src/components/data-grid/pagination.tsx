@@ -19,6 +19,12 @@ export function DataGridPagination(p: Props) {
       <div className="flex w-full items-center gap-2 sm:w-auto">
         <PageButton
           disabled={p.page <= 1}
+          icon="lucide:chevrons-left"
+          label="처음"
+          onClick={() => p.onPageChange?.(1)}
+        />
+        <PageButton
+          disabled={p.page <= 1}
           icon="lucide:chevron-left"
           label="이전"
           onClick={() => p.onPageChange?.(Math.max(1, p.page - 1))}
@@ -32,6 +38,13 @@ export function DataGridPagination(p: Props) {
           iconAfter
           label="다음"
           onClick={() => p.onPageChange?.(Math.min(p.pageCount, p.page + 1))}
+        />
+        <PageButton
+          disabled={p.page >= p.pageCount}
+          icon="lucide:chevrons-right"
+          iconAfter
+          label="마지막"
+          onClick={() => p.onPageChange?.(p.pageCount)}
         />
       </div>
     </div>
