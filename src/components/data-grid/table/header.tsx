@@ -42,7 +42,7 @@ export function DataGridHeader<T>(p: Props<T>) {
         <div
           ref={p.setMain}
           onScroll={p.onMainScroll}
-          className="min-w-0 flex-1 overflow-x-hidden"
+          className="data-grid-scroll min-w-0 flex-1"
         >
           <div className="flex" style={{ minWidth: p.minMainWidth }}>
             {p.selection ? (

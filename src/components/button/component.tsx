@@ -9,7 +9,15 @@ import type { ButtonProps, ButtonSize, ButtonVariant } from "./types";
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    { className, color, variant = "solid", size, asChild = false, ...props },
+    {
+      className,
+      color,
+      variant = "solid",
+      size,
+      asChild = false,
+      disabled,
+      ...props
+    },
     ref,
   ) => {
     const Comp = asChild ? Slot : "button";
@@ -25,6 +33,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           getButtonColorClass(variant, resolvedColor),
           buttonSizes[size ?? "default"],
           className,
+          disabled && "cursor-not-allowed pointer-events-none opacity-50",
         )}
         {...props}
       />

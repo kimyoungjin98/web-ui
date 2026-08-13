@@ -139,7 +139,7 @@ function SkeletonRow<T>({
       <div
         ref={setMain}
         onScroll={onMainScroll}
-        className="min-w-0 flex-1 overflow-x-hidden"
+        className="data-grid-scroll min-w-0 flex-1"
       >
         <div className="flex" style={{ minWidth: minMainWidth }}>
           {hasSelection ? (

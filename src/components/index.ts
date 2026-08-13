@@ -17,6 +17,7 @@ export * from "./sheet";
 export * from "./spinner";
 export * from "./popover";
 export * from "./tabs";
+export * from "./tooltip";
 
 // 폼
 export * from "./form/form-layout";
