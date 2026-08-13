@@ -59,11 +59,17 @@ function FileRow(props: RowProps) {
 function FileMeta({ item }: { item: UploadFileItem }) {
   return (
     <div className="min-w-0 flex-1">
-      <p className="truncate text-sm font-bold text-base-content">
+      <p className="truncate text-sm max-w-[20rem] font-bold text-base-content">
         {item.name}
       </p>
+      {item.size > 0 && (
+        <p className="mt-0.5 text-xs font-semibold text-muted-foreground">
+          {formatBytes(item.size)} · {item.extension || "FILE"}
+        </p>
+      )}
+      {/* 확장자 */}
       <p className="mt-0.5 text-xs font-semibold text-muted-foreground">
-        {formatBytes(item.size)} · {item.extension || "FILE"}
+        {item.extension || "FILE"}
       </p>
       {item.error ? (
         <p className="mt-1 text-xs font-bold text-destructive" role="alert">
@@ -91,13 +97,17 @@ function FilePreview({ item }: { item: UploadFileItem }) {
     setSrc(url);
     return () => URL.revokeObjectURL(url);
   }, [image, item.file, item.url]);
+
   if (!image || !src)
     return <FileIcon extension={item.extension} status={item.status} />;
   return (
     <img
       src={src}
-      alt=""
-      className="size-10 shrink-0 rounded object-cover ring-1 ring-border"
+      alt="이미지"
+      onClick={() => {
+        window.open(src, "_blank");
+      }}
+      className="cursor-pointer size-10 shrink-0 rounded object-cover ring-1 ring-border"
     />
   );
 }
