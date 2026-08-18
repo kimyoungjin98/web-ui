@@ -35,7 +35,7 @@ export type DataGridProps<T extends object> = {
   page: number;
   /** 현재 페이지에서 표시할 행 수입니다. */
   pageSize: number;
-  /** 사용자가 선택할 수 있는 페이지 크기 목록입니다. */
+  /** 기본 페이지 크기 10, 20, 50, 100에 추가할 정수 목록입니다. */
   pageSizeOptions?: number[];
   /** 현재 서버 정렬 상태입니다. */
   sort: DataGridSort;

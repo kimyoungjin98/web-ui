@@ -6,6 +6,7 @@ import { getDataGridModel } from "./model";
 import { DataGridPagination } from "./pagination";
 import type { DataGridProps, ResolvedDataGridProps } from "./props";
 import { DataGridTable } from "./table/table";
+import { getDataGridPageSizeOptions } from "./toolbar/page-size";
 import { DataGridToolbar } from "./toolbar/toolbar";
 
 type Model<T extends object> = ReturnType<typeof getDataGridModel<T>>;
@@ -53,7 +54,10 @@ function DataGridView<T extends object>({
           searchable={props.searchable ?? true}
           selectedCount={props.selection?.selectedIds.length ?? 0}
           pageSize={props.pageSize}
-          pageSizeOptions={props.pageSizeOptions ?? [10, 20, 50]}
+          pageSizeOptions={getDataGridPageSizeOptions(
+            props.pageSize,
+            props.pageSizeOptions,
+          )}
           excelDownload={model.excelDownload}
           onSearchChange={props.onSearchChange}
           onPageSizeChange={props.onPageSizeChange}
