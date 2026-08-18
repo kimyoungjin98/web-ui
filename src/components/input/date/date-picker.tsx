@@ -1,15 +1,15 @@
 "use client";
 
-import * as React from "react";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import * as React from "react";
 import type { DateRange } from "react-day-picker";
 
+import { cn } from "../../../libs/tailwind-util";
 import { Button } from "../../button/button";
 import { Calendar } from "../../calendar";
-import Icon from "../../icon";
 import { getFormSize, type FormSize } from "../../form-size";
-import { cn } from "../../../libs/tailwind-util";
+import Icon from "../../icon";
 import { Popover, PopoverContent, PopoverTrigger } from "../../popover";
 
 dayjs.extend(customParseFormat);
@@ -35,6 +35,7 @@ type DateRangeValue = {
 type DateRangePickerProps = {
   value: DateRangeValue;
   onValueChange: (value: DateRangeValue) => void;
+  getRangeForDate?: (date: string) => DateRangeValue;
   placeholder?: string;
   min?: string;
   max?: string;
@@ -43,6 +44,8 @@ type DateRangePickerProps = {
   toName?: string;
   className?: string;
   size?: FormSize;
+  hiddenResetButton?: boolean;
+  readonly?: boolean;
 };
 
 type DateParts = {
@@ -202,6 +205,7 @@ function DatePicker({
 function DateRangePicker({
   value,
   onValueChange,
+  getRangeForDate,
   placeholder = "기간 선택",
   min,
   max,
@@ -210,6 +214,8 @@ function DateRangePicker({
   toName,
   className,
   size = "default",
+  hiddenResetButton = false,
+  readonly,
 }: DateRangePickerProps) {
   const [open, setOpen] = React.useState(false);
   const [portalContainer, setPortalContainer] = React.useState<Element | null>(
@@ -228,7 +234,17 @@ function DateRangePicker({
   }, []);
 
   function handleSelect(range: DateRange | undefined, selectedDate: Date) {
+    if (readonly) {
+      return;
+    }
+
     const selectedValue = formatDateValue(selectedDate);
+
+    if (getRangeForDate) {
+      onValueChange(getRangeForDate(selectedValue));
+      setOpen(false);
+      return;
+    }
 
     if (value.from && value.to) {
       onValueChange({ from: selectedValue, to: "" });
@@ -275,7 +291,7 @@ function DateRangePicker({
           disabled={disabled}
         />
       ) : null}
-      <Popover open={open} onOpenChange={setOpen}>
+      <Popover open={readonly ? false : open} onOpenChange={setOpen}>
         <span className="relative block w-full">
           <PopoverTrigger asChild>
             <Button
@@ -293,6 +309,7 @@ function DateRangePicker({
                 sizeStyle.inputPadding,
                 sizeStyle.text,
                 hasValue ? "pr-16" : "pr-9",
+                readonly ? "cursor-default pr-6" : "",
                 className,
               )}
             >
@@ -316,7 +333,7 @@ function DateRangePicker({
               </span>
             </Button>
           </PopoverTrigger>
-          {hasValue && !disabled ? (
+          {hasValue && !disabled && !hiddenResetButton ? (
             <button
               type="button"
               aria-label="기간 초기화"
@@ -326,10 +343,12 @@ function DateRangePicker({
               <Icon name="lucide:x" className="size-3.5" />
             </button>
           ) : null}
-          <Icon
-            name="lucide:chevron-down"
-            className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
-          />
+          {readonly ? null : (
+            <Icon
+              name="lucide:chevron-down"
+              className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
+            />
+          )}
         </span>
         <PopoverContent
           align="start"
@@ -347,7 +366,7 @@ function DateRangePicker({
             min={1}
             disabled={(date) => isDateDisabled(formatDateValue(date), min, max)}
           />
-          {hasValue ? (
+          {hasValue && !hiddenResetButton ? (
             <div className="flex items-center justify-end border-t border-input p-2">
               <Button
                 type="button"
@@ -378,7 +397,6 @@ function MonthPicker({
     () => Number(value.slice(0, 4)) || dayjs().year(),
   );
   const sizeStyle = getFormSize(size);
-  const selectedMonth = value.slice(5, 7);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

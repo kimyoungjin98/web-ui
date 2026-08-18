@@ -131,7 +131,7 @@ function PageSizeSelect({
       >
         <SelectTrigger
           aria-label="페이지당 행 수"
-          className="h-8 w-[72px] px-2 text-xs"
+          className="h-8 w-[5rem] px-2 text-xs"
         >
           <SelectValue />
         </SelectTrigger>
