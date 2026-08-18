@@ -12,6 +12,9 @@ export type DataGridSort = {
 /** 행 높이와 여백을 조절하는 DataGrid 표시 밀도입니다. */
 export type DataGridDensity = "default" | "compact" | "ultra-compact";
 
+/** Excel 내보내기 값으로 사용할 수 있는 콘텐츠입니다. */
+export type DataGridExportValue = React.ReactNode | Date;
+
 /** AG Grid와 유사하게 JSON으로 전달할 수 있는 컬럼 정의입니다. */
 export type DataGridColumnDef<T extends object> = {
   /** 셀 내용의 가로 정렬입니다. */
@@ -30,6 +33,8 @@ export type DataGridColumnDef<T extends object> = {
   orderBy?: string;
   /** 정렬·표시 형식을 위한 데이터 유형 힌트입니다. */
   type?: "text" | "number" | "date" | "boolean";
+  /** Excel 셀에 적용할 숫자·날짜 표시 형식입니다. */
+  excelFormat?: string;
   /** 컬럼 너비입니다. 숫자는 px, 문자열은 CSS 길이로 해석합니다. */
   width?: number | string;
 };
@@ -45,9 +50,11 @@ export type DataGridColumn<T> = {
   /** 기본 accessor 대신 셀 콘텐츠를 직접 렌더링하는 함수입니다. */
   cell?: (row: T, index: number) => React.ReactNode;
   /** Excel 내보내기에서 사용할 값을 반환하는 함수입니다. */
-  exportValue?: (row: T, index: number) => React.ReactNode;
+  exportValue?: (row: T, index: number) => DataGridExportValue;
   /** Excel 내보내기 대상 포함 여부입니다. */
   exportable?: boolean;
+  /** Excel 셀에 적용할 숫자·날짜 표시 형식입니다. */
+  excelFormat?: string;
   /** 헤더 클릭을 통한 정렬 허용 여부입니다. */
   sortable?: boolean;
   /** 서버 정렬 요청에 사용할 키입니다. 생략하면 id를 사용합니다. */

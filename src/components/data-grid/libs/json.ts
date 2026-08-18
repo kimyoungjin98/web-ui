@@ -10,6 +10,7 @@ export function createDataGridColumns<T extends object>(
       align:
         definition.align ??
         (definition.type === "number" ? "right" : undefined),
+      excelFormat: definition.excelFormat,
       fixed: definition.pinned === "right" ? "right" : undefined,
       header: definition.headerName ?? definition.field,
       id: definition.field,
