@@ -9,6 +9,7 @@ export * from "./dialog";
 export * from "./dots-dropdown";
 export * from "./dropdown-menu";
 export * from "./file-uploader/file-uploader";
+export * from "./filter-panel";
 export * from "./hint";
 export * from "./input";
 export * from "./metric-card";
