@@ -216,7 +216,9 @@ function AppAlertHost() {
         <DialogHeader className="gap-2">
           <DialogTitle className="text-base">{alert.title}</DialogTitle>
           {alert.description ? (
-            <DialogDescription>{alert.description}</DialogDescription>
+            <DialogDescription>
+              <span className="whitespace-pre-line">{alert.description}</span>
+            </DialogDescription>
           ) : null}
         </DialogHeader>
         <DialogFooter>

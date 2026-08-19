@@ -89,7 +89,7 @@ const DialogContent = React.forwardRef<
           ref={ref}
           data-slot="dialog-content"
           className={cn(
-            "dialog-content pointer-events-auto relative flex max-h-[calc(100dvh-1rem)] w-[calc(100vw-1rem)] max-w-[32rem] flex-col overflow-hidden rounded-md border border-border bg-background shadow-xl outline-none sm:max-h-[90vh]",
+            "dialog-content pointer-events-auto relative flex max-h-[calc(100dvh-1rem)] w-[calc(100vw-1rem)] max-w-[32rem] flex-col overflow-hidden rounded-md border border-border bg-card shadow-xl outline-none sm:max-h-[90vh]",
             className,
           )}
           onInteractOutside={(event) => {
@@ -168,7 +168,7 @@ function DialogFooter({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="dialog-footer"
       className={cn(
-        "flex flex-col items-stretch justify-end gap-2 border-t border-border bg-muted/30 px-4 py-3 [&>button]:w-full sm:flex-row sm:items-center sm:px-5 sm:[&>button]:w-auto",
+        "flex flex-col items-stretch justify-end gap-2 border-t border-border bg-card px-4 py-3 [&>button]:w-full sm:flex-row sm:items-center sm:px-5 sm:[&>button]:w-auto",
         className,
       )}
       {...props}
