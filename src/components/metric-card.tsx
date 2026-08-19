@@ -14,6 +14,9 @@ type MetricCardProps = React.ComponentProps<typeof Card> & {
   valueClassName?: string;
 };
 
+const ACTIVE_METRIC_CARD_CLASS_NAME =
+  "border-primary/30 bg-primary-soft hover:bg-primary-soft";
+
 const toneClassNames: Record<ColorToken, string> = {
   primary: "border-primary-border bg-primary-soft text-primary",
   secondary: "border-border bg-secondary text-secondary-foreground",
@@ -89,5 +92,5 @@ function MetricCard({
   );
 }
 
-export { MetricCard };
+export { ACTIVE_METRIC_CARD_CLASS_NAME, MetricCard };
 export type { MetricCardProps };
