@@ -9,6 +9,7 @@ type MetricCardProps = React.ComponentProps<typeof Card> & {
   label: React.ReactNode;
   value?: React.ReactNode;
   icon?: string;
+  interactive?: boolean;
   tone?: ColorToken;
   valueClassName?: string;
 };
@@ -28,13 +29,37 @@ function MetricCard({
   label,
   value,
   icon,
+  interactive = false,
   tone = "neutral",
   className,
+  onKeyDown,
+  role,
+  tabIndex,
   valueClassName,
   ...props
 }: MetricCardProps) {
   return (
-    <Card className={cn(className)} {...props}>
+    <Card
+      className={cn(
+        interactive &&
+          "cursor-pointer select-none transition-colors hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+        className,
+      )}
+      role={interactive ? "button" : role}
+      tabIndex={interactive ? 0 : tabIndex}
+      onKeyDown={(event) => {
+        onKeyDown?.(event);
+        if (
+          interactive &&
+          !event.defaultPrevented &&
+          (event.key === "Enter" || event.key === " ")
+        ) {
+          event.preventDefault();
+          event.currentTarget.click();
+        }
+      }}
+      {...props}
+    >
       <CardHeader className="flex flex-row items-start justify-between gap-3 pb-3">
         <CardTitle className="text-sm font-semibold text-muted-foreground">
           {label}
