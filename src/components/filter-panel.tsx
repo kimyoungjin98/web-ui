@@ -85,7 +85,7 @@ export function FilterPanel({
             적용 중
           </span>
           {appliedFilters.map((filter) => (
-            <Badge key={filter.id} color="info" className="gap-1 pr-1">
+            <Badge key={filter.id} color="primary" className="gap-1 pr-1">
               {filter.label}
               <button
                 type="button"
