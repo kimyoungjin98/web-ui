@@ -13,6 +13,7 @@ type NumberInputProps = Omit<
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
   size?: FormSize;
+  placeholder?: string;
 };
 
 function getNumberInputValue(floatValue: number | undefined) {
@@ -26,6 +27,7 @@ function NumberInput({
   size = "default",
   startIcon,
   thousandSeparator,
+  placeholder,
   ...props
 }: NumberInputProps) {
   return (
@@ -39,6 +41,7 @@ function NumberInput({
           startIcon: Boolean(startIcon),
         })}
         thousandSeparator={thousandSeparator}
+        placeholder={placeholder}
         {...props}
         onValueChange={({ floatValue }) =>
           onChange(getNumberInputValue(floatValue))
