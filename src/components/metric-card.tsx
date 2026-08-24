@@ -18,7 +18,7 @@ const ACTIVE_METRIC_CARD_CLASS_NAME =
   "border-primary/30 bg-primary-soft hover:bg-primary-soft";
 
 const toneClassNames: Record<ColorToken, string> = {
-  primary: "border-primary-border bg-primary-soft text-primary",
+  primary: "border-primary-border bg-primary-soft text-primary-soft-foreground",
   secondary: "border-border bg-secondary text-secondary-foreground",
   success: "border-success bg-success/20 text-success-soft-foreground",
   warning: "border-warning bg-warning/20 text-warning-soft-foreground",

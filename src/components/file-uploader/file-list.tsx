@@ -157,7 +157,7 @@ function FileIcon({
   const tone =
     status === "error"
       ? "bg-destructive/10 text-destructive"
-      : "bg-primary-soft text-primary";
+      : "bg-primary-soft text-primary-soft-foreground";
 
   return (
     <div className={`grid size-10 shrink-0 place-items-center rounded ${tone}`}>

@@ -19,7 +19,8 @@ const solidColorClassNames: Record<ColorToken, string> = {
 };
 
 const outlineColorClassNames: Record<ColorToken, string> = {
-  primary: "border-primary-border/50 bg-primary-soft text-primary",
+  primary:
+    "border-primary-border/70 bg-primary-soft text-primary-soft-foreground",
   secondary: "border-secondary bg-secondary/30 text-secondary-foreground/70",
   success: "border-success bg-success/10 text-success-soft-foreground",
   warning: "border-warning bg-warning/10 text-warning-soft-foreground",

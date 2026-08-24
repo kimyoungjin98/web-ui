@@ -14,7 +14,7 @@ const solid: Record<ColorToken, string> = {
 
 const outline: Record<ColorToken, string> = {
   primary:
-    "border-primary-border bg-background text-primary-hover hover:bg-primary-soft",
+    "border-primary-border bg-background text-primary-soft-foreground hover:bg-primary-soft",
   secondary:
     "border-border bg-background text-secondary-foreground hover:bg-secondary",
   success:
@@ -28,7 +28,7 @@ const outline: Record<ColorToken, string> = {
 };
 
 const ghost: Record<ColorToken, string> = {
-  primary: "text-primary-hover hover:bg-primary-soft",
+  primary: "text-primary-soft-foreground hover:bg-primary-soft",
   secondary: "text-secondary-foreground hover:bg-secondary",
   success: "text-success-soft-foreground hover:bg-success/10",
   warning: "text-warning-soft-foreground hover:bg-warning/10",
