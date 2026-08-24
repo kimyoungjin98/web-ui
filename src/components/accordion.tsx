@@ -7,9 +7,19 @@ import Icon from "./icon";
 import { cn } from "../libs/tailwind-util";
 
 function Accordion({
+  className,
   ...props
 }: React.ComponentProps<typeof AccordionPrimitive.Root>) {
-  return <AccordionPrimitive.Root data-slot="accordion" {...props} />;
+  return (
+    <AccordionPrimitive.Root
+      data-slot="accordion"
+      className={cn(
+        "overflow-hidden rounded border border-border bg-card text-card-foreground",
+        className,
+      )}
+      {...props}
+    />
+  );
 }
 
 function AccordionItem({
@@ -19,7 +29,10 @@ function AccordionItem({
   return (
     <AccordionPrimitive.Item
       data-slot="accordion-item"
-      className={cn("overflow-hidden border-b last:border-b-0", className)}
+      className={cn(
+        "overflow-hidden border-border border-b last:border-b-0",
+        className,
+      )}
       {...props}
     />
   );
@@ -36,7 +49,7 @@ function AccordionTrigger({
         data-slot="accordion-trigger"
         className={cn(
           "cursor-pointer flex flex-1 items-start justify-between gap-4 py-4 text-left text-sm font-medium outline-none transition-colors hover:underline focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/20 disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]_.accordion-chevron]:rotate-180",
-          "min-h-10 items-center gap-3 px-4 py-3 hover:bg-muted hover:no-underline focus-visible:ring-inset",
+          "min-h-10 items-center gap-3 px-4 py-3 hover:bg-muted hover:no-underline focus-visible:ring-inset data-[state=open]:bg-muted/50",
           className,
         )}
         {...props}
