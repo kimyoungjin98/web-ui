@@ -31,7 +31,7 @@ function Tabs<TValue extends string>({
       aria-label={ariaLabel}
       data-slot="tabs"
       className={cn(
-        "flex min-w-0 w-full rounded-md bg-card border border-border/50 p-1 gap-1 sm:w-max",
+        "flex min-w-0 w-full rounded-md bg-card border border-border p-1 gap-1 sm:w-max",
         className,
       )}
     >
