@@ -3,7 +3,7 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { ACTIVE_METRIC_CARD_CLASS_NAME, MetricCard } from "./metric-card";
+import { MetricCard } from "./metric-card";
 
 afterEach(cleanup);
 
@@ -27,12 +27,13 @@ describe("MetricCard", () => {
     expect(onClick).toHaveBeenCalledTimes(3);
   });
 
-  it("applies the shared active style", () => {
+  it("applies the active style for its tone", () => {
     render(
       <MetricCard
         interactive
+        active
         aria-pressed
-        className={ACTIVE_METRIC_CARD_CLASS_NAME}
+        tone="warning"
         label="처리 대기"
         value="3건"
       />,
@@ -40,10 +41,10 @@ describe("MetricCard", () => {
 
     expect(screen.getByRole("button").className.split(" ")).toEqual(
       expect.arrayContaining([
-        "border-primary/40",
-        "bg-primary/5",
+        "border-warning-soft-foreground/55",
+        "bg-warning/30",
         "shadow-md",
-        "hover:bg-primary/5",
+        "hover:bg-warning/30",
         "hover:shadow-md",
       ]),
     );

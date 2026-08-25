@@ -10,12 +10,29 @@ type MetricCardProps = React.ComponentProps<typeof Card> & {
   value?: React.ReactNode;
   icon?: string;
   interactive?: boolean;
+  active?: boolean;
   tone?: ColorToken;
   valueClassName?: string;
 };
 
-const ACTIVE_METRIC_CARD_CLASS_NAME =
-  "border-primary/40 bg-primary/5 shadow-md hover:border-primary/40 hover:bg-primary/5 hover:shadow-md";
+const activeToneClassNames: Record<ColorToken, string> = {
+  primary:
+    "border-primary bg-primary-soft shadow-md hover:border-primary hover:bg-primary-soft hover:shadow-md",
+  secondary:
+    "border-secondary-foreground/45 bg-secondary shadow-md hover:border-secondary-foreground/45 hover:bg-secondary hover:shadow-md",
+  success:
+    "border-success-soft-foreground/50 bg-success/30 shadow-md hover:border-success-soft-foreground/50 hover:bg-success/30 hover:shadow-md",
+  warning:
+    "border-warning-soft-foreground/55 bg-warning/30 shadow-md hover:border-warning-soft-foreground/55 hover:bg-warning/30 hover:shadow-md",
+  destructive:
+    "border-destructive-soft-foreground/50 bg-destructive/10 shadow-md hover:border-destructive-soft-foreground/50 hover:bg-destructive/10 hover:shadow-md",
+  info:
+    "border-info-soft-foreground/50 bg-info/30 shadow-md hover:border-info-soft-foreground/50 hover:bg-info/30 hover:shadow-md",
+  neutral:
+    "border-neutral/50 bg-neutral/10 shadow-md hover:border-neutral/50 hover:bg-neutral/10 hover:shadow-md",
+  white:
+    "border-base-content/40 bg-card shadow-md hover:border-base-content/40 hover:bg-card hover:shadow-md",
+};
 
 const toneClassNames: Record<ColorToken, string> = {
   primary: "border-primary-border bg-primary-soft text-primary-soft-foreground",
@@ -34,6 +51,7 @@ function MetricCard({
   value,
   icon,
   interactive = false,
+  active = false,
   tone = "neutral",
   className,
   onKeyDown,
@@ -47,6 +65,7 @@ function MetricCard({
       className={cn(
         interactive &&
           "cursor-pointer select-none transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:border-primary/40 hover:shadow-md",
+        active && activeToneClassNames[tone],
         className,
       )}
       role={interactive ? "button" : role}
@@ -93,5 +112,5 @@ function MetricCard({
   );
 }
 
-export { ACTIVE_METRIC_CARD_CLASS_NAME, MetricCard };
+export { MetricCard };
 export type { MetricCardProps };

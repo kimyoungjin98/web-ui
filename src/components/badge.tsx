@@ -21,15 +21,19 @@ const solidColorClassNames: Record<ColorToken, string> = {
 
 const outlineColorClassNames: Record<ColorToken, string> = {
   primary:
-    "border-primary-border/70 bg-primary-soft text-primary-soft-foreground",
-  secondary: "border-secondary bg-secondary/30 text-secondary-foreground/70",
-  success: "border-success bg-success/10 text-success-soft-foreground",
-  warning: "border-warning bg-warning/10 text-warning-soft-foreground",
+    "border-primary-border bg-primary-soft text-primary-soft-foreground",
+  secondary:
+    "border-secondary-foreground/35 bg-secondary/50 text-secondary-foreground",
+  success:
+    "border-success-soft-foreground/40 bg-success/30 text-success-soft-foreground",
+  warning:
+    "border-warning-soft-foreground/45 bg-warning/30 text-warning-soft-foreground",
   destructive:
-    "border-destructive/30 bg-destructive/10 text-destructive-soft-foreground",
-  info: "border-info bg-info/10 text-info-soft-foreground",
-  neutral: "border-neutral/30 bg-neutral/10 text-neutral",
-  white: "border-white/30 bg-white/10 text-white-foreground",
+    "border-destructive-soft-foreground/40 bg-destructive/10 text-destructive-soft-foreground",
+  info:
+    "border-info-soft-foreground/40 bg-info/30 text-info-soft-foreground",
+  neutral: "border-neutral/40 bg-neutral/10 text-neutral",
+  white: "border-white/40 bg-white/10 text-white-foreground",
 };
 
 function Badge({
