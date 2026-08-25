@@ -468,7 +468,7 @@ function MonthPicker({
                 key={month}
                 type="button"
                 size="sm"
-                variant={value === next ? "default" : "ghost"}
+                variant={value === next ? "solid" : "ghost"}
                 onClick={() => {
                   onValueChange(next);
                   setOpen(false);
@@ -568,7 +568,7 @@ function YearPicker({
                 key={year}
                 type="button"
                 size="sm"
-                variant={value === year ? "default" : "ghost"}
+                variant={value === year ? "solid" : "ghost"}
                 onClick={() => {
                   onValueChange(year);
                   setOpen(false);

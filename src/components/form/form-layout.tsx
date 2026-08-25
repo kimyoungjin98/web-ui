@@ -57,7 +57,7 @@ export function FormItem({
   return (
     <div className={cn("grid gap-2", className)}>
       <label
-        className="text-sm font-semibold text-muted-foreground"
+        className="text-sm font-semibold text-base-content/80"
         htmlFor={htmlFor}
       >
         {label}

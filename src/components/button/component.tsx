@@ -33,7 +33,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           getButtonColorClass(variant, resolvedColor),
           buttonSizes[size ?? "default"],
           className,
-          disabled && "cursor-not-allowed pointer-events-none opacity-50",
         )}
         {...props}
       />
@@ -69,10 +68,15 @@ function resolveButtonColor(
   color: ColorToken | undefined,
   variant: ButtonVariant,
 ): ColorToken {
-  return (
-    color ??
-    (variant === "solid" || variant === "default" ? "primary" : "neutral")
-  );
+  if (color) {
+    return color;
+  }
+
+  if (variant === "outline") {
+    return "white";
+  }
+
+  return "primary";
 }
 
 export { Button, buttonVariants };
