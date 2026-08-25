@@ -16,6 +16,7 @@ const solidColorClassNames: Record<ColorToken, string> = {
   destructive: "border-transparent bg-destructive text-destructive-foreground",
   info: "border-transparent bg-info text-info-foreground",
   neutral: "border-transparent bg-neutral text-neutral-foreground",
+  white: "border-transparent bg-white text-white-foreground",
 };
 
 const outlineColorClassNames: Record<ColorToken, string> = {
@@ -28,6 +29,7 @@ const outlineColorClassNames: Record<ColorToken, string> = {
     "border-destructive/30 bg-destructive/10 text-destructive-soft-foreground",
   info: "border-info bg-info/10 text-info-soft-foreground",
   neutral: "border-neutral/30 bg-neutral/10 text-neutral",
+  white: "border-white/30 bg-white/10 text-white-foreground",
 };
 
 function Badge({

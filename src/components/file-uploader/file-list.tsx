@@ -216,6 +216,7 @@ const progressColorClassNames: Record<ColorToken, string> = {
   destructive: "bg-destructive",
   info: "bg-info",
   neutral: "bg-neutral",
+  white: "bg-white",
 };
 
 function RetryButton(props: { disabled?: boolean; onClick: () => void }) {
