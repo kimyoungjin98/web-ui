@@ -40,9 +40,11 @@ describe("MetricCard", () => {
 
     expect(screen.getByRole("button").className.split(" ")).toEqual(
       expect.arrayContaining([
-        "border-primary/30",
-        "bg-primary-soft",
-        "hover:bg-primary-soft",
+        "border-primary/40",
+        "bg-primary/5",
+        "shadow-md",
+        "hover:bg-primary/5",
+        "hover:shadow-md",
       ]),
     );
   });

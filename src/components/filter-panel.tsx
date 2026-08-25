@@ -43,7 +43,7 @@ export function FilterPanel({
       data-slot="filter-panel"
       aria-labelledby={titleId}
       className={cn(
-        "flex flex-col gap-4 rounded-lg border border-border bg-card p-4",
+        "flex flex-col gap-4 rounded-md border border-border bg-card p-4",
         className,
       )}
     >

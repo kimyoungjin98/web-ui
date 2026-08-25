@@ -15,7 +15,7 @@ type MetricCardProps = React.ComponentProps<typeof Card> & {
 };
 
 const ACTIVE_METRIC_CARD_CLASS_NAME =
-  "border-primary/30 bg-primary-soft hover:bg-primary-soft";
+  "border-primary/40 bg-primary/5 shadow-md hover:border-primary/40 hover:bg-primary/5 hover:shadow-md";
 
 const toneClassNames: Record<ColorToken, string> = {
   primary: "border-primary-border bg-primary-soft text-primary-soft-foreground",
@@ -26,6 +26,7 @@ const toneClassNames: Record<ColorToken, string> = {
     "border-destructive/30 bg-destructive/10 text-destructive-soft-foreground",
   info: "border-info bg-info/20 text-info-soft-foreground",
   neutral: "border-neutral/30 bg-neutral/10 text-neutral",
+  white: "border-border bg-card text-base-content",
 };
 
 function MetricCard({
@@ -45,7 +46,7 @@ function MetricCard({
     <Card
       className={cn(
         interactive &&
-          "cursor-pointer select-none transition-colors hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+          "cursor-pointer select-none transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:border-primary/40 hover:shadow-md",
         className,
       )}
       role={interactive ? "button" : role}
