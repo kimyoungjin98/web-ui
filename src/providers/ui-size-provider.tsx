@@ -22,6 +22,7 @@ export type UiSizeDefaults = {
   searchSelect: FormSize;
   select: FormSize;
   spinner: SpinnerSize;
+  tabs: FormSize;
   toggle: ToggleSize;
   yearPicker: FormSize;
 };

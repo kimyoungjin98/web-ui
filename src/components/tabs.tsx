@@ -1,6 +1,10 @@
+"use client";
+
 import * as React from "react";
 
 import { cn } from "../libs/tailwind-util";
+import { useUiSize } from "../providers/ui-size-provider";
+import type { FormSize } from "./form-size";
 
 type TabOption<TValue extends string> = {
   disabled?: boolean;
@@ -13,8 +17,16 @@ type TabsProps<TValue extends string> = {
   className?: string;
   onValueChange: (value: TValue) => void;
   options: TabOption<TValue>[];
+  size?: FormSize;
   triggerClassName?: string;
   value: TValue | "";
+};
+
+const tabsSizeTokens: Record<FormSize, { label: string; trigger: string }> = {
+  xs: { label: "text-xs", trigger: "px-1 py-0.5" },
+  sm: { label: "text-sm", trigger: "px-1.5 py-0.5" },
+  default: { label: "text-sm", trigger: "px-2 py-1" },
+  lg: { label: "text-base", trigger: "px-3 py-1.5" },
 };
 
 function Tabs<TValue extends string>({
@@ -22,9 +34,13 @@ function Tabs<TValue extends string>({
   className,
   onValueChange,
   options,
+  size,
   triggerClassName,
   value,
 }: TabsProps<TValue>) {
+  const resolvedSize = useUiSize("tabs", size, "default");
+  const sizeToken = tabsSizeTokens[resolvedSize];
+
   return (
     <div
       role="group"
@@ -48,7 +64,8 @@ function Tabs<TValue extends string>({
             data-state={selected ? "active" : "inactive"}
             data-value={option.value}
             className={cn(
-              "cursor-pointer flex flex-1 items-center justify-center whitespace-nowrap rounded-md px-2 py-1 text-xs font-medium transition-colors outline-none sm:flex-none",
+              "cursor-pointer flex flex-1 items-center justify-center whitespace-nowrap rounded-md font-medium transition-colors outline-none sm:flex-none",
+              sizeToken.trigger,
               "text-muted-foreground hover:text-base-content hover:bg-muted-foreground/20",
               "focus-visible:ring-3 focus-visible:ring-ring/15 focus-visible:border-ring",
               "disabled:pointer-events-none disabled:opacity-50",
@@ -61,7 +78,7 @@ function Tabs<TValue extends string>({
               handleSegmentedControlKeyDown(event, options, onValueChange)
             }
           >
-            <span className="text-sm">{option.label}</span>
+            <span className={sizeToken.label}>{option.label}</span>
           </button>
         );
       })}
@@ -104,4 +121,4 @@ function handleSegmentedControlKeyDown<TValue extends string>(
 }
 
 export { Tabs };
-export type { TabOption, TabsProps };
+export type { TabOption, TabsProps, FormSize as TabsSize };
