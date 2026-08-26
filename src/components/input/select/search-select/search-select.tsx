@@ -5,6 +5,7 @@ import * as React from "react";
 import { type FormSize } from "../../../form-size";
 import { Select } from "../select";
 import { type SearchSelectOption } from "./search-select.utils";
+import { useUiSize } from "../../../../providers/ui-size-provider";
 
 export type { SearchSelectOption } from "./search-select.utils";
 
@@ -33,11 +34,15 @@ export type SearchSelectProps<TOption extends SearchSelectOption> = {
 export function SearchSelect<TOption extends SearchSelectOption>({
   selectedLabel,
   placeholder = "선택하세요",
+  size,
   ...props
 }: SearchSelectProps<TOption>) {
+  const resolvedSize = useUiSize("searchSelect", size, "default");
+
   return (
     <Select
       {...props}
+      size={resolvedSize}
       searchable
       placeholder={placeholder}
       renderValue={(selectedOptions) =>

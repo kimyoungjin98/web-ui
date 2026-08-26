@@ -1,7 +1,10 @@
+"use client";
+
 import * as React from "react";
 import { NumericFormat, type NumericFormatProps } from "react-number-format";
 import { type FormSize } from "../../form-size";
 import { getInputClassName, InputFrame } from "../style/input-style";
+import { useUiSize } from "../../../providers/ui-size-provider";
 
 type NumberInputProps = Omit<
   NumericFormatProps,
@@ -24,20 +27,22 @@ function NumberInput({
   className,
   endIcon,
   onChange,
-  size = "default",
+  size,
   startIcon,
   thousandSeparator,
   placeholder,
   ...props
 }: NumberInputProps) {
+  const resolvedSize = useUiSize("numberInput", size, "default");
+
   return (
-    <InputFrame endIcon={endIcon} size={size} startIcon={startIcon}>
+    <InputFrame endIcon={endIcon} size={resolvedSize} startIcon={startIcon}>
       <NumericFormat
         allowNegative={false}
         className={getInputClassName({
           className,
           endIcon: Boolean(endIcon),
-          size,
+          size: resolvedSize,
           startIcon: Boolean(startIcon),
         })}
         thousandSeparator={thousandSeparator}

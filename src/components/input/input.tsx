@@ -1,7 +1,10 @@
+"use client";
+
 import * as React from "react";
 
 import { type FormSize } from "../form-size";
 import { getInputClassName, InputFrame } from "./style/input-style";
+import { useUiSize } from "../../providers/ui-size-provider";
 
 type InputProps = Omit<React.ComponentProps<"input">, "size"> & {
   startIcon?: React.ReactNode;
@@ -9,21 +12,17 @@ type InputProps = Omit<React.ComponentProps<"input">, "size"> & {
   size?: FormSize;
 };
 
-function Input({
-  className,
-  startIcon,
-  endIcon,
-  size = "default",
-  ...props
-}: InputProps) {
+function Input({ className, startIcon, endIcon, size, ...props }: InputProps) {
+  const resolvedSize = useUiSize("input", size, "default");
+
   return (
-    <InputFrame endIcon={endIcon} size={size} startIcon={startIcon}>
+    <InputFrame endIcon={endIcon} size={resolvedSize} startIcon={startIcon}>
       <input
         data-slot="input"
         className={getInputClassName({
           className,
           endIcon: Boolean(endIcon),
-          size,
+          size: resolvedSize,
           startIcon: Boolean(startIcon),
         })}
         {...props}

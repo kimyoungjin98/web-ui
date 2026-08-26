@@ -4,6 +4,7 @@ import * as React from "react";
 import { Switch as SwitchPrimitive } from "radix-ui";
 
 import { cn } from "../libs/tailwind-util";
+import { useUiSize } from "../providers/ui-size-provider";
 
 type ToggleSize = "sm" | "md" | "lg";
 
@@ -46,10 +47,11 @@ function Toggle({
   disabled,
   label,
   labelClassName,
-  size = "md",
+  size,
   ...props
 }: ToggleProps) {
-  const sizeToken = toggleSizeTokens[size];
+  const resolvedSize = useUiSize("toggle", size, "md");
+  const sizeToken = toggleSizeTokens[resolvedSize];
   const content = label ?? children;
 
   return (

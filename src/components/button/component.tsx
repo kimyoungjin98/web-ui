@@ -1,3 +1,5 @@
+"use client";
+
 import { Slot } from "@radix-ui/react-slot";
 import * as React from "react";
 
@@ -6,6 +8,7 @@ import type { ColorToken } from "../../themes/color-token";
 import { buttonBase, buttonSizes, buttonVariantBase } from "./base";
 import { getButtonColorClass } from "./colors";
 import type { ButtonProps, ButtonSize, ButtonVariant } from "./types";
+import { useUiSize } from "../../providers/ui-size-provider";
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -22,6 +25,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     const Comp = asChild ? Slot : "button";
     const resolvedColor = resolveButtonColor(color, variant);
+    const resolvedSize = useUiSize("button", size, "default");
 
     return (
       <Comp
@@ -31,7 +35,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           buttonBase,
           buttonVariantBase[variant],
           getButtonColorClass(variant, resolvedColor),
-          buttonSizes[size ?? "default"],
+          buttonSizes[resolvedSize],
           className,
         )}
         {...props}

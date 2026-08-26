@@ -20,7 +20,7 @@ const FORM_SIZES: Record<FormSize, FormSizeStyle> = {
     height: "h-8",
     icon: "left-2.5 size-4",
     inputPadding: "px-2.5",
-    selectItem: "py-1 pl-7 pr-2 text-xs",
+    selectItem: "py-1 pl-7 pr-2 text-sm",
     text: "text-sm",
   },
   default: {

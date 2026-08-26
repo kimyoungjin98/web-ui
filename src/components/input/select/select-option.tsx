@@ -18,6 +18,7 @@ import {
 } from "./libs/select-styles";
 import type { OptionSelectProps, SelectOption } from "./libs/select-types";
 import { resolveSelectPortalContainer } from "./libs/select-utils";
+import { useUiSize } from "../../../providers/ui-size-provider";
 
 export function OptionSelect<TOption extends SelectOption>(
   props: OptionSelectProps<TOption>,
@@ -38,11 +39,12 @@ export function OptionSelect<TOption extends SelectOption>(
     renderValue,
     searchable = false,
     searchPlaceholder = "옵션 검색",
-    size = "default",
+    size,
     shouldFilter = true,
     title,
     triggerStartAdornment,
   } = props;
+  const resolvedSize = useUiSize("select", size, "default");
   const [uncontrolledValue, setUncontrolledValue] =
     React.useState(defaultValue);
   const [open, setOpen] = React.useState(false);
@@ -64,7 +66,7 @@ export function OptionSelect<TOption extends SelectOption>(
           : filterSearchSelectOptions(options, query),
     [filterOption, options, query, shouldFilter],
   );
-  const sizeStyle = getFormSize(size);
+  const sizeStyle = getFormSize(resolvedSize);
   const canCreate =
     !props.multiple &&
     Boolean(onCreateOption) &&
@@ -165,7 +167,7 @@ export function OptionSelect<TOption extends SelectOption>(
             value={query}
             disabled={disabled || isCreating}
             placeholder={searchPlaceholder}
-            size={size}
+            size={resolvedSize}
             onChange={(event) => {
               setQuery(event.target.value);
               onSearchChange?.(event.target.value);

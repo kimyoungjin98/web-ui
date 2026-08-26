@@ -4,6 +4,7 @@ import * as React from "react";
 
 import { cn } from "../libs/tailwind-util";
 import Icon from "./icon";
+import { useUiSize } from "../providers/ui-size-provider";
 
 type CheckboxSize = "sm" | "md" | "lg";
 
@@ -39,10 +40,11 @@ function Checkbox({
   labelClassName,
   disabled,
   title,
-  size = "md",
+  size,
   ...props
 }: CheckboxProps) {
-  const sizeToken = checkboxSizeTokens[size];
+  const resolvedSize = useUiSize("checkbox", size, "md");
+  const sizeToken = checkboxSizeTokens[resolvedSize];
   const inputRef = React.useRef<HTMLInputElement | null>(null);
 
   React.useEffect(() => {
@@ -96,3 +98,4 @@ function Checkbox({
 }
 
 export { Checkbox };
+export type { CheckboxProps, CheckboxSize };

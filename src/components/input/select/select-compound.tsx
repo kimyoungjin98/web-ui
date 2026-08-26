@@ -8,6 +8,7 @@ import {
 } from "./select-context";
 import { SelectItem } from "./select-item";
 import type { CompoundSelectProps } from "./libs/select-types";
+import { useUiSize } from "../../../providers/ui-size-provider";
 
 function getDeclaredOptions(children: React.ReactNode): DeclaredSelectOption[] {
   const options: DeclaredSelectOption[] = [];
@@ -38,9 +39,10 @@ export function CompoundSelect({
   defaultValue = "",
   disabled = false,
   onValueChange,
-  size = "default",
+  size,
   value: controlledValue,
 }: CompoundSelectProps) {
+  const resolvedSize = useUiSize("select", size, "default");
   const [uncontrolledValue, setUncontrolledValue] =
     React.useState(defaultValue);
   const [open, setOpen] = React.useState(false);
@@ -151,7 +153,7 @@ export function CompoundSelect({
       select,
       setActiveValue,
       setOpen: setSelectOpen,
-      size,
+      size: resolvedSize,
       triggerRef,
       value,
     }),
@@ -165,7 +167,7 @@ export function CompoundSelect({
       registerOption,
       select,
       setSelectOpen,
-      size,
+      resolvedSize,
       value,
     ],
   );

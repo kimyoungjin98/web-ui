@@ -20,6 +20,7 @@ export * from "./popover";
 export * from "./tabs";
 export * from "./toggle";
 export * from "./tooltip";
+export * from "../providers/ui-size-provider";
 
 // 폼
 export * from "./form/form-layout";

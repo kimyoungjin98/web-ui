@@ -11,6 +11,7 @@ import { Calendar } from "../../calendar";
 import { getFormSize, type FormSize } from "../../form-size";
 import Icon from "../../icon";
 import { Popover, PopoverContent, PopoverTrigger } from "../../popover";
+import { useUiSize } from "../../../providers/ui-size-provider";
 
 dayjs.extend(customParseFormat);
 
@@ -78,14 +79,15 @@ function DatePicker({
   name,
   className,
   hiddenResetButton = false,
-  size = "default",
+  size,
 }: DatePickerProps) {
   const [open, setOpen] = React.useState(false);
   const [portalContainer, setPortalContainer] = React.useState<Element | null>(
     null,
   );
   const selectedDate = parseDateValue(value);
-  const sizeStyle = getFormSize(size);
+  const resolvedSize = useUiSize("datePicker", size, "default");
+  const sizeStyle = getFormSize(resolvedSize);
   const rootRef = React.useCallback((node: HTMLSpanElement | null) => {
     setPortalContainer(node?.closest("[data-slot='dialog-content']") ?? null);
   }, []);
@@ -132,7 +134,7 @@ function DatePicker({
                 name="lucide:calendar"
                 className={cn(
                   "shrink-0 text-muted-foreground",
-                  size === "xs" ? "size-3.5" : "size-4",
+                  resolvedSize === "xs" ? "size-3.5" : "size-4",
                 )}
               />
               <span
@@ -213,7 +215,7 @@ function DateRangePicker({
   fromName,
   toName,
   className,
-  size = "default",
+  size,
   hiddenResetButton = false,
   readonly,
 }: DateRangePickerProps) {
@@ -228,7 +230,8 @@ function DateRangePicker({
       ? { from: selectedFrom, to: selectedTo }
       : undefined;
   const hasValue = Boolean(value.from || value.to);
-  const sizeStyle = getFormSize(size);
+  const resolvedSize = useUiSize("dateRangePicker", size, "default");
+  const sizeStyle = getFormSize(resolvedSize);
   const rootRef = React.useCallback((node: HTMLSpanElement | null) => {
     setPortalContainer(node?.closest("[data-slot='dialog-content']") ?? null);
   }, []);
@@ -317,7 +320,7 @@ function DateRangePicker({
                 name="lucide:calendar-range"
                 className={cn(
                   "shrink-0 text-muted-foreground",
-                  size === "xs" ? "size-3.5" : "size-4",
+                  resolvedSize === "xs" ? "size-3.5" : "size-4",
                 )}
               />
               <span
@@ -389,14 +392,15 @@ function MonthPicker({
   onValueChange,
   placeholder = "월 선택",
   disabled,
-  size = "default",
+  size,
   className,
 }: MonthPickerProps) {
   const [open, setOpen] = React.useState(false);
   const [year, setYear] = React.useState(
     () => Number(value.slice(0, 4)) || dayjs().year(),
   );
-  const sizeStyle = getFormSize(size);
+  const resolvedSize = useUiSize("monthPicker", size, "default");
+  const sizeStyle = getFormSize(resolvedSize);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -489,14 +493,15 @@ function YearPicker({
   onValueChange,
   placeholder = "연도 선택",
   disabled,
-  size = "default",
+  size,
   className,
 }: YearPickerProps) {
   const [open, setOpen] = React.useState(false);
   const [startYear, setStartYear] = React.useState(
     () => Math.floor((Number(value) || dayjs().year()) / 12) * 12,
   );
-  const sizeStyle = getFormSize(size);
+  const resolvedSize = useUiSize("yearPicker", size, "default");
+  const sizeStyle = getFormSize(resolvedSize);
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
