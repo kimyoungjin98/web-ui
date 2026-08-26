@@ -18,6 +18,14 @@ const DENSITIES: Record<DataGridDensity, DataGridDensityStyles> = {
     selectionCell: "min-h-16 px-4 py-3",
     selectionWidth: "48px",
   },
+  comfortable: {
+    actionCell: "min-h-12 px-3 py-2 text-sm",
+    cell: "min-h-12 px-3 py-2 text-sm",
+    header: "min-h-11 px-3 py-2 text-sm",
+    rowHeight: 48,
+    selectionCell: "min-h-12 px-3 py-2",
+    selectionWidth: "44px",
+  },
   compact: {
     actionCell: "min-h-10 px-2 py-1 text-xs",
     cell: "min-h-10 px-2 py-1 text-xs",

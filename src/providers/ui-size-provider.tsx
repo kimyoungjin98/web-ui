@@ -4,6 +4,7 @@ import * as React from "react";
 
 import type { ButtonSize } from "../components/button/types";
 import type { CheckboxSize } from "../components/checkbox";
+import type { DataGridDensity } from "../components/data-grid/types";
 import type { FormSize } from "../components/form-size";
 import type { ToggleSize } from "../components/toggle";
 
@@ -12,6 +13,7 @@ type SpinnerSize = "sm" | "default" | "lg";
 export type UiSizeDefaults = {
   button: ButtonSize;
   checkbox: CheckboxSize;
+  dataGridDensity: DataGridDensity;
   datePicker: FormSize;
   dateRangePicker: FormSize;
   input: FormSize;

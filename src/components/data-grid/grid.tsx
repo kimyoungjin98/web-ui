@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "../../libs/tailwind-util";
+import { useUiSize } from "../../providers/ui-size-provider";
 import { createDataGridColumns } from "./libs/json";
 import { getDataGridModel } from "./model";
 import { DataGridPagination } from "./pagination";
@@ -12,6 +13,7 @@ import { DataGridToolbar } from "./toolbar/toolbar";
 type Model<T extends object> = ReturnType<typeof getDataGridModel<T>>;
 
 export function DataGrid<T extends object>(props: DataGridProps<T>) {
+  const density = useUiSize("dataGridDensity", props.density, "default");
   const resolvedProps: ResolvedDataGridProps<T> = {
     ...props,
     columns: props.columns ?? createDataGridColumns(props.columnDefs ?? []),
@@ -19,6 +21,7 @@ export function DataGrid<T extends object>(props: DataGridProps<T>) {
       props.getRowId ??
       ((row, index) => String((row as { id?: unknown }).id ?? `row-${index}`)),
     rows: props.rows ?? props.rowData ?? [],
+    density,
   };
 
   return (
@@ -79,7 +82,7 @@ function DataGridView<T extends object>({
         onRowClick={props.onRowClick}
         rowClassName={props.rowClassName}
         rowActions={props.rowActions}
-        density={props.density ?? "default"}
+        density={props.density}
       />
       {showPagination ? (
         <DataGridPagination

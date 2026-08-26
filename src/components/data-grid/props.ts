@@ -76,6 +76,8 @@ export type DataGridProps<T extends object> = {
 export type ResolvedDataGridProps<T extends object> = DataGridProps<T> & {
   /** `columns` 또는 `columnDefs`에서 해석된 필수 컬럼 배열입니다. */
   columns: DataGridColumn<T>[];
+  /** 명시값, Provider 또는 기본값에서 해석된 표시 밀도입니다. */
+  density: DataGridDensity;
   /** 기본 구현까지 적용된 행 식별자 함수입니다. */
   getRowId: (row: T, index: number) => string;
   /** `rows` 또는 `rowData`에서 해석된 필수 행 배열입니다. */

@@ -10,7 +10,11 @@ export type DataGridSort = {
 } | null;
 
 /** 행 높이와 여백을 조절하는 DataGrid 표시 밀도입니다. */
-export type DataGridDensity = "default" | "compact" | "ultra-compact";
+export type DataGridDensity =
+  | "default"
+  | "comfortable"
+  | "compact"
+  | "ultra-compact";
 
 /** Excel 내보내기 값으로 사용할 수 있는 콘텐츠입니다. */
 export type DataGridExportValue = React.ReactNode | Date;
