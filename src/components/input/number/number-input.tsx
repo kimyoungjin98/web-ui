@@ -27,10 +27,13 @@ function NumberInput({
   className,
   endIcon,
   onChange,
+  onFocus,
+  onKeyDown,
   size,
   startIcon,
   thousandSeparator,
   placeholder,
+  value,
   ...props
 }: NumberInputProps) {
   const resolvedSize = useUiSize("numberInput", size, "default");
@@ -47,7 +50,24 @@ function NumberInput({
         })}
         thousandSeparator={thousandSeparator}
         placeholder={placeholder}
+        value={value}
         {...props}
+        onFocus={(event) => {
+          onFocus?.(event);
+          if (!event.defaultPrevented && value === 0) {
+            event.currentTarget.select();
+          }
+        }}
+        onKeyDown={(event) => {
+          onKeyDown?.(event);
+          if (
+            !event.defaultPrevented &&
+            value === 0 &&
+            /^\d$/.test(event.key)
+          ) {
+            event.currentTarget.select();
+          }
+        }}
         onValueChange={({ floatValue }) =>
           onChange(getNumberInputValue(floatValue))
         }
