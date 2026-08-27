@@ -3,7 +3,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../../dropdown-menu";
+} from "../../dropdown/dropdown-menu";
 import Icon from "../../icon";
 import { ActionsButton } from "./actions-button";
 import { getVisibleRowActions, type RowAction } from "./row-actions";

@@ -10,7 +10,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "../dialog";
+} from "../dialog/dialog";
 
 type AppAlertVariant = "error" | "info" | "success" | "warning";
 

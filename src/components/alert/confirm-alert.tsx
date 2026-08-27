@@ -11,7 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../dialog";
+} from "../dialog/dialog";
 
 type ConfirmAlertProps = {
   cancelLabel?: string;

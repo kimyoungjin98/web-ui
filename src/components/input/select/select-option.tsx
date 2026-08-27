@@ -3,22 +3,22 @@
 import * as React from "react";
 
 import { cn } from "../../../libs/tailwind-util";
+import { useUiSize } from "../../../providers/ui-size-provider";
+import { resolveSelectDialogPortalContainer } from "../../dialog/select-dialog-portal";
+import { getFormSize } from "../../form-size";
 import Icon from "../../icon";
 import { Popover, PopoverContent, PopoverTrigger } from "../../popover";
-import { getFormSize } from "../../form-size";
 import { Input } from "../input";
-import {
-  createSearchSelectOption,
-  filterSearchSelectOptions,
-} from "./search-select/search-select.utils";
 import {
   selectContentClassName,
   selectItemClassName,
   selectTriggerClassName,
 } from "./libs/select-styles";
 import type { OptionSelectProps, SelectOption } from "./libs/select-types";
-import { resolveSelectPortalContainer } from "./libs/select-utils";
-import { useUiSize } from "../../../providers/ui-size-provider";
+import {
+  createSearchSelectOption,
+  filterSearchSelectOptions,
+} from "./search-select/search-select.utils";
 
 export function OptionSelect<TOption extends SelectOption>(
   props: OptionSelectProps<TOption>,
@@ -158,7 +158,7 @@ export function OptionSelect<TOption extends SelectOption>(
         role="listbox"
         align="start"
         className={selectContentClassName}
-        portalContainer={resolveSelectPortalContainer(trigger)}
+        portalContainer={resolveSelectDialogPortalContainer(trigger)}
       >
         {searchable ? (
           <Input

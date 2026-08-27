@@ -1,12 +1,10 @@
 import type * as React from "react";
 
-export function resolveSelectPortalContainer<T>(
-  trigger: { closest: (selector: string) => T | null } | null,
-): T | undefined {
-  // Keep the popover inside a dialog so its stacking context and focus handling remain intact.
-  return trigger?.closest("[data-slot='dialog-content']") ?? undefined;
-}
-
+/**
+ * Select의 ref를 합성합니다.
+ * @param refs
+ * @returns
+ */
 export function composeSelectRefs<T>(
   ...refs: (React.Ref<T> | undefined)[]
 ): React.RefCallback<T> {

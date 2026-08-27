@@ -2,14 +2,16 @@
 
 import type { ReactNode } from "react";
 
-import { Button } from "./button/button";
+import { useState } from "react";
+import { Button } from "../button/button";
+import { resolveSelectDialogPortalContainer } from "../dialog/select-dialog-portal";
+import Icon from "../icon";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./dropdown-menu";
-import Icon from "./icon";
 
 export type DotsDropdownItem = {
   disabled?: boolean;
@@ -28,10 +30,13 @@ export function DotsDropdown({
   disabled?: boolean;
   items: DotsDropdownItem[];
 }) {
+  const [triggerRef, setTriggerRef] = useState<HTMLButtonElement | null>(null);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
+          ref={setTriggerRef}
           type="button"
           variant="ghost"
           size="icon"
@@ -42,7 +47,11 @@ export function DotsDropdown({
           <Icon name="lucide:more-horizontal" className="size-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="min-w-32">
+      <DropdownMenuContent
+        portalContainer={resolveSelectDialogPortalContainer(triggerRef)}
+        align="end"
+        className="min-w-32"
+      >
         {items.map((item) => (
           <DropdownMenuItem
             key={item.label}

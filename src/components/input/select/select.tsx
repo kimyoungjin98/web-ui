@@ -14,10 +14,7 @@ export type { OptionSelectProps, SelectOption } from "./libs/select-types";
 export { SelectContent } from "./select-content";
 export { SelectItem } from "./select-item";
 export { SelectTrigger } from "./select-trigger";
-export {
-  composeSelectRefs,
-  resolveSelectPortalContainer,
-} from "./libs/select-utils";
+export { composeSelectRefs } from "./libs/select-utils";
 export { SelectValue } from "./select-value";
 
 function Select(props: CompoundSelectProps): React.ReactElement;

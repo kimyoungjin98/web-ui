@@ -5,9 +5,6 @@ export * from "./button/button";
 export * from "./calendar";
 export * from "./card";
 export * from "./checkbox";
-export * from "./dialog";
-export * from "./dots-dropdown";
-export * from "./dropdown-menu";
 export * from "./file-uploader/file-uploader";
 export * from "./filter-panel";
 export * from "./hint";
@@ -21,6 +18,14 @@ export * from "./tabs";
 export * from "./toggle";
 export * from "./tooltip";
 export * from "../providers/ui-size-provider";
+
+// 다이얼로그
+export * from "./dialog/dialog";
+export * from "./dialog/select-dialog-portal";
+
+// 드롭다운
+export * from "./dropdown/dots-dropdown";
+export * from "./dropdown/dropdown-menu";
 
 // 폼
 export * from "./form/form-layout";

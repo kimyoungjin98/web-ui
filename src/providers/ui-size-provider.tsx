@@ -16,6 +16,7 @@ export type UiSizeDefaults = {
   dataGridDensity: DataGridDensity;
   datePicker: FormSize;
   dateRangePicker: FormSize;
+  dropdownMenu: FormSize;
   input: FormSize;
   monthPicker: FormSize;
   numberInput: FormSize;

@@ -1,0 +1,7 @@
+.dropdown-menu-content[data-state="open"] {
+  animation: dropdown-menu-in 140ms ease-out;
+}
+
+.dropdown-menu-content[data-state="closed"] {
+  animation: dropdown-menu-out 100ms ease-in;
+}

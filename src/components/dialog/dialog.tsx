@@ -3,8 +3,8 @@
 import * as React from "react";
 import { Dialog as DialogPrimitive } from "radix-ui";
 
-import Icon from "./icon";
-import { cn } from "../libs/tailwind-util";
+import Icon from "../icon";
+import { cn } from "../../libs/tailwind-util";
 
 export function getDialogContentPointerEvents(selectIsOpen: boolean) {
   return selectIsOpen ? ("auto" as const) : undefined;
@@ -14,6 +14,11 @@ type DialogOutsideInteractionTarget = {
   closest: (selectors: string) => unknown;
 };
 
+/**
+ * 드롭다운 메뉴, 셀렉트, 팝오버 등과 같은 컴포넌트가 열려있을 때 다이얼로그 외부를 클릭하면 다이얼로그가 닫히는 현상을 방지하기 위한 함수입니다.
+ * @param target
+ * @returns
+ */
 export function shouldPreventDialogOutsideInteraction(target: unknown) {
   if (
     !target ||
@@ -26,9 +31,18 @@ export function shouldPreventDialogOutsideInteraction(target: unknown) {
 
   return Boolean(
     (target as DialogOutsideInteractionTarget).closest(
-      "[data-slot='popover-content'], [data-slot='select-content']",
+      "[data-slot='popover-content'], [data-slot='select-content'], [data-slot='dropdown-menu-content']",
     ),
   );
+}
+
+function isTopmostDialogContent(content: HTMLElement) {
+  const openDialogContents =
+    content.ownerDocument.querySelectorAll<HTMLElement>(
+      "[data-slot='dialog-content'][data-state='open']",
+    );
+
+  return openDialogContents.item(openDialogContents.length - 1) === content;
 }
 
 function Dialog({
@@ -93,7 +107,10 @@ const DialogContent = React.forwardRef<
             className,
           )}
           onInteractOutside={(event) => {
-            if (shouldPreventDialogOutsideInteraction(event.target)) {
+            if (
+              !isTopmostDialogContent(event.currentTarget as HTMLElement) ||
+              shouldPreventDialogOutsideInteraction(event.target)
+            ) {
               event.preventDefault();
             }
             onInteractOutside?.(event);

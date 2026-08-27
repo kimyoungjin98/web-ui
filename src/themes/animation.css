@@ -41,6 +41,20 @@
   animation: tooltip-content-out 100ms cubic-bezier(0.4, 0, 1, 1) both;
 }
 
+.dropdown-menu-content {
+  transform-origin: var(--radix-dropdown-menu-content-transform-origin);
+  will-change: opacity, transform;
+}
+
+.dropdown-menu-content[data-state="open"] {
+  animation: dropdown-menu-content-in 140ms cubic-bezier(0.16, 1, 0.3, 1)
+    both;
+}
+
+.dropdown-menu-content[data-state="closed"] {
+  animation: dropdown-menu-content-out 100ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .accordion-content[data-state="open"],
   .accordion-content[data-state="closed"] {
@@ -166,6 +180,30 @@
   }
 }
 
+@keyframes dropdown-menu-content-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes dropdown-menu-content-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
 @keyframes sheet-overlay-in {
   from {
     opacity: 0;
@@ -260,7 +298,8 @@
   .sheet-overlay[data-state],
   .sheet-content[data-state],
   .data-grid-row-enter,
-  .tooltip-content[data-state] {
+  .tooltip-content[data-state],
+  .dropdown-menu-content[data-state] {
     animation: none;
   }
 
