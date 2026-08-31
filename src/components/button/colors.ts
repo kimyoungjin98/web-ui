@@ -14,7 +14,7 @@ const solid: Record<ColorToken, string> = {
 
 const outline: Record<ColorToken, string> = {
   primary:
-    "border-primary/30 bg-primary10 text-primary-soft-foreground hover:bg-primary/20",
+    "border-primary/30 bg-primary/10 text-primary-soft-foreground hover:bg-primary/20",
   secondary:
     "border-secondary/30 bg-secondary/10 text-secondary-foreground hover:bg-secondary/20",
   success:
