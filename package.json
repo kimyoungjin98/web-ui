@@ -17,7 +17,8 @@
   "scripts": {
     "lint": "tsc -p tsconfig.json --noEmit",
     "test:file-uploader": "node src/file-uploader/queue/queue.test.ts",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "check-types": "tsc -p tsconfig.json --noEmit",
+    "typecheck": "pnpm check-types"
   },
   "dependencies": {
     "@radix-ui/react-dropdown-menu": "^2.1.16",
