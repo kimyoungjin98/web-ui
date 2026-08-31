@@ -15,6 +15,9 @@ export { SelectContent } from "./select-content";
 export { SelectItem } from "./select-item";
 export { SelectTrigger } from "./select-trigger";
 export { composeSelectRefs } from "./libs/select-utils";
+export {
+  resolveSelectDialogPortalContainer as resolveSelectPortalContainer,
+} from "../../dialog/select-dialog-portal";
 export { SelectValue } from "./select-value";
 
 function Select(props: CompoundSelectProps): React.ReactElement;
