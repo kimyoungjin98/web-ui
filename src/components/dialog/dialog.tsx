@@ -111,6 +111,7 @@ const DialogContent = React.forwardRef<
               !isTopmostDialogContent(event.currentTarget as HTMLElement) ||
               shouldPreventDialogOutsideInteraction(event.target)
             ) {
+              // overlay 클릭 시 다이얼로그가 닫히는 것을 방지하기 위해 preventDefault를 호출합니다.
               event.preventDefault();
             }
             onInteractOutside?.(event);
