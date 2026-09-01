@@ -31,6 +31,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <Comp
         ref={ref}
         data-slot="button"
+        disabled={disabled}
         className={cn(
           buttonBase,
           buttonVariantBase[variant],
