@@ -21,6 +21,8 @@ type OptionSelectBaseProps<TOption extends SelectOption> = {
   disabled?: boolean;
   emptyMessage?: string;
   filterOption?: (option: TOption, query: string) => boolean;
+  /** 드롭다운 옵션 목록 아래에 고정으로 렌더되는 영역 (예: 전체 선택 버튼). */
+  footerSlot?: React.ReactNode;
   id?: string;
   onCreateOption?: (query: string) => TOption | void | Promise<TOption | void>;
   onSearchChange?: (query: string) => void;
