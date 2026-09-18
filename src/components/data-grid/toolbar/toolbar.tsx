@@ -122,7 +122,10 @@ function ExcelButton({ action }: { action: Excel }) {
       onClick={action.onClick}
       aria-label={label}
     >
-      <Icon name="vscode-icons:file-type-excel" className="size-5" />
+      <img
+        src="https://api.iconify.design/vscode-icons/file-type-excel.svg"
+        className="size-5"
+      />
     </Button>
   );
 }
