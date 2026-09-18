@@ -2,13 +2,14 @@ import * as React from "react";
 
 import { cn } from "../libs/tailwind-util";
 import Icon from "./icon";
+import type { IconName } from "./icon";
 
 export type RadioProps = Omit<
   React.ComponentProps<"input">,
   "children" | "type"
 > & {
   children?: React.ReactNode;
-  icon?: React.ReactNode | string;
+  icon?: IconName | React.ReactElement;
   iconClassName?: string;
   image?: React.ReactNode | string;
   imageAlt?: string;

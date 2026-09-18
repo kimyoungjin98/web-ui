@@ -32,6 +32,7 @@ export function OptionSelect<TOption extends SelectOption>(
     filterOption,
     emptyMessage = "검색 결과가 없습니다.",
     createMessage = (query) => `“${query}” 등록`,
+    footerSlot,
     onCreateOption,
     onSearchChange,
     placeholder = "선택하세요",
@@ -206,11 +207,21 @@ export function OptionSelect<TOption extends SelectOption>(
                 )}
                 onClick={() => select(option.value)}
               >
+                <span className="absolute left-2 grid size-4 place-items-center">
+                  {selected ? (
+                    <Icon name="lucide:check" className="size-4" />
+                  ) : null}
+                </span>
                 {renderOption ? renderOption(option) : option.label}
               </button>
             );
           })
         )}
+        {footerSlot ? (
+          <div className="sticky bottom-0 z-10 -mx-1 -mb-1 mt-1 flex shrink-0 items-center justify-end border-t border-border bg-popover p-1.5">
+            {footerSlot}
+          </div>
+        ) : null}
       </PopoverContent>
     </Popover>
   );

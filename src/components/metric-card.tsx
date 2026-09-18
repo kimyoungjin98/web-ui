@@ -2,13 +2,14 @@ import * as React from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "./card";
 import Icon from "./icon";
+import type { IconName } from "./icon";
 import { cn } from "../libs/tailwind-util";
 import type { ColorToken } from "../themes/color-token";
 
 type MetricCardProps = React.ComponentProps<typeof Card> & {
   label: React.ReactNode;
   value?: React.ReactNode;
-  icon?: string;
+  icon?: IconName;
   interactive?: boolean;
   active?: boolean;
   tone?: ColorToken;
