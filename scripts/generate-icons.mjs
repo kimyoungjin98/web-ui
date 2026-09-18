@@ -15,10 +15,12 @@ const outputPath = resolve(
 );
 
 const collectionLoaders = {
+  boxicons: () => import("@iconify-json/boxicons"),
   devicon: () => import("@iconify-json/devicon"),
   el: () => import("@iconify-json/el"),
   "eos-icons": () => import("@iconify-json/eos-icons"),
   flowbite: () => import("@iconify-json/flowbite"),
+  gridicons: () => import("@iconify-json/gridicons"),
   ic: () => import("@iconify-json/ic"),
   lucide: () => import("@iconify-json/lucide"),
   "material-symbols": () => import("@iconify-json/material-symbols"),
