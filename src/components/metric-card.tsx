@@ -2,13 +2,14 @@ import * as React from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "./card";
 import Icon from "./icon";
+import type { IconName } from "./icon";
 import { cn } from "../libs/tailwind-util";
 import type { ColorToken } from "../themes/color-token";
 
 type MetricCardProps = React.ComponentProps<typeof Card> & {
   label: React.ReactNode;
   value?: React.ReactNode;
-  icon?: string;
+  icon?: IconName;
   interactive?: boolean;
   active?: boolean;
   tone?: ColorToken;
@@ -26,8 +27,7 @@ const activeToneClassNames: Record<ColorToken, string> = {
     "border-warning-soft-foreground/55 bg-warning/30 shadow-md hover:border-warning-soft-foreground/55 hover:bg-warning/30 hover:shadow-md",
   destructive:
     "border-destructive-soft-foreground/50 bg-destructive/10 shadow-md hover:border-destructive-soft-foreground/50 hover:bg-destructive/10 hover:shadow-md",
-  info:
-    "border-info-soft-foreground/50 bg-info/30 shadow-md hover:border-info-soft-foreground/50 hover:bg-info/30 hover:shadow-md",
+  info: "border-info-soft-foreground/50 bg-info/30 shadow-md hover:border-info-soft-foreground/50 hover:bg-info/30 hover:shadow-md",
   neutral:
     "border-neutral/50 bg-neutral/10 shadow-md hover:border-neutral/50 hover:bg-neutral/10 hover:shadow-md",
   white:
