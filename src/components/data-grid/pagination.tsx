@@ -1,5 +1,6 @@
 import { Button } from "../button/button";
 import Icon from "../icon";
+import type { IconName } from "../icon";
 
 type Props = {
   firstItem: number;
@@ -59,7 +60,7 @@ function PageButton({
   onClick,
 }: {
   disabled: boolean;
-  icon: string;
+  icon: IconName;
   iconAfter?: boolean;
   label: string;
   onClick: () => void;

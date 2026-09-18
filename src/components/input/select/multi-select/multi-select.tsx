@@ -1,6 +1,7 @@
 "use client";
 
 import Icon from "../../../icon";
+import type { IconName } from "../../../icon";
 import { Select } from "../select";
 
 export type MultiSelectOption = { value: string; label: string };
@@ -15,7 +16,7 @@ export function MultiSelect({
   onValueChange,
 }: {
   label: string;
-  icon?: string;
+  icon?: IconName;
   title?: string;
   options: MultiSelectOption[];
   value: string[];

@@ -207,6 +207,11 @@ export function OptionSelect<TOption extends SelectOption>(
                 )}
                 onClick={() => select(option.value)}
               >
+                <span className="absolute left-2 grid size-4 place-items-center">
+                  {selected ? (
+                    <Icon name="lucide:check" className="size-4" />
+                  ) : null}
+                </span>
                 {renderOption ? renderOption(option) : option.label}
               </button>
             );

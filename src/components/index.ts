@@ -8,6 +8,7 @@ export * from "./checkbox";
 export * from "./file-uploader/file-uploader";
 export * from "./filter-panel";
 export * from "./hint";
+export * from "./icon";
 export * from "./input";
 export * from "./metric-card";
 export * from "./radio";
