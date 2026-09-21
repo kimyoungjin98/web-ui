@@ -1,7 +1,9 @@
 import type { CSSProperties } from "react";
 
+export type IconName = string;
+
 export interface IconProps {
-  name: string;
+  name: IconName;
   className?: string;
 }
 
