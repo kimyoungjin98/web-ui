@@ -59,6 +59,40 @@ Spacing과 radius는 Tailwind 기본 유틸리티를 사용합니다. 예를 들
 - 모션을 추가할 때는 `prefers-reduced-motion` 대체 동작도 함께 제공합니다.
 - 새 컴포넌트는 기본/hover/focus/disabled/error 상태와 키보드 조작을 검증한 뒤 추가합니다.
 
+## 사이드 내비게이션
+
+`SideNav`, `SideHeader`, `SideItemWrapper`, `SideItem`을 조합해 사이드 메뉴를 구성합니다. 앱이 메뉴 데이터, 권한 필터링, 현재 항목과 이동 콜백을 전달하고, UI는 그룹 펼침과 표시를 처리합니다. Next.js 라우터나 앱 스토어에는 의존하지 않습니다.
+
+```tsx
+<SideNav isSidebarCollapsed={collapsed}>
+  <SideHeader
+    title="메뉴"
+    isSidebarCollapsed={collapsed}
+    rightButton={toggleButton}
+  />
+  <nav aria-label="주 메뉴">
+    <SideItemWrapper>
+      <SideItem
+        menu={{
+          label: "슬롯 관리",
+          icon: "gridicons:list-ordered",
+          isSidebarCollapsed: collapsed,
+          children: [
+            {
+              label: "진행 중",
+              active: currentPath === "/slots/active",
+              onClick: () => navigate("/slots/active"),
+            },
+          ],
+        }}
+      />
+    </SideItemWrapper>
+  </nav>
+</SideNav>
+```
+
+`SideItem`은 활성 하위 항목이 바뀌면 해당 그룹을 펼칩니다. `active`는 현재 항목 표시이며 그룹의 펼침 상태와는 별개입니다. `left`에 사용자 정의 아이콘을 전달할 수 있고, `disabled`로 항목을 비활성화할 수 있습니다. 사이드바는 기본적으로 `md` 이상에서 표시합니다.
+
 ## 전역 알림
 
 `AppAlertHost`와 `Toaster`는 앱 루트에 각각 한 번만 mount합니다. `appAlert.confirm()`은 호출 순서대로 표시되며, 각 Promise는 확인 또는 취소 시 해결됩니다.

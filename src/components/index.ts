@@ -13,6 +13,7 @@ export * from "./input";
 export * from "./metric-card";
 export * from "./radio";
 export * from "./sheet";
+export * from "./side-nav";
 export * from "./spinner";
 export * from "./popover";
 export * from "./typography/paragraph";

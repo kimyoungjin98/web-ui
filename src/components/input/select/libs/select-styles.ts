@@ -1,10 +1,9 @@
 import { cn } from "../../../../libs/tailwind-util";
+import { getInputBaseClassName } from "../../style/input-style";
 
 export const selectTriggerClassName = cn(
-  "flex w-full select-none items-center justify-between gap-2 rounded-lg",
-  "border border-input bg-card font-semibold outline-none transition-all",
-  "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/15",
-  "disabled:cursor-not-allowed disabled:opacity-50",
+  getInputBaseClassName(),
+  "flex select-none items-center justify-between gap-2 focus:border-primary",
 );
 
 export const selectContentClassName = cn(

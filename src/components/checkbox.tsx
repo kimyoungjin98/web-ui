@@ -55,7 +55,7 @@ function Checkbox({
     <label
       title={title || label}
       className={cn(
-        "group select-none flex cursor-pointer items-center rounded-lg bg-background font-semibold text-base-content transition-all hover:bg-muted has-[:checked]:border-primary-border has-[:checked]:bg-primary/10 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 has-[:focus-visible]:border-ring has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-ring/15",
+        "group select-none border-2 flex cursor-pointer items-center rounded-lg bg-background font-semibold text-base-content transition-all hover:bg-muted has-[:checked]:border-primary-border has-[:checked]:bg-primary/10 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 has-[:focus-visible]:border-ring has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-ring/15",
         sizeToken.label,
         containerClassName,
         labelClassName,
@@ -73,7 +73,7 @@ function Checkbox({
           disabled={disabled}
           aria-checked={indeterminate ? "mixed" : undefined}
           className={cn(
-            "peer absolute inset-0 size-full cursor-pointer appearance-none rounded border border-input bg-background outline-none transition-all checked:border-primary checked:bg-primary disabled:cursor-not-allowed",
+            "peer absolute inset-0 size-full cursor-pointer appearance-none rounded border-2 border-input bg-background outline-none transition-all checked:border-primary checked:bg-primary disabled:cursor-not-allowed",
             indeterminate && "border-primary bg-primary",
             className,
           )}
