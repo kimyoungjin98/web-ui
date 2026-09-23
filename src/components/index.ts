@@ -15,10 +15,13 @@ export * from "./radio";
 export * from "./sheet";
 export * from "./spinner";
 export * from "./popover";
+export * from "./typography/paragraph";
 export * from "./tabs";
 export * from "./toggle";
 export * from "./tooltip";
 export * from "../providers/ui-size-provider";
+
+export * from "./typography/paragraph";
 
 // 다이얼로그
 export * from "./dialog/dialog";
