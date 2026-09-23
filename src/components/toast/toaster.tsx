@@ -24,8 +24,9 @@ function getClickedToastId(toastElement: HTMLElement) {
     toastElement.dataset.yPosition,
     toastElement.dataset.xPosition,
   ].join("-") as ToasterProps["position"];
-  const toasts = sonnerToast.getToasts().reduce<SonnerToastRecord[]>(
-    (visibleToasts, toast) => {
+  const toasts = sonnerToast
+    .getToasts()
+    .reduce<SonnerToastRecord[]>((visibleToasts, toast) => {
       if (!("id" in toast)) {
         return visibleToasts;
       }
@@ -40,9 +41,7 @@ function getClickedToastId(toastElement: HTMLElement) {
       }
 
       return visibleToasts;
-    },
-    [],
-  );
+    }, []);
 
   return toasts[toasts.length - 1 - toastIndex]?.id ?? null;
 }
@@ -80,7 +79,7 @@ export function Toaster(props: ToasterProps) {
         toastOptions={{
           classNames: {
             toast:
-              "cursor-pointer border-border bg-card text-base-content shadow-lg rounded-md font-medium ring-1 ring-border/50",
+              "cursor-pointer border-border bg-card text-base-content shadow-lg rounded-lg font-medium ring-1 ring-border/50",
             title: "text-sm font-bold",
             description: "text-xs font-semibold text-muted-foreground",
             icon: "text-current",

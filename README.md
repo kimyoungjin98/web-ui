@@ -10,7 +10,7 @@ ERP 클라이언트에서 공유하는 UI 컴포넌트와 디자인 토큰 계�
 @import "@repo/ui/styles.css";
 ```
 
-Spacing과 radius는 Tailwind 기본 유틸리티를 사용합니다. 예를 들어 `gap-2`, `px-4`, `rounded-sm`, `rounded-md`, `rounded-lg`, `rounded-full`을 사용하며, UI 패키지에서 별도 spacing/radius scale을 재정의하지 않습니다.
+Spacing과 radius는 Tailwind 기본 유틸리티를 사용합니다. 예를 들어 `gap-2`, `px-4`, `rounded-sm`, `rounded-lg`, `rounded-lg`, `rounded-full`을 사용하며, UI 패키지에서 별도 spacing/radius scale을 재정의하지 않습니다.
 
 `@repo/ui`는 semantic token 이름과 Tailwind 매핑을 제공하고, 실제 라이트·다크 팔레트 값은 클라이언트의 `app/globals.css`가 소유합니다. 새 색상 역할이 필요할 때는 hex 또는 Tailwind palette를 컴포넌트에 직접 추가하지 말고, 먼저 공통 토큰과 `ColorToken`을 정의합니다.
 

@@ -45,7 +45,7 @@ function DataGridView<T extends object>({
   return (
     <div
       className={cn(
-        "flex min-h-0 flex-col overflow-hidden rounded-md bg-card",
+        "flex min-h-0 flex-col overflow-hidden rounded-2xl bg-card",
         props.gridLines &&
           "[&_[role=cell]]:border-r [&_[role=cell]]:border-border/70 [&_[role=columnheader]]:border-r [&_[role=columnheader]]:border-border/70",
         props.className,

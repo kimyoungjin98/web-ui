@@ -69,7 +69,7 @@ function PageButton({
   return (
     <Button
       type="button"
-      variant="outline"
+      variant="ghost"
       size="sm"
       className="h-10 flex-1 sm:h-8 sm:flex-none"
       disabled={disabled}

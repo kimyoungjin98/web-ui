@@ -14,7 +14,7 @@ import { cn } from "../../libs/tailwind-util";
 import type { FileUploaderLabels } from "./types/types";
 
 const FRAME =
-  "grid cursor-pointer place-items-center rounded-md border border-dashed p-4 text-center transition focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/25";
+  "grid cursor-pointer place-items-center rounded-lg border border-dashed p-4 text-center transition focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/25";
 const IDLE_FRAME =
   "border-primary/30 bg-card hover:border-primary/60 hover:bg-primary/5 hover:shadow-sm focus-visible:border-primary/70 focus-visible:bg-primary/5";
 const READY_FRAME =

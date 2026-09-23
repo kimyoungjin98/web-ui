@@ -145,7 +145,7 @@ function DropdownMenuContent({
         data-slot="dropdown-menu-content"
         sideOffset={sideOffset}
         className={cn(
-          "dropdown-menu-content bg-popover text-popover-foreground z-50 min-w-36 overflow-hidden rounded-md border border-border !shadow-md",
+          "dropdown-menu-content bg-popover text-popover-foreground z-50 min-w-36 overflow-hidden rounded-lg border border-border !shadow-md",
           sizeToken.content,
           className,
         )}
@@ -173,7 +173,7 @@ function DropdownMenuItem({
       data-inset={inset}
       data-variant={variant}
       className={cn(
-        "relative flex cursor-pointer select-none items-center rounded-md outline-none transition-colors focus:bg-base-content/10 focus:text-base-content data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+        "relative flex cursor-pointer select-none items-center rounded-lg outline-none transition-colors focus:bg-base-content/10 focus:text-base-content data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
         sizeToken.item,
         inset && sizeToken.inset,
         variant === "destructive" &&
@@ -198,7 +198,7 @@ function DropdownMenuCheckboxItem({
     <DropdownMenuPrimitive.CheckboxItem
       data-slot="dropdown-menu-checkbox-item"
       className={cn(
-        "relative flex cursor-default select-none items-center rounded-md outline-none transition-colors focus:bg-muted focus:text-base-content data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:shrink-0",
+        "relative flex cursor-default select-none items-center rounded-lg outline-none transition-colors focus:bg-muted focus:text-base-content data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:shrink-0",
         sizeToken.item,
         sizeToken.inset,
         className,
@@ -261,7 +261,7 @@ function DropdownMenuSubContent({
     <DropdownMenuPrimitive.SubContent
       data-slot="dropdown-menu-sub-content"
       className={cn(
-        "dropdown-menu-content bg-popover text-popover-foreground z-50 min-w-36 overflow-hidden rounded-md border border-border",
+        "dropdown-menu-content bg-popover text-popover-foreground z-50 min-w-36 overflow-hidden rounded-lg border border-border",
         sizeToken.content,
         className,
       )}
@@ -282,7 +282,7 @@ function DropdownMenuRadioItem({
     <DropdownMenuPrimitive.RadioItem
       data-slot="dropdown-menu-radio-item"
       className={cn(
-        "relative flex cursor-default select-none items-center rounded-md outline-none transition-colors focus:bg-muted focus:text-base-content data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:shrink-0",
+        "relative flex cursor-default select-none items-center rounded-lg outline-none transition-colors focus:bg-muted focus:text-base-content data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:shrink-0",
         sizeToken.item,
         sizeToken.inset,
         className,

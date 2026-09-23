@@ -5,7 +5,7 @@ import { cn } from "../libs/tailwind-util";
 import Icon from "./icon";
 
 const hintVariants = cva(
-  "flex items-start gap-2 rounded-md px-3 py-2.5 text-[13px] font-medium leading-5 text-base-content shadow-none [&_svg]:mt-0.5 [&_svg]:size-4 [&_svg]:shrink-0 [&_[data-slot=icon]]:mt-0.5 [&_[data-slot=icon]]:size-4 [&_[data-slot=icon]]:shrink-0",
+  "flex items-start gap-2 rounded-lg px-3 py-2.5 text-[13px] font-medium leading-5 text-base-content shadow-none [&_svg]:mt-0.5 [&_svg]:size-4 [&_svg]:shrink-0 [&_[data-slot=icon]]:mt-0.5 [&_[data-slot=icon]]:size-4 [&_[data-slot=icon]]:shrink-0",
   {
     variants: {
       variant: {

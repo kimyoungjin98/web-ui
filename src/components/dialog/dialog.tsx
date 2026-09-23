@@ -103,7 +103,7 @@ const DialogContent = React.forwardRef<
           ref={ref}
           data-slot="dialog-content"
           className={cn(
-            "dialog-content pointer-events-auto relative flex max-h-[calc(100dvh-1rem)] w-[calc(100vw-1rem)] max-w-[32rem] flex-col overflow-hidden rounded-md border border-border bg-card shadow-xl outline-none sm:max-h-[90vh]",
+            "dialog-content pointer-events-auto relative flex max-h-[calc(100dvh-1rem)] w-[calc(100vw-1rem)] max-w-[32rem] flex-col overflow-hidden rounded-lg border border-border bg-card shadow-xl outline-none sm:max-h-[90vh]",
             className,
           )}
           onInteractOutside={(event) => {
@@ -120,7 +120,7 @@ const DialogContent = React.forwardRef<
         >
           {children}
           {showClose ? (
-            <DialogPrimitive.Close className="absolute right-4 top-4 z-20 rounded-md opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring">
+            <DialogPrimitive.Close className="absolute right-4 top-4 z-20 rounded-lg opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring">
               <Icon name="lucide:x" className="size-4 cursor-pointer" />
               <span className="sr-only">닫기</span>
             </DialogPrimitive.Close>

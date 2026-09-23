@@ -43,13 +43,13 @@ export function FilterPanel({
       data-slot="filter-panel"
       aria-labelledby={titleId}
       className={cn(
-        "flex flex-col gap-4 rounded-md border border-border bg-card p-4",
+        "flex flex-col gap-4 rounded-lg border border-border bg-card p-4",
         className,
       )}
     >
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2">
-          <span className="grid size-8 place-items-center rounded-md bg-primary/10 text-primary">
+          <span className="grid size-8 place-items-center rounded-lg bg-primary/10 text-primary">
             <Icon name="lucide:list-filter" className="size-4" />
           </span>
           <div className="flex items-center gap-2">

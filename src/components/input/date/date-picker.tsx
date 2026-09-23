@@ -67,7 +67,7 @@ type YearPickerProps = Omit<DatePickerProps, "value" | "onValueChange"> & {
 
 const DATE_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/;
 const PICKER_TRIGGER_CLASS =
-  "w-full justify-start rounded-md border border-input bg-card hover:bg-card text-left font-semibold shadow-none outline-none transition-all hover:text-base-content focus:border-ring focus:ring-3 focus:ring-ring/15 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/15 data-[state=open]:border-ring data-[state=open]:ring-3 data-[state=open]:ring-ring/15 disabled:cursor-not-allowed disabled:opacity-50";
+  "w-full justify-start rounded-lg border border-input bg-card hover:bg-card text-left font-semibold shadow-none outline-none transition-all hover:text-base-content focus:border-ring focus:ring-3 focus:ring-ring/15 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/15 data-[state=open]:border-ring data-[state=open]:ring-3 data-[state=open]:ring-ring/15 disabled:cursor-not-allowed disabled:opacity-50";
 
 function DatePicker({
   value,
@@ -152,7 +152,7 @@ function DatePicker({
             <button
               type="button"
               aria-label="날짜 초기화"
-              className="absolute right-9 top-1/2 grid size-6 -translate-y-1/2 place-items-center rounded-md text-muted-foreground transition-colors hover:text-base-content focus:outline-none focus:ring-2 focus:ring-ring/20"
+              className="absolute right-9 top-1/2 grid size-6 -translate-y-1/2 place-items-center rounded-lg text-muted-foreground transition-colors hover:text-base-content focus:outline-none focus:ring-2 focus:ring-ring/20"
               onClick={() => onValueChange("")}
             >
               <Icon name="lucide:x" className="size-3.5" />
@@ -340,7 +340,7 @@ function DateRangePicker({
             <button
               type="button"
               aria-label="기간 초기화"
-              className="absolute right-9 top-1/2 grid size-6 -translate-y-1/2 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-base-content focus:outline-none focus:ring-2 focus:ring-ring/20"
+              className="absolute right-9 top-1/2 grid size-6 -translate-y-1/2 place-items-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-base-content focus:outline-none focus:ring-2 focus:ring-ring/20"
               onClick={handleClear}
             >
               <Icon name="lucide:x" className="size-3.5" />

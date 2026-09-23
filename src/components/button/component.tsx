@@ -38,6 +38,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           getButtonColorClass(variant, resolvedColor),
           buttonSizes[resolvedSize],
           className,
+          disabled && "pointer-events-none opacity-50",
         )}
         {...props}
       />

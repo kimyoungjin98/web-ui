@@ -19,7 +19,7 @@ type InputFrameProps = {
 
 function getInputBaseClassName(className?: string) {
   return cn(
-    "w-full rounded-md border border-input bg-card font-medium outline-none transition-all placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 focus:border-ring focus:ring-3 focus:ring-ring/15",
+    "w-full rounded-lg border-2 border-input transition-all focus-within:border-primary bg-card font-medium outline-none transition-all placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
     className,
   );
 }

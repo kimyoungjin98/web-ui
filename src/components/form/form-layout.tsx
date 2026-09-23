@@ -15,7 +15,7 @@ export function FormSection({
   return (
     <section
       aria-labelledby={titleId}
-      className="overflow-hidden rounded-md border border-border bg-card"
+      className="overflow-hidden rounded-lg border border-border bg-card"
     >
       <div className="border-b border-border bg-card px-4 py-4 sm:px-5">
         <h3 id={titleId} className="text-base font-bold text-base-content">

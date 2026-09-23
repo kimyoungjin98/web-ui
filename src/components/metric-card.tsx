@@ -91,7 +91,7 @@ function MetricCard({
         {icon ? (
           <span
             className={cn(
-              "grid size-9 shrink-0 place-items-center rounded-md",
+              "grid size-9 shrink-0 place-items-center rounded-lg",
               toneClassNames[tone],
             )}
           >
