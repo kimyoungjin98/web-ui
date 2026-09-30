@@ -69,7 +69,7 @@ type YearPickerProps = Omit<DatePickerProps, "value" | "onValueChange"> & {
 const DATE_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/;
 const PICKER_TRIGGER_CLASS = cn(
   getInputBaseClassName(),
-  "justify-start text-left shadow-none hover:bg-card focus:border-primary focus-visible:border-primary focus-visible:ring-0 data-[state=open]:border-primary data-[state=open]:ring-0",
+  "active:scale-100 justify-start text-left shadow-none hover:bg-card focus:border-primary focus-visible:border-primary focus-visible:ring-0 data-[state=open]:border-primary data-[state=open]:ring-0",
 );
 
 function DatePicker({
@@ -83,7 +83,12 @@ function DatePicker({
   className,
   hiddenResetButton = false,
   size,
-}: DatePickerProps) {
+  ...triggerProps
+}: DatePickerProps &
+  Pick<
+    React.ComponentProps<"button">,
+    "id" | "aria-invalid" | "aria-describedby" | "onBlur"
+  >) {
   const [open, setOpen] = React.useState(false);
   const [portalContainer, setPortalContainer] = React.useState<Element | null>(
     null,
@@ -120,6 +125,7 @@ function DatePicker({
         <span className="relative block w-full">
           <PopoverTrigger asChild>
             <Button
+              {...triggerProps}
               type="button"
               variant="outline"
               disabled={disabled}
