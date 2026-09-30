@@ -38,8 +38,8 @@ function ResultRoot({
         <Paragraph
           data-result-description=""
           typography="t6"
-          color="secondary"
-          style={{ marginTop: 12 }}
+          color="neutral"
+          className="mt-3"
         >
           {description}
         </Paragraph>

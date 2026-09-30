@@ -24,6 +24,8 @@ export * from "../providers/ui-size-provider";
 
 export * from "./slider/slider";
 
+export * from "./result/result";
+
 export * from "./typography/paragraph";
 
 // 다이얼로그
