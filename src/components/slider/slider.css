@@ -1,3 +1,19 @@
+.slider-control {
+  --slider-ratio: 0.5;
+  --slider-thumb-size: 1.5rem;
+  --slider-fill: calc(
+    var(--slider-thumb-size) / 2 + (100% - var(--slider-thumb-size)) *
+      var(--slider-ratio)
+  );
+
+  @apply relative;
+}
+
+.slider-tooltip-anchor {
+  @apply pointer-events-none absolute top-1/2 size-6 -translate-x-1/2 -translate-y-1/2;
+  left: var(--slider-fill);
+}
+
 .slider-input {
   --slider-color: var(--primary);
   --slider-track: var(--border);
@@ -8,13 +24,7 @@
     var(--foreground) 18%,
     transparent
   );
-  --slider-ratio: 0.5;
   --slider-track-height: 0.3125rem;
-  --slider-thumb-size: 1.5rem;
-  --slider-fill: calc(
-    var(--slider-thumb-size) / 2 + (100% - var(--slider-thumb-size)) *
-      var(--slider-ratio)
-  );
 
   @apply m-0 block h-10 w-full cursor-pointer appearance-none border-0 bg-transparent p-0;
 }
