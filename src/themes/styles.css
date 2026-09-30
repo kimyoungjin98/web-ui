@@ -3,6 +3,7 @@
 
 @import "./font.css";
 @import "./animation.css";
+@import "../components/slider/slider.css";
 
 /* Token names are shared here; each app owns the light/dark values. */
 

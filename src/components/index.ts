@@ -22,6 +22,8 @@ export * from "./toggle";
 export * from "./tooltip";
 export * from "../providers/ui-size-provider";
 
+export * from "./slider/slider";
+
 export * from "./typography/paragraph";
 
 // 다이얼로그
