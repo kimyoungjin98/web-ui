@@ -1,0 +1,60 @@
+import type { ComponentPropsWithRef, ReactNode } from "react";
+import { Button, type ButtonProps } from "../button/button";
+import { cn } from "../../libs";
+import { Paragraph } from "../typography/paragraph";
+
+export type ResultProps = Omit<ComponentPropsWithRef<"section">, "title"> & {
+  figure?: ReactNode;
+  title: ReactNode;
+  description?: ReactNode;
+  button?: ReactNode;
+};
+
+function ResultRoot({
+  figure,
+  title,
+  description,
+  button,
+  className,
+  ...props
+}: ResultProps) {
+  return (
+    <section
+      {...props}
+      className={cn(
+        "ds-result flex min-h-80 w-full flex-col items-center justify-center px-6 py-12 text-center",
+        className,
+      )}
+    >
+      {figure != null && (
+        <div data-result-figure="" aria-hidden="true" className="mb-6">
+          {figure}
+        </div>
+      )}
+      <Paragraph typography="t5" fontWeight="semibold">
+        {title}
+      </Paragraph>
+      {description != null && (
+        <Paragraph
+          data-result-description=""
+          typography="t6"
+          color="secondary"
+          style={{ marginTop: 12 }}
+        >
+          {description}
+        </Paragraph>
+      )}
+      {button != null && (
+        <div data-result-button="" className="mt-8 w-full">
+          {button}
+        </div>
+      )}
+    </section>
+  );
+}
+
+function ResultButton(props: ButtonProps) {
+  return <Button size="sm" {...props} />;
+}
+
+export const Result = Object.assign(ResultRoot, { Button: ResultButton });
