@@ -82,7 +82,7 @@ function Checkbox({
         <Icon
           name="mdi:check"
           className={cn(
-            "pointer-events-none opacity-0 text-primary-foreground transition-opacity peer-checked:opacity-100",
+            "pointer-events-none relative opacity-0 text-primary-foreground transition-opacity peer-checked:opacity-100",
             indeterminate && "opacity-100",
             sizeToken.icon,
           )}
