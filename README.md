@@ -4,7 +4,7 @@ ERP 클라이언트에서 공유하는 UI 컴포넌트와 디자인 토큰 계�
 
 ## 스타일 사용
 
-앱의 전역 CSS에서 한 번만 `@repo/ui/styles.css`를 import합니다. 이 파일은 Tailwind v4의 semantic color utility와 `shadow-card`만 추가합니다.
+앱의 전역 CSS에서 한 번만 `@repo/ui/styles.css`를 import합니다. 이 파일은 Tailwind v4의 semantic color utility, `shadow-card`와 타이포그래피 기본값을 제공합니다.
 
 ```css
 @import "@repo/ui/styles.css";
@@ -25,6 +25,31 @@ Spacing과 radius는 Tailwind 기본 유틸리티를 사용합니다. 예를 들
 | 상태                     | `info`, `warning`, `success` 및 foreground 토큰              | `apps/client/app/globals.css` |
 
 각 foreground token은 대응 surface token의 텍스트 색입니다. 명도 대비가 바뀌는 테마를 추가할 때는 surface와 foreground를 함께 변경하고, 본문 텍스트는 WCAG 2.2 AA의 4.5:1 이상을 확인합니다.
+
+## 타이포그래피
+
+기본 본문·입력값·안내문·표 데이터는 400(`font-normal`), 버튼·폼 라벨·표 헤더·선택 상태는 500(`font-medium`), 제목은 600(`font-semibold`)을 사용합니다. `styles.css`의 base layer가 HTML 기본값을 제공하고 컴포넌트의 유틸리티가 역할별 두께를 지정합니다.
+
+`Paragraph`는 부모의 글꼴 두께를 상속합니다. 본문 영역의 기본값은 400이고, 버튼 안에서는 버튼의 500을 유지합니다. `fontWeight="medium"` 또는 `fontWeight="semibold"`로 명시적으로 강조할 수 있습니다. 기존 fontWeight API와 호출부 className 재정의는 유지합니다.
+
+## 결과 안내
+
+빈 결과·오류·접근 불가·선택 대기는 `Result`로 표현합니다. `@repo/ui`에서 import할 수 있으며 제목은 600, 설명은 400을 사용합니다. figure는 장식 요소로 스크린 리더에서 숨깁니다. 아이콘만으로 상태를 전달하지 않고 title에 상태를 명시합니다.
+
+```tsx
+<Result
+  title="목록을 불러오지 못했습니다."
+  description="잠시 후 다시 시도해 주세요."
+  role="alert"
+  button={
+    <Result.Button variant="outline" onClick={() => void refetch()}>
+      다시 시도
+    </Result.Button>
+  }
+/>
+```
+
+DataGrid는 빈 목록에 Result를 사용하며 기존 `emptyMessage`를 그대로 받습니다. 작은 패널은 `className="min-h-48 px-4 py-8"`로 크기를 조절할 수 있습니다. 로딩과 필드 검증에는 각각 Spinner/Skeleton과 FormItem/Hint를 사용합니다.
 
 ## 접근성 기준
 

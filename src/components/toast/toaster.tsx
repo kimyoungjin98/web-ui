@@ -79,9 +79,9 @@ export function Toaster(props: ToasterProps) {
         toastOptions={{
           classNames: {
             toast:
-              "cursor-pointer border-border bg-card text-base-content shadow-lg rounded-lg font-medium ring-1 ring-border/50",
-            title: "text-sm font-bold",
-            description: "text-xs font-semibold text-muted-foreground",
+              "cursor-pointer border-border bg-card text-base-content shadow-lg rounded-lg font-normal ring-1 ring-border/50",
+            title: "text-sm font-semibold",
+            description: "text-xs font-normal text-muted-foreground",
             icon: "text-current",
             success:
               "border-l-4 border-l-success text-success-soft-foreground [&_[data-description]]:text-success-soft-foreground/80 [&_[data-icon]]:text-success-soft-foreground [&_[data-icon]_svg]:text-success-soft-foreground [&_[data-title]]:text-success-soft-foreground",

@@ -11,7 +11,7 @@ import {
 } from "./layout";
 import { getDataGridDensity } from "./density";
 
-const ROW = "group transition-colors hover:bg-muted";
+const ROW = "group font-normal transition-colors hover:bg-muted";
 
 const ROW_ENTER = "data-grid-row-enter";
 

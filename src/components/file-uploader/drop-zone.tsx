@@ -184,15 +184,15 @@ function DropContent({
         name="material-symbols:cloud-download-outline"
         className={`mb-3 size-8 transition ${over ? "text-primary" : "text-primary/80"}`}
       />
-      <p className="font-bold text-base-content">
+      <p className="font-medium text-base-content">
         {over
           ? (overLabel ?? "파일을 여기에 놓으세요")
           : (idle ?? "파일을 업로드하세요")}
       </p>
-      <p className="mt-2 text-xs font-semibold text-muted-foreground">
+      <p className="mt-2 text-xs font-normal text-muted-foreground">
         {guide ?? "파일을 이곳에 드래그하거나 이 영역을 클릭하세요"}
       </p>
-      <p className="mt-4 text-xs font-semibold text-muted-foreground">{help}</p>
+      <p className="mt-4 text-xs font-normal text-muted-foreground">{help}</p>
     </>
   );
 }

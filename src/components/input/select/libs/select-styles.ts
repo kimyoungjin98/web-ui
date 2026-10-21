@@ -14,7 +14,7 @@ export const selectContentClassName = cn(
 
 export const selectItemClassName = cn(
   "relative flex w-full min-w-max cursor-pointer select-none items-center rounded-lg",
-  "font-semibold outline-none transition-colors",
+  "font-normal aria-selected:font-medium outline-none transition-colors",
   "hover:bg-muted data-[active=true]:bg-muted data-[active=true]:text-foreground",
   "disabled:pointer-events-none disabled:opacity-50",
 );

@@ -49,7 +49,7 @@ function SelectedCountPill({ count }: { count: number }) {
   if (count <= 0) return null;
 
   return (
-    <div className="inline-flex w-fit items-center text-primary-foreground text-sm font-semibold">
+    <div className="inline-flex w-fit items-center text-primary-foreground text-sm font-medium">
       {count}개 선택됨
     </div>
   );
@@ -63,7 +63,7 @@ function ToolbarActions(
 ) {
   const excel = p.excelDownload;
   return (
-    <div className="flex w-full items-center justify-between gap-2 text-xs font-semibold text-muted-foreground sm:w-auto sm:min-w-max sm:justify-end">
+    <div className="flex w-full items-center justify-between gap-2 text-xs font-normal text-muted-foreground sm:w-auto sm:min-w-max sm:justify-end">
       <span className="whitespace-nowrap">페이지당</span>
       <PageSizeSelect
         value={p.pageSize}

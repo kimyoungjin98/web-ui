@@ -69,7 +69,7 @@ type YearPickerProps = Omit<DatePickerProps, "value" | "onValueChange"> & {
 const DATE_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/;
 const PICKER_TRIGGER_CLASS = cn(
   getInputBaseClassName(),
-  "active:scale-100 justify-start text-left shadow-none hover:bg-card focus:border-primary focus-visible:border-primary focus-visible:ring-0 data-[state=open]:border-primary data-[state=open]:ring-0",
+  "active:scale-100 justify-start text-left shadow-none hover:bg-card focus:border-primary focus-visible:border-primary data-[state=open]:border-primary",
 );
 
 function DatePicker({

@@ -23,10 +23,10 @@ type TabsProps<TValue extends string> = {
 };
 
 const tabsSizeTokens: Record<FormSize, { label: string; trigger: string }> = {
-  xs: { label: "text-xs", trigger: "px-1 py-0.5" },
-  sm: { label: "text-sm", trigger: "px-1.5 py-0.5" },
-  default: { label: "text-sm", trigger: "px-2 py-1" },
-  lg: { label: "text-base", trigger: "px-3 py-1.5" },
+  xs: { label: "text-xs", trigger: "px-2 py-1" },
+  sm: { label: "text-sm", trigger: "px-2.5 py-1.5" },
+  default: { label: "text-sm", trigger: "px-3 py-2" },
+  lg: { label: "text-base", trigger: "px-4 py-2.5" },
 };
 
 function Tabs<TValue extends string>({
@@ -47,7 +47,7 @@ function Tabs<TValue extends string>({
       aria-label={ariaLabel}
       data-slot="tabs"
       className={cn(
-        "flex min-w-0 w-full rounded-lg bg-card border border-border p-1 gap-1 sm:w-max",
+        "flex min-w-0 w-full rounded-lg bg-muted p-1 gap-1 sm:w-max",
         className,
       )}
     >
@@ -64,13 +64,13 @@ function Tabs<TValue extends string>({
             data-state={selected ? "active" : "inactive"}
             data-value={option.value}
             className={cn(
-              "cursor-pointer flex flex-1 items-center justify-center whitespace-nowrap rounded-lg font-medium transition-colors outline-none sm:flex-none",
+              "cursor-pointer flex flex-1 items-center justify-center whitespace-nowrap rounded-md font-normal transition-colors outline-none motion-reduce:transition-none sm:flex-none",
               sizeToken.trigger,
-              "text-muted-foreground hover:text-base-content hover:bg-muted-foreground/20",
-              "focus-visible:ring-3 focus-visible:ring-ring/15 focus-visible:border-ring",
+              "text-secondary-foreground hover:text-foreground hover:bg-card/50",
+              "focus-visible:ring-2 focus-visible:ring-ring/50",
               "disabled:pointer-events-none disabled:opacity-50",
               selected &&
-                "bg-foreground text-background hover:text-background hover:bg-foreground/80 *:font-medium",
+                "bg-card text-foreground font-medium hover:text-foreground hover:bg-card",
               triggerClassName,
             )}
             onClick={() => onValueChange(option.value)}

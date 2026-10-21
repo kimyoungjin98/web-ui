@@ -7,6 +7,8 @@ import {
   ROW_ACTIONS_WIDTH,
   type DataGridTableColumn,
 } from "./layout";
+import { Result } from "../../result/result";
+import Icon from "../../icon";
 import { DataGridRow } from "./row";
 import { getDataGridDensity } from "./density";
 
@@ -175,12 +177,17 @@ function SkeletonRow<T>({
 function EmptyRow({ count, message }: { count: number; message: string }) {
   return (
     <div role="row" className="flex w-full min-w-full">
-      <div
-        role="cell"
-        aria-colspan={count}
-        className="flex-1 px-4 py-12 text-center text-sm font-semibold text-muted-foreground"
-      >
-        {message}
+      <div role="cell" aria-colspan={count} className="min-w-0 flex-1">
+        <Result
+          className="min-h-48 px-4 py-8"
+          figure={
+            <Icon
+              name="lucide:inbox"
+              className="size-8 text-muted-foreground"
+            />
+          }
+          title={message}
+        />
       </div>
     </div>
   );

@@ -59,20 +59,20 @@ function FileRow(props: RowProps) {
 function FileMeta({ item }: { item: UploadFileItem }) {
   return (
     <div className="min-w-0 flex-1">
-      <p className="truncate text-sm max-w-[20rem] font-bold text-base-content">
+      <p className="truncate text-sm max-w-[20rem] font-normal text-base-content">
         {item.name}
       </p>
       {item.size > 0 && (
-        <p className="mt-0.5 text-xs font-semibold text-muted-foreground">
+        <p className="mt-0.5 text-xs font-normal text-muted-foreground">
           {formatBytes(item.size)} · {item.extension || "FILE"}
         </p>
       )}
       {/* 확장자 */}
-      <p className="mt-0.5 text-xs font-semibold text-muted-foreground">
+      <p className="mt-0.5 text-xs font-normal text-muted-foreground">
         {item.extension || "FILE"}
       </p>
       {item.error ? (
-        <p className="mt-1 text-xs font-bold text-destructive" role="alert">
+        <p className="mt-1 text-xs font-normal text-destructive" role="alert">
           {item.error}
         </p>
       ) : null}

@@ -18,7 +18,7 @@ export function FormSection({
       className="overflow-hidden rounded-lg border border-border bg-card"
     >
       <div className="border-b border-border bg-card px-4 py-4 sm:px-5">
-        <h3 id={titleId} className="text-base font-bold text-base-content">
+        <h3 id={titleId} className="text-base font-semibold text-base-content">
           {title}
         </h3>
       </div>
@@ -57,7 +57,7 @@ export function FormItem({
   return (
     <div className={cn("grid gap-2", className)}>
       <label
-        className="text-sm font-semibold text-base-content/80"
+        className="text-sm font-medium text-base-content/80"
         htmlFor={htmlFor}
       >
         {label}
@@ -73,7 +73,7 @@ export function FormItem({
         <p
           id={errorId}
           role="alert"
-          className="text-xs font-medium text-destructive"
+          className="text-xs font-normal text-destructive"
         >
           {error}
         </p>

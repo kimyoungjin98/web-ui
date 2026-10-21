@@ -37,7 +37,7 @@ export function DataGridHeader<T>(p: Props<T>) {
     <div role="rowgroup" className="sticky top-0 z-20">
       <div
         role="row"
-        className="flex w-full min-w-full border-b border-border bg-muted font-semibold text-base-content"
+        className="flex w-full min-w-full border-b border-border bg-muted font-medium text-base-content"
       >
         <div
           ref={p.setMain}
@@ -176,7 +176,7 @@ function ActionHead({ density }: { density: DataGridDensity }) {
         minWidth: ROW_ACTIONS_WIDTH,
       }}
       className={cn(
-        "box-border flex shrink-0 items-center justify-end text-right font-bold uppercase tracking-normal",
+        "box-border flex shrink-0 items-center justify-end text-right font-medium uppercase tracking-normal",
         densityStyles.header,
       )}
     >

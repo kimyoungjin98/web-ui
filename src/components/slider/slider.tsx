@@ -181,7 +181,7 @@ export function Slider({
           <Paragraph
             typography="t6"
             className="text-muted-foreground"
-            fontWeight="medium"
+            fontWeight="regular"
           >
             {label?.min ?? `${minValue.toLocaleString("ko-KR")}${unit ?? ""}`}
           </Paragraph>
@@ -189,7 +189,7 @@ export function Slider({
             <Paragraph
               typography="t6"
               className="text-muted-foreground"
-              fontWeight="medium"
+              fontWeight="regular"
             >
               {label.mid}
             </Paragraph>
@@ -197,7 +197,7 @@ export function Slider({
           <Paragraph
             typography="t6"
             className="text-muted-foreground"
-            fontWeight="medium"
+            fontWeight="regular"
           >
             {label?.max ?? `${maxValue.toLocaleString("ko-KR")}${unit ?? ""}`}
           </Paragraph>

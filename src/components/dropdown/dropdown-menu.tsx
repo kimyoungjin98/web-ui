@@ -319,7 +319,7 @@ function DropdownMenuLabel({
       data-slot="dropdown-menu-label"
       data-inset={inset}
       className={cn(
-        "font-semibold",
+        "font-medium",
         sizeToken.label,
         inset && sizeToken.inset,
         className,

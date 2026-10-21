@@ -52,6 +52,35 @@
   --shadow-card: var(--shadow-card-value);
 }
 
+@layer base {
+  body {
+    font-weight: var(--font-weight-normal);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  button,
+  label,
+  th,
+  strong,
+  b {
+    font-weight: var(--font-weight-medium);
+  }
+
+  input,
+  textarea,
+  select {
+    font-weight: var(--font-weight-normal);
+  }
+}
+
 /* DataGrid columns can be dragged horizontally on touch devices without
  * showing a second scrollbar for every row. */
 .data-grid-scroll {

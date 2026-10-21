@@ -38,7 +38,7 @@ function Radio({
     <label
       data-slot="radio-label"
       className={cn(
-        "bg-card select-none group flex min-h-9 cursor-pointer items-center gap-2.5 rounded-lg border border-input hover:bg-muted px-3.5 text-sm font-semibold text-base-content transition-all has-[:checked]:border-primary-border has-[:checked]:bg-primary/10 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 has-[:focus-visible]:border-ring has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-ring/15",
+        "bg-card select-none group flex min-h-9 cursor-pointer items-center gap-2.5 rounded-lg border border-input hover:bg-muted px-3.5 text-sm font-medium text-base-content transition-all has-[:checked]:border-primary-border has-[:checked]:bg-primary/10 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 has-[:focus-visible]:border-ring has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-ring/15",
         labelClassName,
       )}
     >

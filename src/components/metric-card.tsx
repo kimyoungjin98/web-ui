@@ -18,20 +18,20 @@ type MetricCardProps = React.ComponentProps<typeof Card> & {
 
 const activeToneClassNames: Record<ColorToken, string> = {
   primary:
-    "border-primary bg-primary-soft shadow-md hover:border-primary hover:bg-primary-soft hover:shadow-md",
+    "border-primary bg-primary-soft shadow-md hover:border-primary hover:bg-primary/10 hover:shadow-md",
   secondary:
-    "border-secondary-foreground/45 bg-secondary shadow-md hover:border-secondary-foreground/45 hover:bg-secondary hover:shadow-md",
+    "border-secondary-foreground/45 bg-secondary shadow-md hover:border-secondary-foreground/45 hover:bg-secondary/70 hover:shadow-md",
   success:
-    "border-success-soft-foreground/50 bg-success/30 shadow-md hover:border-success-soft-foreground/50 hover:bg-success/30 hover:shadow-md",
+    "border-success-soft-foreground/50 bg-success/30 shadow-md hover:border-success-soft-foreground/50 hover:bg-success/50 hover:shadow-md",
   warning:
-    "border-warning-soft-foreground/55 bg-warning/30 shadow-md hover:border-warning-soft-foreground/55 hover:bg-warning/30 hover:shadow-md",
+    "border-warning-soft-foreground/55 bg-warning/30 shadow-md hover:border-warning-soft-foreground/55 hover:bg-warning/50 hover:shadow-md",
   destructive:
-    "border-destructive-soft-foreground/50 bg-destructive/10 shadow-md hover:border-destructive-soft-foreground/50 hover:bg-destructive/10 hover:shadow-md",
-  info: "border-info-soft-foreground/50 bg-info/30 shadow-md hover:border-info-soft-foreground/50 hover:bg-info/30 hover:shadow-md",
+    "border-destructive-soft-foreground/50 bg-destructive/10 shadow-md hover:border-destructive-soft-foreground/50 hover:bg-destructive/20 hover:shadow-md",
+  info: "border-info-soft-foreground/50 bg-info/30 shadow-md hover:border-info-soft-foreground/50 hover:bg-info/50 hover:shadow-md",
   neutral:
-    "border-neutral/50 bg-neutral/10 shadow-md hover:border-neutral/50 hover:bg-neutral/10 hover:shadow-md",
+    "border-neutral/50 bg-neutral/10 shadow-md hover:border-neutral/50 hover:bg-neutral/15 hover:shadow-md",
   white:
-    "border-base-content/40 bg-card shadow-md hover:border-base-content/40 hover:bg-card hover:shadow-md",
+    "border-base-content/40 bg-card shadow-md hover:border-base-content/40 hover:bg-muted/60 hover:shadow-md",
 };
 
 const toneClassNames: Record<ColorToken, string> = {
@@ -63,7 +63,7 @@ function MetricCard({
   return (
     <Card
       className={cn(
-        "border-none",
+        "border-none transition-colors hover:bg-muted/60 motion-reduce:transition-none",
         interactive &&
           "cursor-pointer select-none transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:border-primary/40 hover:shadow-md",
         active && activeToneClassNames[tone],
@@ -85,7 +85,7 @@ function MetricCard({
       {...props}
     >
       <CardHeader className="flex flex-row items-start justify-between gap-3 pb-3">
-        <CardTitle className="text-sm font-semibold text-muted-foreground">
+        <CardTitle className="text-sm font-medium text-muted-foreground">
           {label}
         </CardTitle>
         {icon ? (

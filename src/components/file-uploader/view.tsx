@@ -107,8 +107,8 @@ function OverallProgress({
   return (
     <div className="rounded border border-primary-border bg-card p-3">
       <div className="mb-2 flex items-center justify-between gap-3">
-        <p className="text-sm font-bold text-base-content">업로드 중</p>
-        <p className="text-xs font-bold text-muted-foreground">
+        <p className="text-sm font-normal text-base-content">업로드 중</p>
+        <p className="text-xs font-normal text-muted-foreground">
           전체 {progress}%
         </p>
       </div>
@@ -130,7 +130,7 @@ function ProgressBar({ value }: { value: number }) {
 
 function Limit({ message }: { message: string }) {
   return message ? (
-    <p className="text-xs font-bold text-destructive">{message}</p>
+    <p className="text-xs font-normal text-destructive">{message}</p>
   ) : null;
 }
 

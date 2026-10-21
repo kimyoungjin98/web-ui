@@ -53,3 +53,6 @@ export * from "./data-grid";
 export * from "./data-grid/actions/actions-button";
 export * from "./data-grid/actions/row-actions";
 export * from "./data-grid/actions/row-actions-menu";
+
+// 결과 안내
+export * from "./result/result";
