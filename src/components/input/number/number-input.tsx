@@ -8,7 +8,7 @@ import { useUiSize } from "../../../providers/ui-size-provider";
 
 type NumberInputProps = Omit<
   NumericFormatProps,
-  "allowNegative" | "onChange" | "size" | "thousandSeparator" | "value"
+  "onChange" | "size" | "thousandSeparator" | "value"
 > & {
   value?: number;
   onChange: (value: number) => void;
@@ -24,6 +24,7 @@ function getNumberInputValue(floatValue: number | undefined) {
 }
 
 function NumberInput({
+  allowNegative = false,
   className,
   endIcon,
   onChange,
@@ -41,7 +42,7 @@ function NumberInput({
   return (
     <InputFrame endIcon={endIcon} size={resolvedSize} startIcon={startIcon}>
       <NumericFormat
-        allowNegative={false}
+        allowNegative={allowNegative}
         className={getInputClassName({
           className,
           endIcon: Boolean(endIcon),
